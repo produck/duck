@@ -1,0 +1,17 @@
+{
+	"type": "object",
+	"properties": {
+		"install": {
+			"instanceof": "Function"
+		},
+		"get": {
+			"instanceof": "Function"
+		},
+		"set": {
+			"instanceof": "Function"
+		},
+		"destroy": {
+			"instanceof": "Function"
+		}
+	}
+}

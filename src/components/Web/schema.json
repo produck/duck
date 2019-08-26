@@ -1,0 +1,22 @@
+{
+	"type": "array",
+	"items": {
+		"type": "object",
+		"additionalProperties": false,
+		"required": [
+			"id",
+			"Application"
+		],
+		"properties": {
+			"id": {
+				"type": "string"
+			},
+			"type": {
+				"type": "string"
+			},
+			"Application": {
+				"instanceof": "Function"
+			}
+		}
+	}
+}

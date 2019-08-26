@@ -1,0 +1,15 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"factory": {
+			"instanceof": "Function"
+		},
+		"plugins": {
+			"type": "array",
+			"items": {
+				"instanceof": "Function"
+			}
+		}
+	}
+}

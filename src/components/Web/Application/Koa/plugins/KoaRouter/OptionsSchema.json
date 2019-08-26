@@ -1,0 +1,33 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"Router"
+	],
+	"properties": {
+		"prefix": {
+			"type": "string"
+		},
+		"Router": {
+			"instanceof": "Function"
+		},
+		"use": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"mount": {
+						"type": ["null", "string", "array"],
+						"items": {
+							"type": "string"
+						}
+					},
+					"child": {
+						"$ref": "#/"
+					}
+				}
+			}
+		}
+	}
+}
