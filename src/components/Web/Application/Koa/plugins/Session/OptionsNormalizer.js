@@ -1,8 +1,21 @@
 'use strict';
 
+const Ajv = require('ajv');
+const AjvKeywords = require('ajv-keywords');
+const schema = require('./OptionsSchema.json');
 
+const ajv = new Ajv({
+	allErrors: true,
+	verbose: true,
+});
+
+AjvKeywords(ajv, ['instanceof']);
+
+const validate = ajv.compile(schema);
 
 module.exports = function normalize(options) {
+	validate(options);
+
 	if (options) {
 		return options;
 	}
@@ -10,6 +23,7 @@ module.exports = function normalize(options) {
 	const session = require('koa-session');
 
 	return {
+		key: 'session',
 		install(app) {
 			app.keys = [Math.random().toString(16).substr(2, 8)];
 			app.use(session(app));
@@ -17,11 +31,11 @@ module.exports = function normalize(options) {
 		destroy(ctx) {
 			ctx.session = null;
 		},
-		get(ctx, key) {
-			return ctx.session[key];
+		get(ctx) {
+			return ctx.session;
 		},
-		set(ctx, key, value) {
-			return ctx.session[key] = value;
+		set(ctx, value) {
+			return ctx.session = value;
 		}
 	};
-}
+};

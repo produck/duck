@@ -23,11 +23,11 @@ function normalize(options) {
 	return finalOptions;
 }
 
-module.exports = function AccessControlPluginProvider(originalOptions) {
+module.exports = function AccessControlPlugin(originalOptions) {
 	const options = normalize(originalOptions);
 
-	return function AccessControlPlugin(injection, context) {
-		context.Authorize = function AuthorizeMiddlerware(symbol) {
+	return function install(injection, context) {
+		context.AccessControl = function AccessControlMiddleware(symbol) {
 			return async function middleware(ctx, next) {
 				if (await options.authorize(symbol, ctx, injection)) {
 					return next();

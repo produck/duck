@@ -24,7 +24,7 @@ module.exports = function normalizeWebOptions(options = []) {
 		throw new Error(JSON.stringify(validate.errors, null, '  '));
 	}
 	
-	if (typeof options !== 'undefined') {
+	if (options.length > 0) {
 		return options;
 	}
 

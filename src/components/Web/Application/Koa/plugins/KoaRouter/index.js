@@ -3,41 +3,37 @@
 const normalize = require('./normalize');
 
 module.exports = function KoaRouterPlugin(originalOptions) {
-	const KoaRouter = require('koa-router');
+	const KoaRouter = require('@koa/router');
 	const options = normalize(originalOptions);
 
 	return function install(injection, context) {
-		function buildRouter(optionsNode) {
-			const options = {};
+		context.KoaRouter = KoaRouter;
+		
+		function buildRouter(options) {
+			const koaRouterOptions = {};
 	
-			if (optionsNode.prefix) {
-				options.prefix = optionsNode.prefix;
+			if (options.prefix) {
+				koaRouterOptions.prefix = options.prefix;
 			}
 	
-			const router = new KoaRouter(optionsNode);
+			const router = new KoaRouter(koaRouterOptions);
 	
-			optionsNode.Router(router, injection, context);
+			options.Router(router, injection, context);
+			options.use.forEach(optionsNode => {
+				const childRouter = buildRouter(optionsNode);
 
-			const { children } = optionsNode;
-
-			if (children.length > 0) {
-				children.forEach(optionsNode => {
-					const childRouter = buildRouter(optionsNode);
-					const middleware = childRouter.routes();
-
-					if (optionsNode.mount === null) {
-						return router.use(middleware);
-					} else {
-						return router.use(optionsNode.mount, middleware);
-					}
-				});
-			}
+				if (optionsNode.mount === null) {
+					router.use(childRouter.routes());
+				} else {
+					router.use(optionsNode.mount, childRouter.routes());
+				}
+			});
 
 			return router;
 		}
-			
-		context.AppRouterMiddleware = function ApplicationRouterMiddleware() {
-			return buildRouter(options).routes();
+		
+		context.AppRouter = function ApplicationRouter() {
+			return buildRouter(options);
 		};
 	};
 };
