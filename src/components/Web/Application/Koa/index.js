@@ -34,6 +34,7 @@ function KoaApplicationProvider(options) {
 
 module.exports = KoaApplicationProvider;
 
+KoaApplicationProvider.AccessControl =require('./plugins/AccessControl');
 KoaApplicationProvider.KoaRouter = require('./plugins/KoaRouter');
 KoaApplicationProvider.Session = require('./plugins/Session');
 KoaApplicationProvider.OAuth = require('./plugins/OAuthServer');

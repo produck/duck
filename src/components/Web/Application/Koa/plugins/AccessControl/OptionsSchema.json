@@ -1,0 +1,41 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"asserts": {
+			"type": "array",
+			"items": {
+				"instanceof": "Function"
+			}
+		},
+		"table": {
+			"type": "object",
+			"additionalProperties": false,
+			"patternProperties": {
+				"^[\\w\\d\\.]+$": {
+					"type": "array",
+					"maxItems": {
+						"$data": "2/asserts/length"
+					},
+					"minItems": {
+						"$data": "2/asserts/length"
+					},
+					"items": {
+						"type": "integer",
+						"oneOf": [
+							{
+								"const": 0
+							},
+							{
+								"const": 1
+							}
+						]
+					}
+				}
+			}
+		},
+		"throws": {
+			"instanceof": "Function"
+		}
+	}
+}

@@ -11,22 +11,16 @@
 		"Router": {
 			"instanceof": "Function"
 		},
+		"mount": {
+			"type": ["null", "string", "array"],
+			"items": {
+				"type": "string"
+			}
+		},
 		"use": {
 			"type": "array",
 			"items": {
-				"type": "object",
-				"additionalProperties": false,
-				"properties": {
-					"mount": {
-						"type": ["null", "string", "array"],
-						"items": {
-							"type": "string"
-						}
-					},
-					"child": {
-						"$ref": "#/"
-					}
-				}
+				"$ref": "#/"
 			}
 		}
 	}

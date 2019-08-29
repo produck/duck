@@ -2,9 +2,7 @@
 
 function ComponentElectron(bootstrap, plugins = []) {
 	const Electron = require('electron');
-	const context = {
-		windows: new WeakMap()
-	};
+	const context = {};
 
 	return {
 		id: 'com.oc.duck.electron',
@@ -22,5 +20,6 @@ function ComponentElectron(bootstrap, plugins = []) {
 }
 
 ComponentElectron.Window = require('./plugins/WindowApplication');
+ComponentElectron.VueTools = require('./plugins/VueTools');
 
 module.exports = ComponentElectron;

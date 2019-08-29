@@ -6,14 +6,15 @@ const KoaApplication = Duck.Web.Koa({
 	plugins: [
 		Duck.Web.Koa.KoaRouter({
 			prefix: '/api',
-			Router(router, { product, injection }) {
-				router.get('/product/meta', ctx => {
-					injection;
+			Router(router, { product, Web }, { AccessControl }) {
+				router.get('/product/meta', AccessControl('meta.query') ,ctx => {
 					ctx.state.session.name = 'lichao';
 					console.log(ctx.state.session);
 					ctx.body = product.meta;
 				}).get('/product/components', ctx => {
 					ctx.body = product.components;
+				}).get('/server', ctx => {
+					ctx.body = Object.keys(Web.servers);
 				});
 			},
 			use: [
@@ -33,7 +34,24 @@ const KoaApplication = Duck.Web.Koa({
 				}
 			]
 		}),
-		Duck.Web.Koa.Session()
+		Duck.Web.Koa.Session(),
+		Duck.Web.Koa.AccessControl({
+			asserts: [
+				function test(ctx, injection) {
+					console.log(ctx, injection);
+
+					return false;
+				},
+				function test(ctx, injection) {
+					console.log(ctx, injection);
+
+					return true;
+				}
+			],
+			table: {
+				'meta.query': [0, 0]
+			}
+		})
 	],
 	factory(app, _injection, { AppRouter, Session }) {
 		const router = AppRouter();

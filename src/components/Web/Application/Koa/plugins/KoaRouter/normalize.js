@@ -14,7 +14,15 @@ AjvKeywords(ajv, ['instanceof']);
 const validate = ajv.compile(schema);
 
 module.exports = function normalize(options) {
-	validate(options);
+	const valid = validate(options);
+	
+	if (!valid) {
+		validate.errors.forEach(error => {
+			console.error(error);
+		});
+
+		throw new Error(JSON.stringify(validate.errors, null, '  '));
+	}
 
 	return (function normalizeOptionsNode(optionsNode) {
 		const finalOptionsNode = {

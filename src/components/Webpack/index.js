@@ -1,13 +1,14 @@
 'use strict';
 
-const mearge = require('webpack-merge');
 const abstract = {};
 
 function ProductComponentWebpack(options) {
+	const merge = require('webpack-merge');
+	const store = {};
 
 	return {
 		id: 'com.oc.duck.webpack',
-		name: 'WebApplication',
+		name: 'WebpackConfigBuilder',
 		description: 'Used to guide developer to create a web application.',
 		install(injection) {
 			function Webpack() {
@@ -19,7 +20,9 @@ function ProductComponentWebpack(options) {
 			}
 
 			Webpack.Dev = WebpackDev;
-			injection.Webpack = Webpack;
+			injection.Webpack = {
+				merge
+			};
 		},
 		created(injection) {
 			

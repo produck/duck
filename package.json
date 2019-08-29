@@ -19,6 +19,7 @@
   "homepage": "https://github.com/or-change/production#readme",
   "devDependencies": {
     "@koa/router": "^8.0.0",
+    "@lemonce3/mitm": "^0.7.1",
     "@or-change/data-hub": "^0.1.4",
     "electron": "^6.0.5",
     "http-cas-client": "^0.4.1",
@@ -38,6 +39,7 @@
     "koa": ">= 2.7.0 < 3",
     "koa-session": ">= 5.12.0 < 6",
     "@or-change/data-hub": ">= 0.1.4",
+    "@lemonce3/mitm": ">= 0.7.0",
     "webpack": ">= 4",
     "webpack-merge": ">= 4"
   },
