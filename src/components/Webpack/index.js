@@ -1,31 +1,32 @@
 'use strict';
 
-const abstract = {};
-
-function ProductComponentWebpack(options) {
+function ComponentWebpack(Templates) {
 	const merge = require('webpack-merge');
-	const store = {};
+	const TemplateStore = {};
+
+	for (const name in Templates) {
+		TemplateStore[name] = Templates[name];
+	}
 
 	return {
 		id: 'com.oc.duck.webpack',
 		name: 'WebpackConfigBuilder',
 		description: 'Used to guide developer to create a web application.',
 		install(injection) {
-			function Webpack() {
+			function Webpack(templateName, ...args) {
+				const Template = TemplateStore[templateName];
 
+				if (Template === undefined) {
+					throw new Error(`The webpack template named '${templateName}' is NOT defined.`);
+				}
+
+				return Template(injection, ...args);
 			}
 
-			function WebpackDev() {
-
-			}
-
-			Webpack.Dev = WebpackDev;
-			injection.Webpack = {
-				merge
-			};
-		},
-		created(injection) {
-			
+			Webpack.merge = merge;
+			injection.Webpack = Object.freeze(Webpack);
 		}
 	};
 }
+
+module.exports = ComponentWebpack;

@@ -14,8 +14,6 @@ module.exports = function normalizeProductOptions(options = {}) {
 		namespace: '',
 		version: '0.0.0',
 		description: 'Default product descrition',
-		beforeCreate: NOOP,
-		created: NOOP,
 		components: []
 	};
 
@@ -24,8 +22,6 @@ module.exports = function normalizeProductOptions(options = {}) {
 		namespace: _namespace = finalOptions.namespace,
 		version: _version = finalOptions.version,
 		description: _description = finalOptions.description,
-		beforeCreate: _beforeCreate = finalOptions.beforeCreate,
-		created: _created = finalOptions.created,
 		components: _components = finalOptions.components
 	} = options;
 
@@ -33,8 +29,6 @@ module.exports = function normalizeProductOptions(options = {}) {
 	finalOptions.namespace = _namespace;
 	finalOptions.version = _version;
 	finalOptions.description = _description;
-	finalOptions.beforeCreate = _beforeCreate;
-	finalOptions.created = _created;
 	finalOptions.components = _components.map(options => {
 		const finalOptions = {
 			description: 'No description',

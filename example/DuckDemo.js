@@ -7,12 +7,6 @@ function DuckDemo() {
 	const duck = {};
 
 	Duck({
-		beforeCreate(injection) {
-			console.log('hook:beforeCreate');
-			injection.sound = {
-				message: 'ah~~~~~~~'
-			};
-		},
 		components: [
 			Duck.Web([
 				{
@@ -23,23 +17,23 @@ function DuckDemo() {
 				}
 			]),
 		],
-		created({ product, sound, Web, injection }) {
-			console.log('hook:created');
-			console.log(product.abstract);
-			console.log(product.components);
+		
+	}, function created({ product, sound, Web, injection }) {
+		console.log('hook:created');
+		console.log(product.abstract);
+		console.log(product.components);
 
-			try {
-				injection.test = 1
-			} catch (error) {
-				console.log(error)
-			}
-
-			duck.quack = function () {
-				return sound;
-			};
-
-			duck.server = http.createServer(Web.Application['default']());
+		try {
+			injection.test = 1
+		} catch (error) {
+			console.log(error)
 		}
+
+		duck.quack = function () {
+			return sound;
+		};
+
+		duck.server = http.createServer(Web.Application['default']());
 	});
 
 	return duck;

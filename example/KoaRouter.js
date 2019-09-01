@@ -77,11 +77,59 @@ function KoaApp() {
 				name: 'TeacherLuo',
 				description: 'shishi',
 				install(injection) {},
-			}
-		],
-		created({ Web }) {
-			app.server = Web.Server('app', 'http', Web.Application.Demo());
-		}
+			},
+			Duck.Webpack({
+				'app.sdlc'(injection, ...args) {
+					console.log(injection, args);
+
+					return {};
+				}
+			}),
+			Duck.Datahub([
+				{
+					id: 'com.oc.duck.datahub.test',
+					alias: 'db',
+					models: {
+						Account(injection) {
+							console.log(injection);
+
+							return {
+								schemas: {
+									type: 'object',
+									properties: {
+										administrator: { type: 'boolean' },
+										id: { type: 'string' },
+										name: { type: 'string' },
+										email: { type: 'string' },
+										avatar: { type: 'string' }
+									},
+									allowNull: ['email']
+								},
+								methods: {
+									create(payload) {
+										return injection.account.create(payload);
+									},
+									delete(payload) {
+										return injection.account.delete(payload);
+									},
+									update(items) {
+										return injection.store.updateAccount(this.id, items);
+									},
+									query(accountId) {
+										return injection.store.getAccountById(accountId);
+									}
+								}
+							};
+						},
+					}
+				}
+			])
+		]
+	}, function created({ Web, Webpack, datahubs }) {
+		app.server = Web.Server('app', 'http', Web.Application.Demo());
+		const sdlc = Webpack('app.sdlc');
+
+		console.log(sdlc, 1, 2, 3)
 	});
 
 	return app;

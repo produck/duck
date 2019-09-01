@@ -3,14 +3,13 @@
 const EventEmitter = require('events');
 const normalize = require('./src/normalize');
 const meta = require('./package.json');
+const Injection = require('./src/injection');
 
-function Product(options) {
+function Product(options, created = () => {}) {
 	options = normalize(options);
 
 	const product = new EventEmitter();
-	const injection = { product };
-
-	injection.injection = injection;
+	const injection = Injection({ product });
 
 	Object.defineProperty(product, 'meta', {
 		get() {
@@ -22,11 +21,6 @@ function Product(options) {
 			};
 		}
 	});
-
-	/**
-	 * Use to mixin other customized injection object.
-	 */
-	options.beforeCreate(injection);
 
 	const components = {
 		metas: {},
@@ -85,13 +79,13 @@ function Product(options) {
 	/**
 	 * Allow to access all injection for final assembling.
 	 */
-	options.created(injection);
+	created(injection);
 
 	return product;
 }
 
 Product.Web = require('./src/components/Web');
-Product.Webpack = require('./src/components/webpack');
-Product.Datahub = require('./src/components/datahub');
+Product.Webpack = require('./src/components/Webpack');
+Product.Datahub = require('./src/components/Datahub');
 
 module.exports = Product;

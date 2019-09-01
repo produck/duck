@@ -1,6 +1,12 @@
 'use strict';
 
-function ComponentDatahub(options) {
+const normalize = require('./normalize');
+
+function ComponentDatahub(datahubOptions) {
+	const Datahub = require('@or-change/data-hub');
+
+	datahubOptions = normalize(datahubOptions);
+
 	const datahubs = {};
 
 	return {
@@ -8,10 +14,24 @@ function ComponentDatahub(options) {
 		name: 'Datahub',
 		description: 'Database middle layout.',
 		install(injection) {
-			injection.Datahub = new Proxy();
-		},
-		created(injection) {
-
+			datahubOptions.forEach(options => {
+				const models = {};
+		
+				for (const symbol in options.models) {
+					const modelOptions = options.models[symbol](injection);
+		
+					modelOptions.symbol = symbol;
+					models[symbol] = modelOptions;
+				}
+		
+				datahubs[options.alias] = Datahub.create({
+					id: options.id,
+					models
+				});
+			});
+			
+			injection.datahubs = datahubs;
+			Object.freeze(datahubs);
 		}
 	};
 }
