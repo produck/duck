@@ -1,6 +1,9 @@
 {
 	"type": "object",
 	"additionalProperty": false,
+	"required": [
+		"id"
+	],
 	"properties": {
 		"id": {
 			"type": "string"
@@ -17,6 +20,9 @@
 		"description": {
 			"type": "string"
 		},
+		"injection": {
+			"type": "object"
+		},
 		"components": {
 			"type": "array",
 			"items": {
@@ -25,7 +31,6 @@
 				"requied": [
 					"id",
 					"name",
-					"version",
 					"install"
 				],
 				"properties": {
@@ -42,6 +47,9 @@
 						"instanceof": "Function"
 					},
 					"created": {
+						"instanceof": "Function"
+					},
+					"getDetails": {
 						"instanceof": "Function"
 					}
 				}

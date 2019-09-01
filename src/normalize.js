@@ -1,19 +1,35 @@
 'use strict';
 
-function NOOP() {}
+const Ajv = require('ajv');
+const AjvKeywords = require('ajv-keywords');
+const schema = require('./schema.json');
 
-function validate() {
-	return true;
-}
+const ajv = new Ajv({
+	allErrors: true,
+	verbose: true,
+});
 
-module.exports = function normalizeProductOptions(options = {}) {
-	validate(options);
+AjvKeywords(ajv, ['instanceof']);
+
+const validate = ajv.compile(schema);
+
+module.exports = function normalizeProductOptions(options) {
+	const valid = validate(options);
+
+	if (!valid) {
+		validate.errors.forEach(error => {
+			console.error(error);
+		});
+
+		throw new Error(JSON.stringify(validate.errors, null, '  '));
+	}
 
 	const finalOptions = {
 		name: 'Default Product Name',
 		namespace: '',
 		version: '0.0.0',
-		description: 'Default product descrition',
+		description: 'No descrition',
+		injection: {},
 		components: []
 	};
 
@@ -22,6 +38,7 @@ module.exports = function normalizeProductOptions(options = {}) {
 		namespace: _namespace = finalOptions.namespace,
 		version: _version = finalOptions.version,
 		description: _description = finalOptions.description,
+		injection: _injection = finalOptions.injection,
 		components: _components = finalOptions.components
 	} = options;
 
@@ -29,19 +46,17 @@ module.exports = function normalizeProductOptions(options = {}) {
 	finalOptions.namespace = _namespace;
 	finalOptions.version = _version;
 	finalOptions.description = _description;
+	finalOptions.injection = _injection;
 	finalOptions.components = _components.map(options => {
 		const finalOptions = {
 			description: 'No description',
-			created: NOOP,
-			getDetails() {
-				return null;
-			}
+			created: () => {},
+			getDetails: () => null
 		};
 
 		const {
 			id: _id,
 			name: _name,
-			version: _version,
 			install: _install,
 			created: _created = finalOptions.created,
 			description: _description = finalOptions.description,
@@ -50,7 +65,6 @@ module.exports = function normalizeProductOptions(options = {}) {
 
 		finalOptions.id = _id;
 		finalOptions.name = _name;
-		finalOptions.version = _version;
 		finalOptions.install = _install;
 		finalOptions.description = _description;
 		finalOptions.created = _created;

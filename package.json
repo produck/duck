@@ -1,7 +1,7 @@
 {
   "name": "@or-change/duck",
   "version": "0.1.0",
-  "description": "",
+  "description": "Duck is an extensible, lightweight, flexible, progressive software development frameworks for building software product.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/or-change/production.git"
   },
-  "keywords": [],
+  "keywords": [
+    "product",
+    "framework",
+    "web",
+    "app",
+    "spring",
+    "injection",
+    "component"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {

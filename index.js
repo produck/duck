@@ -5,23 +5,45 @@ const normalize = require('./src/normalize');
 const meta = require('./package.json');
 const Injection = require('./src/injection');
 
-function Product(options, created = () => {}) {
+function Product(options, callback = () => {}) {
 	options = normalize(options);
 
-	const product = new EventEmitter();
-	const injection = Injection({ product });
+	const product = Object.defineProperties(new EventEmitter(), {
+		meta: {
+			get() {
+				return {
+					name: options.name,
+					namespace: options.namespace,
+					version: options.version,
+					description: options.description
+				};
+			}
+		},
+		components: {
+			get() {
+				return Object.keys(components.metas).map(id => {
+					const meta = components.metas[id];
 
-	Object.defineProperty(product, 'meta', {
-		get() {
-			return {
-				name: options.name,
-				namespace: options.namespace,
-				version: options.version,
-				description: options.description
-			};
+					return {
+						id: meta.id,
+						name: meta.name,
+						description: meta.description,
+						details: meta.getDetails()
+					};
+				});
+			}
+		},
+		duck: {
+			get() {
+				return {
+					version: meta.version,
+					peerDependencies: meta.peerDependencies
+				};
+			}
 		}
 	});
 
+	const injection = Injection(Object.assign({ product }, options.injection));
 	const components = {
 		metas: {},
 		installerList: [],
@@ -54,32 +76,12 @@ function Product(options, created = () => {}) {
 
 	components.installerList.forEach(install => install(injection));
 	Object.freeze(injection);
-	Object.defineProperty(product, 'components', {
-		get() {
-			return {
-				duck: {
-					version: meta.version,
-					peerDependencies: meta.peerDependencies
-				},
-				components: Object.keys(components.metas).map(id => {
-					const meta = components.metas[id];
-
-					return {
-						id: meta.id,
-						name: meta.name,
-						description: meta.description,
-						details: meta.getDetails()
-					};
-				})
-			};
-		}
-	});
 	components.createdList.forEach(fn => fn(injection));
 
 	/**
 	 * Allow to access all injection for final assembling.
 	 */
-	created(injection);
+	callback(injection);
 
 	return product;
 }

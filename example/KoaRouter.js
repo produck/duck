@@ -65,6 +65,7 @@ function KoaApp() {
 	const app = {};
 
 	Duck({
+		id: 'com.orchange.duck.demo',
 		components: [
 			Duck.Web([
 				{
