@@ -12,6 +12,7 @@ function Product(options, callback = () => {}) {
 		meta: {
 			get() {
 				return {
+					id: options.id,
 					name: options.name,
 					namespace: options.namespace,
 					version: options.version,

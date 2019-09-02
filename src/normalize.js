@@ -34,6 +34,7 @@ module.exports = function normalizeProductOptions(options) {
 	};
 
 	const {
+		id: _id,
 		name: _name = finalOptions.name,
 		namespace: _namespace = finalOptions.namespace,
 		version: _version = finalOptions.version,
@@ -42,6 +43,7 @@ module.exports = function normalizeProductOptions(options) {
 		components: _components = finalOptions.components
 	} = options;
 
+	finalOptions.id = _id;
 	finalOptions.name = _name;
 	finalOptions.namespace = _namespace;
 	finalOptions.version = _version;

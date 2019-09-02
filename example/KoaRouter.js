@@ -77,7 +77,7 @@ function KoaApp() {
 				id: 'private.luo.test.panda',
 				name: 'TeacherLuo',
 				description: 'shishi',
-				install(injection) {},
+				install() {},
 			},
 			Duck.Webpack({
 				'app.sdlc'(injection, ...args) {
@@ -126,11 +126,11 @@ function KoaApp() {
 				}
 			])
 		]
-	}, function created({ Web, Webpack, datahubs }) {
+	}, function created({ Web, Webpack }) {
 		app.server = Web.Server('app', 'http', Web.Application.Demo());
 		const sdlc = Webpack('app.sdlc');
 
-		console.log(sdlc, 1, 2, 3)
+		console.log(sdlc, 1, 2, 3);
 	});
 
 	return app;

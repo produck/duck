@@ -57,16 +57,17 @@ console.log(simple.getComponents());
 
 - [Duck](#duck)
   * [Duck(options[, callback])](#duck-factory)
-  * [options](#duck-factory-options)
-  * [callback](#duck-factory-callback)
+    * [options](#duck-factory-options)
+    * [callback](#duck-factory-callback)
   * [Lifecycle](#duck-lifecycle)
-- [Components](#components)
-  * [Instance](#component-instance)
-  * [Native Components](#native-components)
-- [Injection](#injection)
-  * [Instance](#injection)
-  * [Inline Dependences](#inline-dependences)
+- [Components](#duck-component)
+  * [Instance](#duck-component-instance)
+  * [Native Components](#duck-component-native)
+- [Injection](#duck-injection)
+  * [Instance](#duck-injection-instance)
+  * [Inline Dependences](#duck-injection-instance)
 
+<a id="duck"></a>
 ## Duck
 
 A duck instance is just an ``EventEmitter`` instance without any preset event. Everyone can emit necessary event by ``injection.product``.
@@ -78,6 +79,7 @@ A duck instance is just an ``EventEmitter`` instance without any preset event. E
 
 ``options`` is an object. ``callback`` is a function. Return a product instance. The product instance is extended from ``EventEmitter``. 
 
+<a id="duck-factory-options"></a>
 ### Options
 
 | **Property** | **Type**  | **Default value**       | **Description**              |
@@ -90,6 +92,9 @@ A duck instance is just an ``EventEmitter`` instance without any preset event. E
 | injection    | Object    | {}                      | Initial dependences          |
 | components   | Array     | []                      | Product components list      |
 
+[RECOMMANDED] Some dependencies just for current product can be injected into by ``options.injection`` to avoid defining components [(see components)](#duck-components). Because dependencies from components is universal and reusable across products.
+
+<a id="duck-factory-callback"></a>
 ### Callback
 
 Only one formal parameter could be accessed is ``injection``. [RECOMMANDED] Using object destructuring assignment syntax to access dependencies of injection can make the code more clear. There is no meaningful context here (``this === null``). Arrow function is also accepted here if you like.
@@ -144,17 +149,60 @@ function MyProductB() {
 }
 ```
 
+<a id="duck-lifecycle"></a>
 ### Lifecycle
 
 | init | components install | product dependence | components created | callback |
 
+<a id="duck-product-dependence"></a>
 ### Product dependence
 
-When 
+A ``product`` dependence will be injected into injection after components have been installed. The ``project`` provides ``meta``, ``components`` and ``duck`` getters to reflect the final abstract of the duck instance.
 
-## Components
+Use project dependence,
 
-Component is use to append some runtime dependences into injection. Each component instance MUST include 3 items to describe the features & meta of itself. They are ``id``, ``name``, ``install``. 
+```js
+const Duck = require('../');
+
+Duck({
+  id: 'com.xxx.yy.zz',
+}, ({ project }) => {
+  console.log(project.meta);
+  console.log(project.components);
+  console.log(project.duck);
+});
+```
+
+``project.meta`` returns a new plain object every time. Pproperties,
+
+| **Property** | **Type**  | **Example Value**       | **Description**              |
+| ------------ | --------- | ----------------------- | ---------------------------- |
+| id           | String    | 'com.xx.yy.zz'          | options.id                   |
+| name         | String    | 'Default Product Name'  | options.name                 |
+| namespace    | String    | ''                      | options.namespace            |
+| version      | String    | '0.0.0'                 | options.version              |
+| description  | String    | 'No descrition'         | options.description          |
+
+``project.components`` returns a new array about used components. Each element properties,
+
+| **Property** | **Type**  | **Example Value**       | **Description**              |
+| ------------ | --------- | ----------------------- | ---------------------------- |
+| id           | String    | 'com.xx.yy.zz'          | ``component.id``             |
+| name         | String    | 'Component Name'        | ``component.name``           |
+| description  | String    | 'No descrition'         | ``component.description``    |
+| details      | any       | null                    | ``component.getDetails()``   |
+
+``project.duck`` returns a new plain object about duck. Properties,
+
+| **Property**     | **Type**  | **Example Value**       | **Description**              |
+| ---------------- | --------- | ----------------------- | ---------------------------- |
+| version          | String    | '0.0.0'                 | duck version                 |
+| peerDependencies | object    | {}                      | duck peerDependencies        |
+
+<a id="duck-component"></a>
+## Component
+
+``Component`` is use to append some runtime dependencies into injection. Each component instance MUST include 3 items to describe the features & meta of itself. They are ``id``, ``name``, ``install``. 
 
 In addition, ``component.description`` is a string for describing what the component is. ``component.created`` a hook function will be called after the duck has been created.
 
@@ -162,6 +210,7 @@ In addition, ``component.description`` is a string for describing what the compo
 
 Althought accessing when ``component.install`` is ok, it means "Component_A depends Component_B" that cause coulping between components. Developers can still handle these problems with care and "Put Component_A before Component_B" to ensure Component_B can use Component_A in install.
 
+<a id="duck-component-instance"></a>
 ### Instance
 
 Properties Table
@@ -241,6 +290,7 @@ Duck({
 */
 ```
 
+<a id="duck-component-native"></a>
 ### Native Components
 
 * [Web](/src/components/Web/README.md) - How to build a web application product?
@@ -251,23 +301,24 @@ Duck({
 * HttpMitm //TODO Manage a mitm server instance.
 * Sequenlize //TODO Provide sequenlize instance to everywhere.
 
+<a id="duck-injection"></a>
 ## Injection
 
-Injection is the core function to manage dependencies regularly. Dependencies could be in any form.
+Injection is the core function to manage dependencies regularly. Dependencies could be in any form. After ``product dependence`` injection will be freezed [(see lifecycle)](#duck-lifecycle). Setting new dependence will become invalid.
 
+<a id="duck-injection-instance"></a>
 ### Instance
 
+An injection is use to set, get, transmit and manage dependencies to everywhere in a product. Each duck instance will create only one injection for itself. 
 
+About injection, some facts MUST be known,
 
-### Inline Dependences
-
-``injection.injection`` & ``injection.Injection``.
-
-# Misc
-
-## peerDependences
-
-## AJV
+* Cannot get a dependence NOT existed.
+* Cannot set a new dependence override a existed.
+* The injection of a duck will be freezen after duck created.
+* Inline Dependences - There are 2 dependencies on injection when created.
+  * ``injection.injection`` reference itself for convenience.
+  * ``injection.Injection`` used for components created an isolateing injection to manage local dependencies.
 
 # License
 
