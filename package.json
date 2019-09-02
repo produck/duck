@@ -29,13 +29,13 @@
     "@koa/router": "^8.0.0",
     "@lemonce3/mitm": "^0.7.1",
     "@or-change/data-hub": "^0.1.4",
-    "electron": "^6.0.5",
+    "electron": "^6.0.7",
     "http-cas-client": "^0.4.1",
     "koa": "^2.8.1",
     "koa-session": "^5.12.3",
     "mocha": "^6.2.0",
-    "webpack": "^4.39.2",
-    "webpack-merge": "^4.2.1"
+    "webpack": "^4.39.3",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "ajv": "^6.10.2",

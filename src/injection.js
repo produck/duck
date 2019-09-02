@@ -1,17 +1,13 @@
 'use strict';
 
-function Injection(initObject) {
-	const injection = Object.assign({ Injection }, initObject);
-	const registered = {
-		then: true,
-		inspect: true
-	};
+function Injection(initObject = {}) {
+	if (typeof initObject !== 'object') {
+		throw new TypeError('`initObject` MUST be an object.');
+	}
 
-	injection.injection = injection;
-	
-	Object.keys(injection).forEach(key => registered[key] = true);
-
-	return new Proxy(injection, {
+	const internalInjection = Object.assign({ Injection }, initObject);
+	const registered = { then: true, inspect: true };
+	const injection = new Proxy(internalInjection, {
 		get(target, key, receiver) {
 			if (typeof key !== 'symbol' && !registered[key]) {
 				throw new Error(`The dependence named '${String(key)}' is NOT defined.`);
@@ -33,6 +29,11 @@ function Injection(initObject) {
 			return Reflect.set(target, key, value, receiver);
 		}
 	});
+
+	internalInjection.injection = injection;
+	Object.keys(internalInjection).forEach(key => registered[key] = true);
+
+	return injection;
 }
 
 module.exports = Injection;
