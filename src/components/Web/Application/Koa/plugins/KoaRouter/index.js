@@ -3,7 +3,20 @@
 const normalize = require('./normalize');
 
 module.exports = function KoaRouterPlugin(originalOptions) {
-	const KoaRouter = require('@koa/router');
+	const KoaRouterMouduleName = ['koa-router', '@koa/router'].find(moduleName => {
+		try {
+			require.resolve(moduleName);
+			return true;
+		} catch(error) {
+			return false;
+		}
+	});
+
+	if (!KoaRouterMouduleName) {
+		throw new Error('Cannot find module \'koa-router\' or \'@koa/router\'.');
+	}
+
+	const KoaRouter = require(KoaRouterMouduleName);
 	const options = normalize(originalOptions);
 
 	return function install(injection, context) {

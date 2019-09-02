@@ -64,8 +64,6 @@ console.log(simple.getComponents());
   * [Instance](#duck-component-instance)
   * [Native Components](#duck-component-native)
 - [Injection](#duck-injection)
-  * [Instance](#duck-injection-instance)
-  * [Inline Dependences](#duck-injection-instance)
 
 <a id="duck"></a>
 ## Duck
@@ -152,7 +150,26 @@ function MyProductB() {
 <a id="duck-lifecycle"></a>
 ### Lifecycle
 
-| init | components install | product dependence | components created | callback |
+1. Initialization
+  * Normalizing options
+  * Preparing product instance
+  * Creating injection instance with ``options.injection``
+
+2. Installing components
+  * Collecting all component configuration items
+  * **Invoking all installers** of components
+  * Setting dependencies or accessing dependencies unsafely
+
+3. Preset product dependence
+  * Setting product instance into injection as a dependence
+  * Then freezing injection
+
+4. Components created
+  * **Invoking all created hooks** of components
+  * Accessing dependencies safely but can NOT changing injection any more
+
+5. Invoking callback
+  * Invoking callback function if defined
 
 <a id="duck-product-dependence"></a>
 ### Product dependence
