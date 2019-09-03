@@ -8,7 +8,7 @@ function ComponentDatahub(datahubOptions) {
 	datahubOptions = normalize(datahubOptions);
 
 	const context = {};
-	const datahubs = {};
+	const Linkers = {};
 
 	return {
 		id: 'com.oc.duck.datahub',
@@ -16,25 +16,35 @@ function ComponentDatahub(datahubOptions) {
 		description: 'Database middle layout.',
 		install(injection) {
 			datahubOptions.forEach(options => {
-				const models = {};
-		
-				for (const symbol in options.models) {
-					const modelOptions = options.models[symbol](injection, context);
-		
-					modelOptions.symbol = symbol;
-					models[symbol] = modelOptions;
-				}
-		
-				datahubs[options.id] = Datahub.create({
-					id: options.id,
-					models
-				});
-			});
+				Linkers[options.id] = function DatahubLinker(adaptor) {
+					const models = {};
 			
-			injection.Datahub = function getDatahub(id) {
-				return datahubs[id];	
+					for (const symbol in options.models) {
+						const modelOptions = options.models[symbol](adaptor, injection, context);
+			
+						modelOptions.symbol = symbol;
+						models[symbol] = modelOptions;
+					}
+			
+					return Datahub.create({
+						id: options.id,
+						models
+					});
+				};
+			});
+
+			injection.Datahub = function link(id, adaptor) {
+				const Linker = Linkers[id];
+
+				if (!Linker) {
+					throw new Error(`Datahub id='${id}' is NOT defined.`);
+				}
+
+				return Linkers[id](adaptor);
 			};
-			Object.freeze(datahubs);
+
+			Object.freeze(Linkers);
+			Object.freeze(context);
 		}
 	};
 }

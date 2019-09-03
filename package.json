@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Duck is an extensible, lightweight, flexible, progressive software development frameworks for building software product.",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/or-change/production#readme",
   "devDependencies": {
-    "@koa/router": "^8.0.0",
+    "@koa/router": "^8.0.1",
     "@lemonce3/mitm": "^0.7.1",
     "@or-change/data-hub": "^0.1.4",
     "electron": "^6.0.7",
