@@ -76,6 +76,7 @@ function Product(options, callback = () => {}) {
 	});
 
 	components.installerList.forEach(install => install(injection));
+	options.installed(injection);
 	Object.freeze(injection);
 	components.createdList.forEach(fn => fn(injection));
 

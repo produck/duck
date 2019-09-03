@@ -5,14 +5,10 @@
 		"additionalProperties": false,
 		"required": [
 			"id",
-			"alias",
 			"models"
 		],
 		"properties": {
 			"id": {
-				"type": "string"
-			},
-			"alias": {
 				"type": "string"
 			},
 			"models": {

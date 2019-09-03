@@ -7,6 +7,7 @@ function ComponentDatahub(datahubOptions) {
 
 	datahubOptions = normalize(datahubOptions);
 
+	const context = {};
 	const datahubs = {};
 
 	return {
@@ -18,19 +19,21 @@ function ComponentDatahub(datahubOptions) {
 				const models = {};
 		
 				for (const symbol in options.models) {
-					const modelOptions = options.models[symbol](injection);
+					const modelOptions = options.models[symbol](injection, context);
 		
 					modelOptions.symbol = symbol;
 					models[symbol] = modelOptions;
 				}
 		
-				datahubs[options.alias] = Datahub.create({
+				datahubs[options.id] = Datahub.create({
 					id: options.id,
 					models
 				});
 			});
 			
-			injection.datahubs = datahubs;
+			injection.Datahub = function getDatahub(id) {
+				return datahubs[id];	
+			};
 			Object.freeze(datahubs);
 		}
 	};

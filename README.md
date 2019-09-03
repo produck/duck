@@ -87,10 +87,13 @@ A duck instance is just an ``EventEmitter`` instance without any preset event. E
 | namespace    | String    | ''                      | Namespace component may use  |
 | version      | String    | '0.0.0'                 | Current version              |
 | description  | String    | 'No descrition'         | What am I?                   |
+| installed    | Object    | () => {}                | Invoking after components    |
 | injection    | Object    | {}                      | Initial dependences          |
 | components   | Array     | []                      | Product components list      |
 
-[RECOMMANDED] Some dependencies just for current product can be injected into by ``options.injection`` to avoid defining components [(see components)](#duck-components). Because dependencies from components is universal and reusable across products.
+[RECOMMANDED] Some dependencies just for current product can be injected into by ``options.injection`` to avoid defining components [(see components)](#duck-component). Because dependencies from components is universal and reusable across products.
+
+[RECOMMANDED] In hook ``options.installed``, some direct dependencies using component dependencies could be created and injected into injection. In other words, injection could still be changed here and then to be non-extensible.
 
 <a id="duck-factory-callback"></a>
 ### Callback
@@ -155,6 +158,8 @@ function MyProductB() {
   * Preparing product instance
   * Creating injection instance with ``options.injection``
 
+> Mixin ``options.injection``
+
 2. Installing components
   * Collecting all component configuration items
   * **Invoking all installers** of components
@@ -164,12 +169,17 @@ function MyProductB() {
   * Setting product instance into injection as a dependence
   * Then freezing injection
 
+> Invoking ``options.installed(injection)``
+
 4. Components created
   * **Invoking all created hooks** of components
   * Accessing dependencies safely but can NOT changing injection any more
 
-5. Invoking callback
-  * Invoking callback function if defined
+<!-- 
+5. Freezing injection
+  * Making injection non-extensible -->
+
+> Invoking ``callback(injection)``
 
 <a id="duck-product-dependence"></a>
 ### Product dependence
@@ -223,7 +233,9 @@ Duck({
 
 In addition, ``component.description`` is a string for describing what the component is. ``component.created`` a hook function will be called after the duck has been created.
 
-[RECOMMENDED] Appending dependence only in ``component.install``. Accessing dependence only after duck instance created, like in ``component.created`` and Duck(options[, ``callback``]). 
+[RECOMMENDED] Appending dependence only in ``component.install``. Accessing dependence only after duck instance created, like in ``component.created`` and Duck(options[, ``callback``]).
+
+[NOTICE] Defining a component means that there are some widespread jobs need to be decoupled. Just use ``options.injection`` if there is no special need for flexibility.
 
 Althought accessing when ``component.install`` is ok, it means "Component_A depends Component_B" that cause coulping between components. Developers can still handle these problems with care and "Put Component_A before Component_B" to ensure Component_B can use Component_A in install.
 

@@ -30,6 +30,7 @@ module.exports = function normalizeProductOptions(options) {
 		version: '0.0.0',
 		description: 'No descrition',
 		injection: {},
+		installed: () => {},
 		components: []
 	};
 
@@ -40,6 +41,7 @@ module.exports = function normalizeProductOptions(options) {
 		version: _version = finalOptions.version,
 		description: _description = finalOptions.description,
 		injection: _injection = finalOptions.injection,
+		installed: _installed = finalOptions.installed,
 		components: _components = finalOptions.components
 	} = options;
 
@@ -49,6 +51,7 @@ module.exports = function normalizeProductOptions(options) {
 	finalOptions.version = _version;
 	finalOptions.description = _description;
 	finalOptions.injection = _injection;
+	finalOptions.installed = _installed;
 	finalOptions.components = _components.map(options => {
 		const finalOptions = {
 			description: 'No description',

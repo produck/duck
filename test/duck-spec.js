@@ -19,12 +19,80 @@ describe('Duck::', function () {
 			});
 		});
 
+		it('should throw error if use dumplicated components.', function () {
+			assert.throws(() => {
+				Duck({
+					id: 'com.orchange.duck.test',
+					components: [
+						{
+							id: 'com.orchange.duck.test',
+							name: 'TestComponent',
+							description: 'test',
+							install() {},
+						},
+						{
+							id: 'com.orchange.duck.test',
+							name: 'TestComponent',
+							description: 'test',
+							install() {},
+						}
+					]
+				});
+			}, {
+				message: 'Dumplicated product component \'com.orchange.duck.test\' defined.'
+			});
+		});
+
 		describe('callback::', function () {
 			it('should access product.meta to get id.', function (done) {
 				Duck({
 					id: 'com.orchange.duck.test',
 				}, ({ product }) => {
 					assert.equal(product.meta.id, 'com.orchange.duck.test');
+					done();
+				});
+			});
+
+			it('should NOT append new dependence in callback.', function (done) {
+				Duck({
+					id: 'com.orchange.duck.test',
+				}, ({ injection }) => {
+					assert.throws(() => {
+						injection.test = {};
+					});
+					done();
+				});
+			});
+		});
+	});
+
+	describe('hooks::', function () {
+		describe('installed::', function () {
+			it('should be called correctly.', function (done) {
+				Duck({
+					id: 'com.orchange.duck.test',
+					injection: {
+						test: true
+					},
+					installed({ test }) {
+						assert.strictEqual(test, true);
+						done();
+					}
+				});
+			});
+
+			it('should can append new dependence in options.installed.', function (done) {
+				Duck({
+					id: 'com.orchange.duck.test',
+					injection: {
+						test: true
+					},
+					installed({ injection }) {
+						injection.newone = {};
+					}
+				}, ({ test, newone }) => {
+					assert.strictEqual(test, true);
+					assert.deepEqual(newone, {});
 					done();
 				});
 			});

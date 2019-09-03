@@ -23,6 +23,9 @@
 		"injection": {
 			"type": "object"
 		},
+		"installed": {
+			"instanceof": "Function"
+		},
 		"components": {
 			"type": "array",
 			"items": {
