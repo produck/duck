@@ -1,0 +1,25 @@
+{
+	"type": "array",
+	"items": {
+		"type": "object",
+		"additionalProperties": false,
+		"required": [
+			"id",
+			"models"
+		],
+		"properties": {
+			"id": {
+				"type": "string"
+			},
+			"models": {
+				"type": "object",
+				"additionalProperties": false,
+				"patternProperties": {
+					"^[A-Z][A-Za-z0-9]*$": {
+						"instanceof": "Function"
+					}
+				}
+			}
+		}
+	}
+}

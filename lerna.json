@@ -1,0 +1,11 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "command": {
+    "run": {
+      "npmClient": "npm"
+    }
+  },
+  "version": "independent"
+}

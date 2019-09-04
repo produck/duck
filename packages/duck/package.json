@@ -1,0 +1,47 @@
+{
+  "name": "@or-change/duck",
+  "version": "0.2.0",
+  "description": "Duck is an extensible, lightweight, flexible, progressive software development frameworks for building software product.",
+  "keywords": [
+    "product",
+    "framework",
+    "web",
+    "app",
+    "spring",
+    "injection",
+    "component"
+  ],
+  "author": "ChaosLee <lichao@or-change.cn>",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "src",
+    "test": "test"
+  },
+  "files": [
+    "src",
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/or-change/duck.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "bugs": {
+    "url": "https://github.com/or-change/duck/issues"
+  },
+  "dependencies": {
+    "ajv": "^6.10.2",
+    "ajv-keywords": "^3.4.1",
+    "debug": "^4.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  },
+  "homepage": "https://github.com/or-change/duck#readme"
+}

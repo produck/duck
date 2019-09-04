@@ -1,0 +1,38 @@
+{
+  "name": "@or-change/duck-electron",
+  "version": "0.1.0",
+  "description": "Development for electron application in duck to get other runtime dependencies.",
+  "author": "ChaosLee <lichao@or-change.cn>",
+  "homepage": "https://github.com/or-change/duck#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "lib": "src",
+    "test": "test"
+  },
+  "files": [
+    "/src",
+    "/index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/or-change/duck.git"
+  },
+  "scripts": {},
+  "bugs": {
+    "url": "https://github.com/or-change/duck/issues"
+  },
+  "devDependencies": {
+    "electron": "^6.0.7",
+    "mocha": "^6.2.0"
+  },
+  "peerDependencies": {
+    "electron": ">= 5"
+  },
+  "dependencies": {
+    "@or-change/duck": "^0.2.0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@or-change/duck-webpack",
+  "version": "0.1.0",
+  "description": "Webpack config factory manager for duck.",
+  "author": "lichaozhy <lichao@or-change.cn>",
+  "homepage": "https://github.com/or-change/duck#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "test": "test"
+  },
+  "files": [
+    "src",
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/or-change/duck.git"
+  },
+  "scripts": {
+  },
+  "bugs": {
+    "url": "https://github.com/or-change/duck/issues"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  },
+  "dependencies": {
+    "@or-change/duck": "^0.2.0"
+  }
+}

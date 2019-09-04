@@ -1,0 +1,46 @@
+{
+  "name": "@or-change/duck-datahub",
+  "version": "0.1.0",
+  "description": "In duck to use datahub can get a more easier coding experience in ORM like realms.",
+  "keywords": [
+    "duck",
+    "database",
+    "middleware",
+    "orm"
+  ],
+  "author": "ChaosLee <lichao@or-change.cn>",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "test": "mocha"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/or-change/duck.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "bugs": {
+    "url": "https://github.com/or-change/duck/issues"
+  },
+  "homepage": "https://github.com/or-change/duck#readme",
+  "devDependencies": {
+    "@or-change/data-hub": "^0.1.4",
+    "cross-env": "^5.2.1",
+    "mocha": "^6.2.0"
+  },
+  "peerDependencies": {
+    "@or-change/data-hub": ">= 0.1.4"
+  },
+  "dependencies": {
+    "@or-change/duck": "^0.2.0"
+  }
+}

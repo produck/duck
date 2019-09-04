@@ -1,0 +1,62 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"id"
+	],
+	"properties": {
+		"id": {
+			"type": "string"
+		},
+		"name": {
+			"type": "string"
+		},
+		"namespace": {
+			"type": "string"
+		},
+		"version": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"injection": {
+			"type": "object"
+		},
+		"installed": {
+			"instanceof": "Function"
+		},
+		"components": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperty": false,
+				"requied": [
+					"id",
+					"name",
+					"install"
+				],
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"install": {
+						"instanceof": "Function"
+					},
+					"created": {
+						"instanceof": "Function"
+					},
+					"getDetails": {
+						"instanceof": "Function"
+					}
+				}
+			}
+		}
+	}
+}
