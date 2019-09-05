@@ -1,18 +1,17 @@
 {
-  "name": "@or-change/duck-web",
-  "version": "0.1.0",
+  "name": "@or-change/duck-web-koa-validator",
+  "version": "1.0.0",
   "description": "> TODO: description",
-  "author": "ChaosLee <lichao@or-change.cn>",
+  "author": "lichaozhy <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
-  "license": "MIT",
-  "main": "index.js",
+  "license": "ISC",
+  "main": "lib/duck-web-koa-validator.js",
   "directories": {
-    "src": "src",
-    "test": "test"
+    "lib": "lib",
+    "test": "__tests__"
   },
   "files": [
-    "/src",
-    "/index.js"
+    "lib"
   ],
   "publishConfig": {
     "access": "public"
@@ -21,15 +20,18 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
     "@or-change/duck": "^0.3.0",
+    "@or-change/duck-web-koa": "^0.1.0",
+    "@or-change/duck-web-koa-router": "^0.1.0",
     "mocha": "^6.2.0"
   },
   "dependencies": {
-    "@or-change/duck": "^0.3.0"
+    "ajv": "^6.10.2"
   }
 }

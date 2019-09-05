@@ -26,6 +26,7 @@
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
+    "@or-change/duck": "^0.3.0",
     "electron": "^6.0.7",
     "mocha": "^6.2.0"
   },
@@ -33,6 +34,6 @@
     "electron": ">= 5"
   },
   "dependencies": {
-    "@or-change/duck": "^0.2.0"
+    "@or-change/duck": "^0.3.0"
   }
 }

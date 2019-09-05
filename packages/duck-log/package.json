@@ -21,15 +21,15 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "dependencies": {
-    "@or-change/duck": "^0.2.0"
+    "@or-change/duck": "^0.3.0"
   },
   "devDependencies": {
+    "@or-change/duck": "^0.3.0",
     "mocha": "^6.2.0"
   }
 }

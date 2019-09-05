@@ -1,62 +1,66 @@
 'use strict';
 
 const Normalizer = require('./Normalizer');
+const Validator = require('./Validator');
 const schema = require('./OptionsSchema.json');
 
-module.exports = Normalizer(schema, (options) => {
-	const finalOptions = {
-		name: 'Default Product Name',
-		namespace: '',
-		version: '0.0.0',
-		description: 'No descrition',
-		injection: {},
-		installed: () => {},
-		components: []
-	};
-
-	const {
-		id: _id,
-		name: _name = finalOptions.name,
-		namespace: _namespace = finalOptions.namespace,
-		version: _version = finalOptions.version,
-		description: _description = finalOptions.description,
-		injection: _injection = finalOptions.injection,
-		installed: _installed = finalOptions.installed,
-		components: _components = finalOptions.components
-	} = options;
-
-	finalOptions.id = _id;
-	finalOptions.name = _name;
-	finalOptions.namespace = _namespace;
-	finalOptions.version = _version;
-	finalOptions.description = _description;
-	finalOptions.injection = _injection;
-	finalOptions.installed = _installed;
-	finalOptions.components = _components.map(options => {
+module.exports = Normalizer({
+	defaults: {},
+	handler: options => {
 		const finalOptions = {
-			description: 'No description',
-			created: () => {},
-			getDetails: () => null
+			name: 'Default Product Name',
+			namespace: '',
+			version: '0.0.0',
+			description: 'No descrition',
+			injection: {},
+			installed: () => {},
+			components: []
 		};
 
 		const {
 			id: _id,
-			name: _name,
-			install: _install,
-			created: _created = finalOptions.created,
+			name: _name = finalOptions.name,
+			namespace: _namespace = finalOptions.namespace,
+			version: _version = finalOptions.version,
 			description: _description = finalOptions.description,
-			getDetails: _getDetails = finalOptions.getDetails
+			injection: _injection = finalOptions.injection,
+			installed: _installed = finalOptions.installed,
+			components: _components = finalOptions.components
 		} = options;
 
 		finalOptions.id = _id;
 		finalOptions.name = _name;
-		finalOptions.install = _install;
+		finalOptions.namespace = _namespace;
+		finalOptions.version = _version;
 		finalOptions.description = _description;
-		finalOptions.created = _created;
-		finalOptions.getDetails = _getDetails;
+		finalOptions.injection = _injection;
+		finalOptions.installed = _installed;
+		finalOptions.components = _components.map(options => {
+			const finalOptions = {
+				description: 'No description',
+				created: () => {},
+				getDetails: () => null
+			};
+
+			const {
+				id: _id,
+				name: _name,
+				install: _install,
+				created: _created = finalOptions.created,
+				description: _description = finalOptions.description,
+				getDetails: _getDetails = finalOptions.getDetails
+			} = options;
+
+			finalOptions.id = _id;
+			finalOptions.name = _name;
+			finalOptions.install = _install;
+			finalOptions.description = _description;
+			finalOptions.created = _created;
+			finalOptions.getDetails = _getDetails;
+
+			return finalOptions;
+		});
 
 		return finalOptions;
-	});
-
-	return finalOptions;
-});
+	}
+}, Validator(schema));

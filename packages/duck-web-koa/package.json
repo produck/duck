@@ -27,11 +27,12 @@
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
+    "@or-change/duck": "^0.3.0",
     "koa": "^2.8.1",
     "mocha": "^6.2.0"
   },
   "dependencies": {
-    "@or-change/duck": "^0.2.0"
+    "@or-change/duck": "^0.3.0"
   },
   "peerDependencies": {
     "koa": ">= 2.7.0 < 3"

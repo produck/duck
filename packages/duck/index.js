@@ -5,12 +5,14 @@ const debug = require('debug')('duck:factory');
 
 const Normalizer = require('./src/Normalizer');
 const Injection = require('./src/Injection');
+const Validator = require('./src/Validator');
 const normalize = require('./src/normalizeOptions');
 
 const meta = require('./package.json');
 
 Product.Normalizer = Normalizer;
 Product.Injection = Injection;
+Product.Validator = Validator;
 module.exports = Product;
 
 function Product(options, callback = () => {}) {
@@ -55,7 +57,8 @@ function Product(options, callback = () => {}) {
 	});
 
 	const injection = Injection(Object.assign({
-		product, debug
+		product,
+		Debug: debug
 	}, finalOptions.injection));
 	
 	const components = {

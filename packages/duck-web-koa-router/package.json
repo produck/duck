@@ -27,9 +27,10 @@
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
+    "@or-change/duck": "^0.3.0",
     "mocha": "^6.2.0"
   },
   "dependencies": {
-    "@or-change/duck": "^0.2.0"
+    "@or-change/duck": "^0.3.0"
   }
 }

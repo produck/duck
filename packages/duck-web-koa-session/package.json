@@ -27,11 +27,11 @@
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
-    "cross-env": "^5.2.1",
+    "@or-change/duck": "^0.3.0",
     "koa-session": "^5.12.3",
     "mocha": "^6.2.0"
   },
   "dependencies": {
-    "@or-change/duck": "^0.2.0"
+    "@or-change/duck": "^0.3.0"
   }
 }

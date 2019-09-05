@@ -1,6 +1,8 @@
 'use strict';
 
-const { Normalizer } = require('@or-change/duck');
+const { Normalizer, Validator } = require('@or-change/duck');
 const schema = require('./OptionsSchema.json');
 
-module.exports = Normalizer(schema, options => options === null ? [] : options);
+module.exports = Normalizer({
+	defaults: []
+}, Validator(schema));

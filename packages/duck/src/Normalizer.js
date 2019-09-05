@@ -1,25 +1,33 @@
 'use strict';
 
-const Ajv = require('ajv');
-const AjvKeywords = require('ajv-keywords');
+const Validator = require('./Validator');
+const validateOptions = Validator({
+	type: 'object',
+	additionalProperties: false,
+	required: [],
+	properties: {
+		handler: {
+			instanceof: 'Function'
+		},
+		defaults: {}
+	}
+});
 
-module.exports = function Normalize(schema, optionsHandler = o => o, ajvHandler = () => {}) {
-	const ajv = new Ajv({ allErrors: true, verbose: true });
-	
-	AjvKeywords(ajv, ['instanceof']);
-	ajvHandler(ajv);
-	
-	const validate = ajv.compile(schema);
+module.exports = function Normalize(options, validate = () => {}) {
+	if (typeof validate !== 'function') {
+		throw new Error('Optional `validate()` MUST be a functioin.');
+	}
 
-	return function normalize(options = null) {
-		if (!validate(options)) {
-			validate.errors.forEach(error => {
-				console.error(error);
-			});
-	
-			throw new Error(JSON.stringify(validate.errors, null, '  '));
-		}
+	validateOptions(options);
 
-		return optionsHandler(options);
+	const {
+		handler = any => any,
+		defaults = undefined
+	} = options;
+
+	return function normalize(any = defaults) {
+		validate(any);
+
+		return handler(any);
 	};
 };
