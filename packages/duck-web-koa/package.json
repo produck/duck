@@ -32,7 +32,8 @@
     "mocha": "^6.2.0"
   },
   "dependencies": {
-    "@or-change/duck": "^0.3.0"
+    "@or-change/duck": "^0.3.0",
+    "debug": "^4.1.1"
   },
   "peerDependencies": {
     "koa": ">= 2.7.0 < 3"

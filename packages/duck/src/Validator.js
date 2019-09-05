@@ -8,6 +8,10 @@ function DEFAULT_AJV_MODIFIER(ajv) {
 }
 
 module.exports = function DuckAjvValidator(schema, ajvModifier = DEFAULT_AJV_MODIFIER) {
+	if (typeof ajvModifier !== 'function') {
+		throw new TypeError('`ajvModifier` MUST be a function.');
+	}
+
 	const ajv = new Ajv({ allErrors: true, verbose: true });
 
 	ajvModifier(ajv);
@@ -27,8 +31,9 @@ module.exports = function DuckAjvValidator(schema, ajvModifier = DEFAULT_AJV_MOD
 				});
 			});
 	
-			console.error(errors);
-			throw new Error(JSON.stringify(errors, null, '  '));
+			throw errors;
 		}
+
+		return true;
 	};
 };

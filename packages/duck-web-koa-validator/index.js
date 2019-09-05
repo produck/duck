@@ -1,6 +1,8 @@
 'use strict';
 
 const Ajv = require('ajv');
+const debug = require('debug')('duck:web:koa:validator');
+
 const SCOPES = [
 	{
 		name: 'Body',
@@ -24,12 +26,18 @@ const SCOPES = [
 
 module.exports = function DuckWebKoaValidator() {
 
-	return function install({ Debug }, context) {
-		const debug = Debug('duck:web:koa:validator');
+	return function install(_injection, context) {
 
-		context.Validator = SCOPES.map(scope => function ScopeValidatorMiddleware(schema, options) {
+		function Validator(schema) {
 			const ajv = new Ajv({ allErrors: true, verbose: true });
-			const validate = ajv.compile(schema);
+			
+			return ajv.compile(schema);
+		}
+
+		context.Validator = Validator;
+		
+		SCOPES.map(scope => function ScopeValidatorMiddleware(schema, options) {
+			const validate = Validator(schema);
 
 			return function middleware(ctx, next) {
 				const scopeData = scope.getData(ctx);

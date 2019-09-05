@@ -34,6 +34,7 @@
     "electron": ">= 5"
   },
   "dependencies": {
-    "@or-change/duck": "^0.3.0"
+    "@or-change/duck": "^0.3.0",
+    "debug": "^4.1.1"
   }
 }

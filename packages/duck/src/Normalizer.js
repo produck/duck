@@ -9,20 +9,20 @@ const validateOptions = Validator({
 		handler: {
 			instanceof: 'Function'
 		},
-		defaults: {}
+		defaults: {},
+		validate: {
+			instanceof: 'Function'
+		}
 	}
 });
 
-module.exports = function Normalize(options, validate = () => {}) {
-	if (typeof validate !== 'function') {
-		throw new Error('Optional `validate()` MUST be a functioin.');
-	}
-
+module.exports = function Normalize(options = {}) {
 	validateOptions(options);
 
 	const {
 		handler = any => any,
-		defaults = undefined
+		defaults = undefined,
+		validate = () => true
 	} = options;
 
 	return function normalize(any = defaults) {

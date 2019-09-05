@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const debug = require('debug')('duck:factory');
+const debug = require('debug')('duck');
 
 const Normalizer = require('./src/Normalizer');
 const Injection = require('./src/Injection');
@@ -10,15 +10,15 @@ const normalize = require('./src/normalizeOptions');
 
 const meta = require('./package.json');
 
-Product.Normalizer = Normalizer;
-Product.Injection = Injection;
-Product.Validator = Validator;
-module.exports = Product;
+Duck.Normalizer = Normalizer;
+Duck.Injection = Injection;
+Duck.Validator = Validator;
+module.exports = Duck;
 
-function Product(options, callback = () => {}) {
+function Duck(options, callback = () => {}) {
 	const finalOptions = normalize(options);
 
-	debug('Instant a product id=`%s`', finalOptions.id);
+	debug('Creating a duck id=`%s`', finalOptions.id);
 
 	const product = Object.defineProperties(new EventEmitter(), {
 		meta: {
@@ -56,10 +56,8 @@ function Product(options, callback = () => {}) {
 		}
 	});
 
-	const injection = Injection(Object.assign({
-		product,
-		Debug: debug
-	}, finalOptions.injection));
+	const injection = Injection(Object.assign({ product }, finalOptions.injection));
+	debug('The injection of duck has been created.');
 	
 	const components = {
 		metas: {},
@@ -90,16 +88,22 @@ function Product(options, callback = () => {}) {
 		components.installerList.push(install);
 		components.createdList.push(created);
 	});
+	debug('Components options has been registered.');
 
 	components.installerList.forEach(install => install(injection));
+	debug('`components.install()` has been called.');
 	finalOptions.installed(injection);
+	debug('`options.installed()` has been called.');
 	Object.freeze(injection);
-	components.createdList.forEach(fn => fn(injection));
+	debug('The injection of duck has been freezen.');
+	components.createdList.forEach(created => created(injection));
+	debug('`components.created` hooks of components has been called.');
 
 	/**
 	 * Allow to access all injection for final assembling.
 	 */
 	callback(injection);
+	debug('The final `callback()` has been called.');
 
 	return product;
 }

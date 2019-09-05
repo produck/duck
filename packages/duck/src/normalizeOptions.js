@@ -62,5 +62,6 @@ module.exports = Normalizer({
 		});
 
 		return finalOptions;
-	}
-}, Validator(schema));
+	},
+	validate: Validator(schema)
+});
