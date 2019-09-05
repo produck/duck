@@ -1,11 +1,11 @@
 'use strict';
 
-function Injection(initObject = {}) {
+module.exports = function Injection(initObject = {}) {
 	if (typeof initObject !== 'object') {
 		throw new TypeError('`initObject` MUST be an object.');
 	}
 
-	const internalInjection = Object.assign({ Injection }, initObject);
+	const internalInjection = Object.assign({}, initObject);
 	const registered = { then: true, inspect: true };
 	const injection = new Proxy(internalInjection, {
 		get(target, key, receiver) {
@@ -34,6 +34,4 @@ function Injection(initObject = {}) {
 	Object.keys(internalInjection).forEach(key => registered[key] = true);
 
 	return injection;
-}
-
-module.exports = Injection;
+};

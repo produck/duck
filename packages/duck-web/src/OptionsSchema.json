@@ -8,20 +8,17 @@
 		"additionalProperties": false,
 		"required": [
 			"id",
-			"models"
+			"Application"
 		],
 		"properties": {
 			"id": {
 				"type": "string"
 			},
-			"models": {
-				"type": "object",
-				"additionalProperties": false,
-				"patternProperties": {
-					"^[A-Z][A-Za-z0-9]*$": {
-						"instanceof": "Function"
-					}
-				}
+			"type": {
+				"type": "string"
+			},
+			"Application": {
+				"instanceof": "Function"
 			}
 		}
 	}

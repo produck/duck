@@ -5,6 +5,9 @@
   "command": {
     "run": {
       "npmClient": "npm"
+    },
+    "bootstrap": {
+      
     }
   },
   "version": "independent"

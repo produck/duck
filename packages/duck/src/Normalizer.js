@@ -3,7 +3,7 @@
 const Ajv = require('ajv');
 const AjvKeywords = require('ajv-keywords');
 
-module.exports = function Normalize(schema, optionsHandler = () => {}, ajvHandler = () => {}) {
+module.exports = function Normalize(schema, optionsHandler = o => o, ajvHandler = () => {}) {
 	const ajv = new Ajv({ allErrors: true, verbose: true });
 	
 	AjvKeywords(ajv, ['instanceof']);
@@ -11,7 +11,7 @@ module.exports = function Normalize(schema, optionsHandler = () => {}, ajvHandle
 	
 	const validate = ajv.compile(schema);
 
-	return function normalize(options) {
+	return function normalize(options = null) {
 		if (!validate(options)) {
 			validate.errors.forEach(error => {
 				console.error(error);

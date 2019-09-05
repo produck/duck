@@ -1,7 +1,9 @@
 'use strict';
 
-function ComponentWebpack(Templates) {
-	const merge = require('webpack-merge');
+const merge = require('webpack-merge');
+const normalize = require('./src/normalizeOptions');
+
+module.exports = function DuckWebpack(Templates) {
 	const TemplateStore = {};
 
 	for (const name in Templates) {
@@ -27,6 +29,4 @@ function ComponentWebpack(Templates) {
 			injection.Webpack = Object.freeze(Webpack);
 		}
 	};
-}
-
-module.exports = ComponentWebpack;
+};

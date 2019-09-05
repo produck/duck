@@ -1,5 +1,5 @@
 {
-  "name": "@or-change/duck-web",
+  "name": "@or-change/duck-log",
   "version": "0.1.0",
   "description": "> TODO: description",
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -21,15 +21,15 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
-  "devDependencies": {
-    "cross-env": "^5.2.1",
-    "mocha": "^6.2.0"
-  },
   "dependencies": {
     "@or-change/duck": "^0.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
   }
 }

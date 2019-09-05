@@ -2,25 +2,31 @@
 
 const EventEmitter = require('events');
 const debug = require('debug')('duck:factory');
+
 const Normalizer = require('./src/Normalizer');
-const normalize = require('./src/OptionsNormalizer');
 const Injection = require('./src/Injection');
+const normalize = require('./src/normalizeOptions');
+
 const meta = require('./package.json');
 
-function Product(options, callback = () => {}) {
-	options = normalize(options);
+Product.Normalizer = Normalizer;
+Product.Injection = Injection;
+module.exports = Product;
 
-	debug('Instant a product id=`%s`', options.id);
+function Product(options, callback = () => {}) {
+	const finalOptions = normalize(options);
+
+	debug('Instant a product id=`%s`', finalOptions.id);
 
 	const product = Object.defineProperties(new EventEmitter(), {
 		meta: {
 			get() {
 				return {
-					id: options.id,
-					name: options.name,
-					namespace: options.namespace,
-					version: options.version,
-					description: options.description
+					id: finalOptions.id,
+					name: finalOptions.name,
+					namespace: finalOptions.namespace,
+					version: finalOptions.version,
+					description: finalOptions.description
 				};
 			}
 		},
@@ -50,7 +56,7 @@ function Product(options, callback = () => {}) {
 
 	const injection = Injection(Object.assign({
 		product, debug
-	}, options.injection));
+	}, finalOptions.injection));
 	
 	const components = {
 		metas: {},
@@ -58,7 +64,7 @@ function Product(options, callback = () => {}) {
 		createdList: []
 	};
 
-	options.components.forEach(component => {
+	finalOptions.components.forEach(component => {
 		const { 
 			id,
 			name,
@@ -83,7 +89,7 @@ function Product(options, callback = () => {}) {
 	});
 
 	components.installerList.forEach(install => install(injection));
-	options.installed(injection);
+	finalOptions.installed(injection);
 	Object.freeze(injection);
 	components.createdList.forEach(fn => fn(injection));
 
@@ -94,6 +100,3 @@ function Product(options, callback = () => {}) {
 
 	return product;
 }
-
-Product.Normalizer = Normalizer;
-module.exports = Product;

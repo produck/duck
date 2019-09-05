@@ -1,7 +1,8 @@
 'use strict';
 
+const Electron = require('electron');
+
 function DuckElectron(bootstrap, plugins = []) {
-	const Electron = require('electron');
 	const context = {};
 
 	return {

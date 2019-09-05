@@ -1,11 +1,10 @@
 'use strict';
 
-const normalize = require('./src/normalize');
+const Datahub = require('@or-change/data-hub');
+const normalize = require('./src/normalizeOptions');
 
-function ComponentDatahub(datahubOptions) {
-	const Datahub = require('@or-change/data-hub');
-
-	datahubOptions = normalize(datahubOptions);
+module.exports = function DuckDatahub(options) {
+	const finalOptions = normalize(options);
 
 	const context = {};
 	const Linkers = {};
@@ -15,7 +14,7 @@ function ComponentDatahub(datahubOptions) {
 		name: 'Datahub',
 		description: 'Database middle layout.',
 		install(injection) {
-			datahubOptions.forEach(options => {
+			finalOptions.forEach(options => {
 				Linkers[options.id] = function DatahubLinker(adaptor) {
 					const models = {};
 			
@@ -47,6 +46,4 @@ function ComponentDatahub(datahubOptions) {
 			Object.freeze(context);
 		}
 	};
-}
-
-module.exports = ComponentDatahub;
+};

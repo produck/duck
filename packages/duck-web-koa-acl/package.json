@@ -1,17 +1,18 @@
 {
   "name": "@or-change/duck-web-koa-acl",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "> TODO: description",
-  "author": "lichaozhy <lichao@or-change.cn>",
+  "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
-  "license": "ISC",
-  "main": "lib/duck-web-koa-acl.js",
+  "license": "MIT",
+  "main": "index.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "src": "src",
+    "test": "test"
   },
   "files": [
-    "lib"
+    "/src",
+    "/index.js"
   ],
   "publishConfig": {
     "access": "public"

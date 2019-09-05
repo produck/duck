@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const Injection = require('../src/injection');
+const Injection = require('../src/Injection');
 
 describe('Injection::', function () {
 	describe('constructor()', function () {
@@ -9,7 +9,6 @@ describe('Injection::', function () {
 			const injection = Injection();
 
 			assert.equal(injection, injection.injection);
-			assert.equal(Injection, injection.Injection);
 		});
 
 		it('should create a injection successfully with initObject.', function () {
@@ -36,7 +35,6 @@ describe('Injection::', function () {
 
 		describe('get::', function () {
 			it('should get a existed dependence', function () {
-				assert.equal(this.injection.Injection, Injection);
 				assert.deepEqual(this.injection.dependenceA, { a: true });
 				assert.deepEqual(this.injection.dependenceB, { b: true });
 			});

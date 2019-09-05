@@ -1,0 +1,27 @@
+{
+	"type": "object",
+	"required": [
+		"key",
+		"install",
+		"get",
+		"set",
+		"destroy"
+	],
+	"properties": {
+		"key": {
+			"type": "string"
+		},
+		"install": {
+			"instanceof": "Function"
+		},
+		"get": {
+			"instanceof": "Function"
+		},
+		"set": {
+			"instanceof": "Function"
+		},
+		"destroy": {
+			"instanceof": "Function"
+		}
+	}
+}

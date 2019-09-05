@@ -16,7 +16,8 @@
     "test": "mocha"
   },
   "files": [
-    "lib"
+    "/src",
+    "/index.js"
   ],
   "publishConfig": {
     "access": "public"

@@ -1,3 +1,5 @@
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
 Duck is an extensible, lightweight, flexible, progressive software development frameworks for building software product. It uses dependency injection and control inversion just a little like "Java Spring". It help developers to create, use, manage various runtime objects to inject to whereever required. Everyone can extend framework directly in low cost.
 
 In the past, we often have to face to inflexible, confused project directory problems in development in Node.js. Everyone could disgust require modules from parent directory like ``require('../../')``. Because it represent some coupling out of control. Duck resolve the problems above and provide a programming models to help developer avoid incorrect design.
@@ -347,8 +349,7 @@ About injection, some facts MUST be known,
 * Cannot set a new dependence override a existed.
 * The injection of a duck will be freezen after duck created.
 * Inline Dependences - There are 2 dependencies on injection when created.
-  * ``injection.injection`` reference itself for convenience.
-  * ``injection.Injection`` used for components created an isolateing injection to manage local dependencies.
+* ``injection.injection`` reference itself for convenience.
 
 <a id="duck-injection-preset"></a>
 ### Preset dependencies
