@@ -6,10 +6,6 @@
   "author": "ChaosLee <lichao@or-change.cn>",
   "license": "MIT",
   "main": "index.js",
-  "directories": {
-    "src": "src",
-    "test": "test"
-  },
   "files": [
     "/src",
     "/index.js"
@@ -27,7 +23,6 @@
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
-    "@or-change/duck": "^0.3.0",
     "koa-session": "^5.12.3",
     "mocha": "^6.2.0"
   },

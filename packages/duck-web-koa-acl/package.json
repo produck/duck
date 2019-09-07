@@ -6,10 +6,6 @@
   "homepage": "https://github.com/or-change/duck#readme",
   "license": "MIT",
   "main": "index.js",
-  "directories": {
-    "src": "src",
-    "test": "test"
-  },
   "files": [
     "/src",
     "/index.js"
@@ -26,7 +22,6 @@
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
-    "@or-change/duck": "^0.3.0",
     "mocha": "^6.2.0"
   },
   "dependencies": {

@@ -2,17 +2,23 @@
 
 const merge = require('webpack-merge');
 const normalize = require('./src/normalizeOptions');
+const debug = require('debug')('duck:webpack');
 
-module.exports = function DuckWebpack(Templates) {
+module.exports = function DuckWebpack(TemplatesOptions) {
+	const finalTemplatesOptions = normalize(TemplatesOptions);
 	const TemplateStore = {};
 
-	for (const name in Templates) {
-		TemplateStore[name] = Templates[name];
+	if (Object.keys(finalTemplatesOptions).length === 0) {
+		debug('Warning: There is NOT any options of templates.');
+	}
+
+	for (const name in finalTemplatesOptions) {
+		TemplateStore[name] = finalTemplatesOptions[name];
 	}
 
 	return {
 		id: 'com.oc.duck.webpack',
-		name: 'WebpackConfigBuilder',
+		name: 'WebpackConfigTemplateManager',
 		description: 'Used to guide developer to create a web application.',
 		install(injection) {
 			function Webpack(templateName, ...args) {
@@ -27,6 +33,8 @@ module.exports = function DuckWebpack(Templates) {
 
 			Webpack.merge = merge;
 			injection.Webpack = Object.freeze(Webpack);
+			Object.freeze(TemplatesOptions);
+			debug('Webpack template manager ready.');
 		}
 	};
 };

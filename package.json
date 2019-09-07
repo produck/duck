@@ -1,4 +1,5 @@
 {
+	"name": "@or-change/duck-packages",
   "private": true,
   "scripts": {
     "test": "lerna run test",

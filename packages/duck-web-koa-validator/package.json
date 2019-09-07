@@ -22,7 +22,6 @@
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
-    "@or-change/duck": "^0.3.0",
     "@or-change/duck-web-koa": "^0.1.0",
     "@or-change/duck-web-koa-router": "^0.1.0",
     "mocha": "^6.2.0"

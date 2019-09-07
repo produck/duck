@@ -27,7 +27,8 @@ module.exports = function DuckAjvValidator(schema, ajvModifier = DEFAULT_AJV_MOD
 					keyword: error.keyword,
 					dataPath: error.dataPath,
 					schemaPath: error.schemaPath,
-					message: error.message
+					message: error.message,
+					params: error.params
 				});
 			});
 
