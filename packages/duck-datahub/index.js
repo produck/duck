@@ -1,10 +1,11 @@
 'use strict';
 
 const Datahub = require('@or-change/data-hub');
+const debug = require('debug')('duck:datahub');
 const normalize = require('./src/normalizeOptions');
 
-module.exports = function DuckDatahub(options) {
-	const finalOptions = normalize(options);
+module.exports = function DuckDatahub(modelOptionsList) {
+	const finalOptions = normalize(modelOptionsList);
 
 	const context = {};
 	const Linkers = {};
@@ -32,7 +33,11 @@ module.exports = function DuckDatahub(options) {
 				};
 			});
 
+			debug('DuckDatahub has handled all models options.');
+
 			injection.Datahub = function link(id, adaptor) {
+				debug('Creating a new datahub instance by linkerId=`%s`.', id);
+				
 				const Linker = Linkers[id];
 
 				if (!Linker) {

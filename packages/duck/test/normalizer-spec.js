@@ -20,7 +20,9 @@ describe('Normalizer::', function () {
 
 		it('should create a normalizer successfully only with defaults.', function () {
 			Normalizer({
-				defaults: { foo: 'bar' }
+				defaults() {
+					return { foo: 'bar' };
+				}
 			});
 		});
 
@@ -58,7 +60,9 @@ describe('Normalizer::', function () {
 
 					return finalOptions;
 				},
-				defaults: {},
+				defaults() {
+					return {};
+				},
 				validate: Validator({
 					type: 'object',
 					additionalProperties: false,

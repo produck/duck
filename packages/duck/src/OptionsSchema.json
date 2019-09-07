@@ -31,7 +31,7 @@
 			"items": {
 				"type": "object",
 				"additionalProperty": false,
-				"requied": [
+				"required": [
 					"id",
 					"name",
 					"install"

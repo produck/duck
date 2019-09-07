@@ -6,7 +6,11 @@ In the past, we often have to face to inflexible, confused project directory pro
 
 Duck does not impose any restrictions on your coding style. But it will still provide the necessary guidance to advance the right design. Be brave enough to use your imagination to solve your problems.
 
-The DUCK knows first when the river becomes warm in SPRING. Duck is used to build product!
+On the one hand Duck is a useful framework & pattern for architect or tech leader to take apart development tasks. Developers working at the top will feel comfortable with structuring their work. Duck hopes every developer does NOT need to learn any framework practices. Duck respects, supports and maintains the development team's own practices. [What does it mean?](#project-structure-implementation)
+
+> The DUCK knows first when the river becomes warm in SPRING.
+
+Duck is used to build product!
 
 # Installation
 
@@ -66,7 +70,12 @@ console.log(simple.getComponents());
   * [Instance](#duck-component-instance)
   * [Native Components](#duck-component-native)
 - [Injection](#duck-injection)
-  * [preset dependencies](#duck-injection-preset)
+  * [Preset dependencies](#duck-injection-preset)
+  * [Direct / Component dependence](#duck-injection-compare)
+- [Static](#duck-static)
+  * [Duck.Injection([initObject])](#duck-static-injection)
+  * [Duck.Validator(schema[, ajvModifier])](#duck-static-validator)
+  * [Duck.Normalizer([options])](#duck-static-normalizer)
 
 <a id="duck"></a>
 ## Duck
@@ -354,6 +363,26 @@ About injection, some facts MUST be known,
 <a id="duck-injection-preset"></a>
 ### Preset dependencies
 
+<a id="project-structure-implementation"></a>
+# Project structure & Implementation
+
+## I am a leader
+
+### What should I think about components?
+
+### How to establish an own practices?
+
+### What will direct dependencies give me?
+
+### Whose IoC is it?
+
+### I have a good idea to share.
+
+## I am a member
+
+### What I want must be in the injection.
+
+### Please give ...
 
 # License
 

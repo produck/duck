@@ -1,7 +1,7 @@
 {
-	"type": [
-		"array",
-		"null"
+	"type": "array",
+	"uniqueItemProperties": [
+		"id"
 	],
 	"items": {
 		"type": "object",
@@ -14,7 +14,7 @@
 			"id": {
 				"type": "string"
 			},
-			"type": {
+			"description": {
 				"type": "string"
 			},
 			"Application": {

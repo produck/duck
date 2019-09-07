@@ -1,17 +1,14 @@
 {
   "name": "@or-change/duck-web-koa-validator",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "> TODO: description",
-  "author": "lichaozhy <lichao@or-change.cn>",
+  "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
-  "license": "ISC",
+  "license": "MIT",
   "main": "lib/duck-web-koa-validator.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "/src",
+    "/index.js"
   ],
   "publishConfig": {
     "access": "public"

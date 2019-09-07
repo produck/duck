@@ -9,7 +9,8 @@
     "app",
     "spring",
     "injection",
-    "component"
+    "component",
+    "IoC"
   ],
   "author": "ChaosLee <lichao@or-change.cn>",
   "license": "MIT",

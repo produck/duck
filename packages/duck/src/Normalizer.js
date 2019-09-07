@@ -9,7 +9,9 @@ const validateOptions = Validator({
 		handler: {
 			instanceof: 'Function'
 		},
-		defaults: {},
+		defaults: {
+			instanceof: 'Function'
+		},
 		validate: {
 			instanceof: 'Function'
 		}
@@ -21,11 +23,11 @@ module.exports = function Normalize(options = {}) {
 
 	const {
 		handler = any => any,
-		defaults = undefined,
+		defaults = () => undefined,
 		validate = () => true
 	} = options;
 
-	return function normalize(any = defaults) {
+	return function normalize(any = defaults()) {
 		validate(any);
 
 		return handler(any);

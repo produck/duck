@@ -30,8 +30,8 @@ module.exports = function DuckAjvValidator(schema, ajvModifier = DEFAULT_AJV_MOD
 					message: error.message
 				});
 			});
-	
-			throw errors;
+
+			throw new Error(JSON.stringify(errors));
 		}
 
 		return true;

@@ -1,16 +1,15 @@
 'use strict';
 
-const Protocol = {
-	http: require('http'),
-	https: require('https')
-};
-
+const http = require('http');
+const https = require('https');
+const debug = require('debug')('duck:web');
 const normalize = require('./src/normalizeOptions');
 
 module.exports = function DuckWeb(options) {
 	const ApplicationOptionsList = normalize(options);
 	const applications = {};
-	const servers = {};
+
+	let ready = false;
 
 	return {
 		id: 'com.oc.duck.web',
@@ -18,24 +17,45 @@ module.exports = function DuckWeb(options) {
 		description: 'Used to guide developer to create a web application.',
 		install(injection) {
 			injection.Web = Object.freeze({
-				Application: applications,
-				servers,
-				Server(id, protocolName, requestListener) {
-					const server = Protocol[protocolName].createServer(requestListener);
+				Application(id, ...args) {
+					if (!ready) {
+						throw new Error('Could NOT instant any application safely now.');
+					}
 
-					servers[id] = server;
-					server.on('close', () =>  delete servers[id]);
+					const Application = applications[id];
 
-					return server;
-				}
+					if (!Application) {
+						throw new Error(`The application specified with id='${id}' does not exist.`);
+					}
+
+					return new Application(...args);
+				},
+				Http: http,
+				Https: https
 			});
-		},
-		created(injection) {
+
+			debug('Creating all `Application()` factory from `options`.');
 			ApplicationOptionsList.forEach(options => {
+				debug('Building Application id=`%s`', options.id);
 				applications[options.id] = options.Application(injection);
 			});
-
+			debug('All factory has been built %s in total.', ApplicationOptionsList.length);
 			Object.freeze(applications);
+			debug('`Application()` factory store has been freezen. Ready!');
+			
+		},
+		created() {
+			ready = true;
+		},
+		getDetails() {
+			return {
+				applications: ApplicationOptionsList.map(options => {
+					return {
+						id: options.id,
+						description: options.description
+					};
+				})
+			};
 		}
 	};
 };
