@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-webpack",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Webpack config factory manager for duck.",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
