@@ -17,7 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },

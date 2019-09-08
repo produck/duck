@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
+    "@or-change/duck-web": "^0.1.0",
+    "@or-change/duck-web-koa": "^0.1.0",
     "koa-session": "^5.12.3",
     "mocha": "^6.2.0"
   },
   "dependencies": {
     "@or-change/duck": "^0.3.0",
-    "@or-change/duck-web": "^0.1.0",
-    "@or-change/duck-web-koa": "^0.1.0",
     "debug": "^4.1.1"
   }
 }
