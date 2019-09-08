@@ -1,21 +1,19 @@
 'use strict';
 
+const { Injection } = require('@or-change/duck');
 const Koa = require('koa');
-const normalize = require('./src/normalizeOptions');
+const normalizePlugins = require('./src/normalizeOptions');
 
-module.exports = function KoaApplicationProvider(options) {
+module.exports = function KoaApplicationProvider(callback = () => {}, pluginsOptions) {
 	/**
 	 * Koa application
 	 */
-	const { factory, plugins } = normalize(options);
-	
-	return function Application(injection) {
-		/**
-		 * Inject product freezen injection.
-		 */
-		const context = {};
+	const finalPluginsOptions = normalizePlugins(pluginsOptions);
 
-		plugins.forEach(install => install(injection, context));
+	return function Application(injection) {
+		const context = Injection();
+
+		finalPluginsOptions.forEach(install => install(injection, context));
 
 		return function KoaApplication() {
 			/**
@@ -23,9 +21,7 @@ module.exports = function KoaApplicationProvider(options) {
 			 */
 			const app = new Koa();
 		
-			if (factory) {
-				factory(app, injection, context);
-			}
+			callback(app, injection, context);
 			
 			return app.callback();
 		};

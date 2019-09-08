@@ -27,6 +27,8 @@
     "mocha": "^6.2.0"
   },
   "dependencies": {
+    "@or-change/duck-web": "^0.1.0",
+    "@or-change/duck-web-koa": "^0.1.0",
     "ajv": "^6.10.2",
     "debug": "^4.1.1"
   }

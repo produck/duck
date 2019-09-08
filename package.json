@@ -2,7 +2,7 @@
 	"name": "@or-change/duck-packages",
   "private": true,
   "scripts": {
-    "test": "lerna run test",
+    "test": "lerna run test --parallel",
     "lint": "eslint --fix packages/**/*.js"
   },
   "devDependencies": {

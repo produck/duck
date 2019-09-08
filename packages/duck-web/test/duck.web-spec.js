@@ -18,7 +18,7 @@ describe('DuckWeb::', function () {
 				{
 					id: 'com.orchange.duck.web.test',
 					description: 'test',
-					Application(injection) {
+					Application() {
 						return function TestingApplication() {
 
 						};
@@ -28,7 +28,7 @@ describe('DuckWeb::', function () {
 			DuckWeb([
 				{
 					id: 'com.orchange.duck.web.test2',
-					Application(injection) {
+					Application() {
 						return function TestingApplication() {
 
 						};
