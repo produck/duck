@@ -3,16 +3,23 @@
 const Ajv = require('ajv');
 const AjvKeywords = require('ajv-keywords');
 
-function DEFAULT_AJV_MODIFIER(ajv) {
-	AjvKeywords(ajv, ['instanceof']);
-}
+const AJV = {
+	MODIFIER(ajv) {
+		AjvKeywords(ajv, ['instanceof']);
+	},
+	OPTIONS: {
+		allErrors: true,
+		verbose: true,
+		$data: true
+	}
+};
 
-module.exports = function DuckAjvValidator(schema, ajvModifier = DEFAULT_AJV_MODIFIER) {
+module.exports = function DuckAjvValidator(schema, ajvModifier = AJV.MODIFIER) {
 	if (typeof ajvModifier !== 'function') {
 		throw new TypeError('`ajvModifier` MUST be a function.');
 	}
 
-	const ajv = new Ajv({ allErrors: true, verbose: true });
+	const ajv = new Ajv(AJV.OPTIONS);
 
 	ajvModifier(ajv);
 
@@ -32,7 +39,9 @@ module.exports = function DuckAjvValidator(schema, ajvModifier = DEFAULT_AJV_MOD
 				});
 			});
 
-			throw new Error(JSON.stringify(errors));
+			throw new Error(errors.reduce((message, error) => {
+				return message + '\n\r' + JSON.stringify(error);
+			}, ''));
 		}
 
 		return true;

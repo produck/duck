@@ -5,7 +5,7 @@ const normalize = require('./src/normalizeOptions');
 module.exports = function SessionPlugin(originalOptions) {
 	const options = normalize(originalOptions);
 
-	return function install(_injection, context) {
+	return function install(context) {
 		context.Session = function install(app) {
 			options.install(app);
 			app.use(async (ctx, next) => {

@@ -1,6 +1,6 @@
 # `@or-change/duck-log-winston`
 
-> TODO: description
+
 
 ## Usage
 

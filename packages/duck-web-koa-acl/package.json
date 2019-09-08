@@ -1,7 +1,7 @@
 {
   "name": "@or-change/duck-web-koa-acl",
   "version": "0.1.0",
-  "description": "> TODO: description",
+  "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
   "license": "MIT",
@@ -17,7 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },

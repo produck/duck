@@ -7,7 +7,15 @@
       "npmClient": "npm"
     },
     "bootstrap": {
-      
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    },
+    "publish": {
+      "ignoreChanges": [
+        "duck-log*",
+        "duck-web-koa-validator"
+      ]
     }
   },
   "version": "independent"

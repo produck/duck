@@ -1,5 +1,8 @@
 {
-	"type": "object",
+	"type": [
+		"object",
+		"null"
+	],
 	"additionalProperties": false,
 	"required": [
 		"Router"
@@ -12,7 +15,11 @@
 			"instanceof": "Function"
 		},
 		"mount": {
-			"type": ["null", "string", "array"],
+			"type": [
+				"null",
+				"string",
+				"array"
+			],
 			"items": {
 				"type": "string"
 			}

@@ -4,13 +4,12 @@ const { Normalizer, Validator } = require('@or-change/duck');
 const schema = require('./OptionsSchema.json');
 
 module.exports = Normalizer({
-	default() {
+	defaults() {
 		const session = require('koa-session');
 
 		return {
 			key: 'session',
 			install(app) {
-	
 				app.keys = [Math.random().toString(16).substr(2, 8)];
 				app.use(session(app));
 			},
@@ -23,7 +22,7 @@ module.exports = Normalizer({
 			set(ctx, value) {
 				return ctx.session = value;
 			}
-		}
+		};
 	},
 	validate: Validator(schema)
 });

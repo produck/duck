@@ -2,7 +2,7 @@
 
 const normalize = require('./src/normalizeOptions');
 
-module.exports = function KoaRouterPlugin(originalOptions) {
+module.exports = function KoaRouterPlugin(options) {
 	const KoaRouterMouduleName = ['koa-router', '@koa/router'].find(moduleName => {
 		try {
 			require.resolve(moduleName);
@@ -17,9 +17,9 @@ module.exports = function KoaRouterPlugin(originalOptions) {
 	}
 
 	const KoaRouter = require(KoaRouterMouduleName);
-	const options = normalize(originalOptions);
+	const finalOptions = normalize(options);
 
-	return function install(injection, context) {
+	return function install(context, injection) {
 		context.KoaRouter = KoaRouter;
 		
 		function buildRouter(options) {
@@ -46,7 +46,7 @@ module.exports = function KoaRouterPlugin(originalOptions) {
 		}
 		
 		context.AppRouter = function ApplicationRouter() {
-			return buildRouter(options);
+			return buildRouter(finalOptions);
 		};
 	};
 };

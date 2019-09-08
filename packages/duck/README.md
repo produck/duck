@@ -339,8 +339,6 @@ Duck({
 * [Datahub](/src/components/Datahub) - Use data middle layer & define models.
 * [Electron6](/src/components/Electron6/README.md) - How to build a integrated Electron application?
 * Log //TODO - Build & manage log channel.
-* HttpMitm //TODO Manage a mitm server instance.
-* Sequenlize //TODO Provide sequenlize instance to everywhere.
 
 <a id="duck-injection"></a>
 ## Injection

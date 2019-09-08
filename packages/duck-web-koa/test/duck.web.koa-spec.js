@@ -22,7 +22,7 @@ describe('DuckWebKoa::', function () {
 		
 		it('should throw error with invalid callback or plugins', function () {
 			assert.throws(() => DuckWebKoa(1), {
-				message: 'Argument[0] `callback` MUST be a function.'
+				message: 'Argument 0 `callback` MUST be a function.'
 			});
 			assert.throws(() => DuckWebKoa(() => {}, 2));
 			assert.throws(() => DuckWebKoa(() => {}, [1]));
@@ -52,18 +52,19 @@ describe('DuckWebKoa::', function () {
 						DuckWeb([
 							{
 								id: 'DuckKoaApp',
-								Application: DuckWebKoa((app, context, { injection }) => {
+								Application: DuckWebKoa((app, context, { injection }, options) => {
 									assert(app);
 									assert(injection.product);
 									assert(context);
 									assert(Object.isFrozen(injection));
+									assert.deepEqual(options, { a: 1 });
 									done();
 								})
 							}
 						])
 					]
 				}, ({ Web }) => {
-					Web.Application('DuckKoaApp');
+					Web.Application('DuckKoaApp', { a: 1 });
 				});
 			});
 	
@@ -130,7 +131,7 @@ describe('DuckWebKoa::', function () {
 									assert.equal(context.foo, 'bar');
 									done();
 								}, [
-									function Test(context, injection) {
+									function install(context, injection) {
 										context.foo = 'bar';
 										assert(injection.product);
 									}
