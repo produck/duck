@@ -31,7 +31,7 @@ module.exports = function KoaRouterPlugin(options) {
 	
 			const router = new KoaRouter(koaRouterOptions);
 	
-			options.Router(router, injection, context);
+			options.Router(router, context, injection);
 			options.use.forEach(optionsNode => {
 				const childRouter = buildRouter(optionsNode);
 

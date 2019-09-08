@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-web-koa-router",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -17,12 +17,15 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
+    "@koa/router": "^8.0.1",
     "@or-change/duck-web": "^0.1.0",
     "@or-change/duck-web-koa": "^0.1.0",
     "mocha": "^6.2.0"

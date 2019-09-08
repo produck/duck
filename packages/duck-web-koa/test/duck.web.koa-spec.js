@@ -41,6 +41,8 @@ describe('DuckWebKoa::', function () {
 						}
 					])
 				]
+			}, ({ Web }) => {
+				Web.Application('DuckKoaApp');
 			});
 		});
 

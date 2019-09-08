@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-electron",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Development for electron application in duck to get other runtime dependencies.",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",

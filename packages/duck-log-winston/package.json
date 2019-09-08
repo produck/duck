@@ -1,6 +1,7 @@
 {
   "name": "@or-change/duck-log-winston",
-  "version": "0.1.0",
+  "version": "0.0.0",
+  "private": true,
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",

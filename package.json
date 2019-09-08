@@ -1,9 +1,10 @@
 {
-	"name": "@or-change/duck-packages",
+  "name": "@or-change/duck-packages",
   "private": true,
   "scripts": {
     "test": "lerna run test --parallel",
-    "lint": "eslint --fix packages/**/*.js"
+    "lint": "eslint --fix packages/**/*.js",
+    "prepublish": "npm run lint && npm run test"
   },
   "devDependencies": {
     "lerna": "^3.16.4"
