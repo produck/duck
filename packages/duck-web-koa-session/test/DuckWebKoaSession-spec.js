@@ -27,9 +27,11 @@ describe('DuckWebKoaSession::', function () {
 
 								ctx.body = product.meta;
 							});
-						}, [
-							DuckWebKoaSession()
-						])
+						}, {
+							plugins: [
+								DuckWebKoaSession()
+							]
+						})
 					}
 				])
 			]

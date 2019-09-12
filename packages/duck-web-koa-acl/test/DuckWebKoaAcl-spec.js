@@ -30,9 +30,12 @@ describe('DuckWebKoaAcl::', function () {
 							app.use(AccessControl('duck.test')).use(ctx => {
 								ctx.body = product.meta;
 							});
-						}, [
-							DuckWebKoaAcl(aclOptions)
-						])
+						}, {
+							
+							plugins: [
+								DuckWebKoaAcl(aclOptions)
+							]
+						})
 					}
 				])
 			]

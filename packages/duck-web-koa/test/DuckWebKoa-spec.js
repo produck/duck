@@ -4,7 +4,7 @@ const assert = require('assert');
 const http = require('http');
 const Duck = require('@or-change/duck');
 const DuckWeb = require('@or-change/duck-web');
-const DuckWebKoa = require('../');
+const DuckWebKoa = require('..');
 
 describe('DuckWebKoa::', function () {
 	describe('contrustor()', function () {
@@ -12,20 +12,30 @@ describe('DuckWebKoa::', function () {
 			DuckWebKoa();
 		});
 
-		it('should be created with only callback.', function () {
+		it('should be created with only factory.', function () {
 			DuckWebKoa(() => {});
 		});
 
-		it('should be created with callback & plugins.', function () {
-			DuckWebKoa(() => {}, []);
+		it('should be created with factory & options.', function () {
+			DuckWebKoa(() => {}, {});
+			DuckWebKoa(() => {}, {
+				plugins: []
+			});
+			DuckWebKoa(() => {}, {
+				plugins: [],
+				installed() {}
+			});
 		});
 		
-		it('should throw error with invalid callback or plugins', function () {
+		it('should throw error with invalid factory or plugins', function () {
 			assert.throws(() => DuckWebKoa(1), {
-				message: 'Argument 0 `callback` MUST be a function.'
+				message: 'Argument 0 `factory` MUST be a function.'
 			});
 			assert.throws(() => DuckWebKoa(() => {}, 2));
 			assert.throws(() => DuckWebKoa(() => {}, [1]));
+			assert.throws(() => DuckWebKoa(() => {}, {
+				plugins: [1]
+			}));
 		});
 	});
 
@@ -46,8 +56,8 @@ describe('DuckWebKoa::', function () {
 			});
 		});
 
-		describe('Callback::', function () {
-			it('should access app, injection, context when callback().', function (done) {
+		describe('factory::', function () {
+			it('should access app, injection, context when factory().', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
 					components: [
@@ -70,7 +80,7 @@ describe('DuckWebKoa::', function () {
 				});
 			});
 	
-			it('should respond successfully by default callback().', function (done) {
+			it('should respond successfully by default factory().', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
 					components: [
@@ -93,7 +103,7 @@ describe('DuckWebKoa::', function () {
 				});
 			});
 	
-			it('should respond successfully by with assigned callback().', function (done) {
+			it('should respond successfully by with assigned factory().', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
 					components: [
@@ -132,12 +142,38 @@ describe('DuckWebKoa::', function () {
 								Application: DuckWebKoa((_app, context) => {
 									assert.equal(context.foo, 'bar');
 									done();
-								}, [
-									function install(context, injection) {
-										context.foo = 'bar';
-										assert(injection.product);
+								}, {
+									plugins: [
+										function install(context, injection) {
+											context.foo = 'bar';
+											assert(injection.product);
+										}
+									]
+								})
+							}
+						])
+					]
+				}, ({ Web }) => {
+					Web.Application('DuckKoaApp');
+				});
+			});
+			
+			it('should be that injection, context can be access in `options.installed`.', function (done) {
+				Duck({
+					id: 'com.orchange.DuckWebKoa.test',
+					components: [
+						DuckWeb([
+							{
+								id: 'DuckKoaApp',
+								Application: DuckWebKoa((_app, context) => {
+									assert.equal(context.a, 'b');
+									done();
+								}, {
+									installed(context, injection) {
+										context.a = 'b';
+										assert(injection);
 									}
-								])
+								})
 							}
 						])
 					]

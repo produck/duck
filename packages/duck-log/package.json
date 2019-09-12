@@ -1,7 +1,6 @@
 {
   "name": "@or-change/duck-log",
   "version": "0.1.0",
-  "private": true,
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
@@ -18,13 +17,16 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "dependencies": {
     "@or-change/duck": "^0.3.0",
-    "debug": "^4.1.1"
+    "debug": "^4.1.1",
+    "streamroller": "^2.1.0"
   },
   "devDependencies": {
     "mocha": "^6.2.0"

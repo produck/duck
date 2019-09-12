@@ -1,0 +1,75 @@
+{
+	"definitions": {
+		"defaultLevels": {
+			"type": "string",
+			"_enum": "/* The real value is in normalize.js */"
+		}
+	},
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"label": {
+			"type": "string"
+		},
+		"format": {
+			"instanceof": "Function"
+		},
+		"levels": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"pattern": "^[a-z][a-z0-9]*$"
+			}
+		},
+		"appenders": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": ["write"],
+				"properties": {
+					"write": {
+						"instanceof": "Function"
+					}
+				}
+			}
+		},
+		"defaultLevel": true,
+		"preventLevels": true
+	},
+	"if": {
+		"required": [
+			"levels"
+		]
+	},
+	"then": {
+		"properties": {
+			"defaultLevel": {
+				"type": "string",
+				"enum": {
+					"$data": "1/levels"
+				}
+			},
+			"preventLevels": {
+				"type": "array",
+				"items": {
+					"enum": {
+						"$data": "2/levels"
+					}
+				}
+			}
+		}
+	},
+	"else": {
+		"properties": {
+			"defaultLevel": {
+				"$ref": "#/definitions/defaultLevels"
+			},
+			"preventLevels": {
+				"type": "array",
+				"items": {
+					"$ref": "#/definitions/defaultLevels"
+				}
+			}
+		}
+	}
+}

@@ -35,18 +35,20 @@ describe('DuckWebKoaRouter::', function () {
 						id: 'Testing',
 						Application: DuckWebKoa((app, { AppRouter }) => {
 							app.use(AppRouter().routes());
-						}, [
-							DuckWebKoaRouter({
-								prefix: '/api',
-								Router: APIRouter,
-								use: [
-									{
-										prefix: '/test',
-										Router: TestRouter
-									}
-								]
-							})
-						])
+						}, {
+							plugins: [
+								DuckWebKoaRouter({
+									prefix: '/api',
+									Router: APIRouter,
+									use: [
+										{
+											prefix: '/test',
+											Router: TestRouter
+										}
+									]
+								})
+							]
+						})
 					}
 				])
 			]

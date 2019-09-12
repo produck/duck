@@ -3,24 +3,34 @@
 const { Injection } = require('@or-change/duck');
 const Koa = require('koa');
 const normalizePlugins = require('./src/normalizePluginsOptions');
-const defaultCallback = require('./src/defaultCallback');
 
-module.exports = function KoaApplicationProvider(callback = defaultCallback, pluginsOptions) {
-	if (typeof callback !== 'function') {
-		throw new Error('Argument 0 `callback` MUST be a function.');
+function DEFAULT_FACTORY(app, _context, { product }) {
+	app.use(ctx => {
+		ctx.body = 'hello, world!\n\nProduct Meta\n\n';
+		ctx.body += JSON.stringify(product.meta, null, '  ');
+		ctx.body += '\n\nProduct Components\n\n';
+		ctx.body += JSON.stringify(product.components, null, '  ');
+		ctx.body += '\n\n--Duck Quack~';
+	});
+}
+
+module.exports = function KoaApplicationProvider(factory = DEFAULT_FACTORY, options) {
+	if (typeof factory !== 'function') {
+		throw new Error('Argument 0 `factory` MUST be a function.');
 	}
 	
-	const finalPluginsOptions = normalizePlugins(pluginsOptions);
+	const finalOptions = normalizePlugins(options);
 
 	return function Application(injection) {
 		const context = Injection();
 
-		finalPluginsOptions.forEach(install => install(context, injection));
+		finalOptions.plugins.forEach(install => install(context, injection));
+		finalOptions.installed(context, injection);
 
 		return function KoaApplication(options) {
 			const app = new Koa();
 		
-			callback(app, context, injection, options);
+			factory(app, context, injection, options);
 			
 			return app.callback();
 		};

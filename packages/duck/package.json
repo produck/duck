@@ -44,5 +44,5 @@
   "devDependencies": {
     "mocha": "^6.2.0"
   },
-  "homepage": "https://github.com/or-change/duck#readme"
+  "homepage": "https://github.com/or-change/duck/tree/master/packages/duck#readme"
 }
