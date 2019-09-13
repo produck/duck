@@ -6,10 +6,6 @@
   "homepage": "https://github.com/or-change/duck#readme",
   "license": "MIT",
   "main": "index.js",
-  "directories": {
-    "lib": "src",
-    "test": "test"
-  },
   "files": [
     "/src",
     "/index.js"
@@ -21,12 +17,15 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "electron-mocha"
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
     "electron": "^6.0.7",
+    "electron-mocha": "^8.1.2",
     "mocha": "^6.2.0"
   },
   "peerDependencies": {
