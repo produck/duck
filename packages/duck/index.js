@@ -56,7 +56,9 @@ function Duck(options, callback = () => {}) {
 		}
 	});
 
-	const injection = Injection(Object.assign({ product }, finalOptions.injection));
+	const initObject = Object.assign({ product }, finalOptions.injection);
+	const injection = Injection(initObject, 'duck');
+
 	debug('The injection of duck has been created.');
 	
 	const components = {

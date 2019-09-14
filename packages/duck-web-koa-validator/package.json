@@ -1,7 +1,6 @@
 {
   "name": "@or-change/duck-web-koa-validator",
   "version": "0.1.1",
-  "private": true,
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/or-change/duck#readme",
@@ -18,11 +17,14 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
+    "@or-change/duck": "^0.3.1",
     "@or-change/duck-web-koa": "^0.2.0",
     "@or-change/duck-web-koa-router": "^0.1.1",
     "mocha": "^6.2.0"

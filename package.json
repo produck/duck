@@ -1,9 +1,9 @@
 {
-  "name": "@or-change/duck-packages",
   "private": true,
   "scripts": {
     "test": "lerna run test --parallel",
     "lint": "eslint --fix packages/**/*.js",
+    "dev:install": "lerna bootstrap --hoist",
     "prepublish": "npm run lint && npm run test"
   },
   "devDependencies": {

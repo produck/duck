@@ -11,8 +11,6 @@ DuckLog.Appender = {
 
 module.exports = DuckLog;
 
-function NOOP () {}
-
 function DuckLog() {
 	let configurable = true;
 
@@ -32,7 +30,7 @@ function DuckLog() {
 					finalOptions.appenders.forEach(appender => appender.write(message));
 				}
 
-				finalOptions.levels.map(function (levelName, index) {
+				finalOptions.levels.forEach(function (levelName, index) {
 					const notPrevented = finalOptions.preventLevels.indexOf(levelName) === -1;
 
 					this.push(log.map[levelName] = notPrevented ? function log(message) {
@@ -44,7 +42,7 @@ function DuckLog() {
 							time: new Date(),
 							category: finalOptions.label
 						}, message));
-					} : NOOP);
+					} : () => {});
 				}, log.list);
 
 				const { defaultLevel } = finalOptions;

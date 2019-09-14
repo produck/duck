@@ -4,30 +4,16 @@ const Ajv = require('ajv');
 const debug = require('debug')('duck:web:koa:validator');
 
 const SCOPES = [
-	{
-		name: 'Body',
-		getData(ctx) {
-			return ctx.request.body;
-		}
-	},
-	{
-		name: 'Query',
-		getData(ctx) {
-			return ctx.request.query;
-		}
-	},
-	{
-		name: 'Headers',
-		getData(ctx) {
-			return ctx.request.headers;
-		}
-	}
+	{ name: 'Body', key: 'body' },
+	{ name: 'Query', key: 'query' }
 ];
 
+function ERROR_HANDLER(ctx, errors) {
+	return ctx.throw(400, JSON.stringify(errors, null, '  '));
+}
+
 module.exports = function DuckWebKoaValidator() {
-
-	return function install(_injection, context) {
-
+	return function install(context) {
 		function Validator(schema) {
 			const ajv = new Ajv({ allErrors: true, verbose: true });
 			
@@ -35,21 +21,22 @@ module.exports = function DuckWebKoaValidator() {
 		}
 
 		context.Validator = Validator;
-		
-		SCOPES.map(scope => function ScopeValidatorMiddleware(schema, options) {
-			const validate = Validator(schema);
+		SCOPES.forEach(scope => {
+			Validator[scope.name] = function ValidatorMiddleware(schema, errorHandler = ERROR_HANDLER) {
+				const validate = Validator(schema);
 
-			return function middleware(ctx, next) {
-				const scopeData = scope.getData(ctx);
+				return function middleware(ctx, next) {
+					const scopeData = ctx[scope.key];
 
-				if (!validate(scopeData)) {
-					//TODO create error body
+					if (!validate(scopeData)) {
+						return errorHandler(ctx, validate.errors);
+					}
 
-					return ctx.throw(400);
-				}
-
-				return next();
-			};
+					return next();
+				};
+			}
 		});
+
+		debug('DuckWebKoaValidator is installed.');
 	};
 };

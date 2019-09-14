@@ -22,6 +22,33 @@ describe('Injection::', function () {
 				message: '`initObject` MUST be an object.'
 			});
 		});
+
+		it('should with name', function () {
+			Injection({ foo: 'bar' }, 'test');
+		});
+	});
+	
+	describe('$create()', function () {
+		it('should created a child injetion successfully.', function () {
+			const root = Injection();
+
+			root.$create();
+		});
+
+		it('should prototype chain.', function () {
+			const root = Injection({ a: 1 });
+			const child0 = root.$create({ b: 2 });
+			const child1 = child0.$create({ c: 3 });
+
+			assert.equal(child1.a, 1);
+			assert.equal(child1.b, 2);
+			assert.equal(child1.c, 3);
+			assert.throws(() => child1.d);
+			root.d = 4;
+			assert.equal(child1.d, 4);
+			child0.a = 5;
+			assert.equal(child1.a, 5);
+		});
 	});
 
 	describe('proxy::', function () {
