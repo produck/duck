@@ -16,7 +16,7 @@ module.exports = function DuckWebKoaValidator() {
 	return function install(context) {
 		function Validator(schema) {
 			const ajv = new Ajv({ allErrors: true, verbose: true });
-			
+
 			return ajv.compile(schema);
 		}
 
@@ -26,7 +26,7 @@ module.exports = function DuckWebKoaValidator() {
 				const validate = Validator(schema);
 
 				return function middleware(ctx, next) {
-					const scopeData = ctx[scope.key];
+					const scopeData = ctx.request[scope.key];
 
 					if (!validate(scopeData)) {
 						return errorHandler(ctx, validate.errors);
