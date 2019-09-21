@@ -1,0 +1,28 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"Extension": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"normalize": {
+					"instanceof": "Function"
+				}
+			}
+		},
+		"IExtender": {
+			"instanceof": "Function"
+		},
+		"IRegistry": {
+			"instanceof": "Function"
+		},
+		"Extender": {
+			"instanceof": "Function"
+		}
+	},
+	"required": [
+		"IExtender",
+		"extend"
+	]
+}
