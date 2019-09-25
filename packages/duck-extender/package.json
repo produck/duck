@@ -1,9 +1,9 @@
 {
   "name": "@or-change/duck-extender",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "> TODO: description",
-	"author": "ChaosLee <lichao@or-change.cn>",
-	"private": true,
+  "author": "ChaosLee <lichao@or-change.cn>",
+  "private": true,
   "homepage": "https://github.com/or-change/duck#readme",
   "license": "MIT",
   "main": "index.js",
@@ -18,16 +18,15 @@
     "type": "git",
     "url": "git+https://github.com/or-change/duck.git"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
-		"mocha": "^6.2.0"
+    "mocha": "^6.2.0"
   },
   "dependencies": {
-		"@or-change/duck": "^0.4.0",
-		"debug": "^4.1.1"
+    "@or-change/duck": "^0.4.0",
+    "debug": "^4.1.1"
   }
 }
