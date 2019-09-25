@@ -1,6 +1,5 @@
 'use strict';
 
-const EventEmitter = require('events');
 const debug = require('debug')('duck');
 
 const Normalizer = require('./src/Normalizer');
@@ -15,52 +14,46 @@ Duck.Injection = Injection;
 Duck.Validator = Validator;
 module.exports = Duck;
 
-function Duck(options, callback = () => {}) {
+function Duck(options, Instance = () => {}) {
 	const finalOptions = normalize(options);
 
 	debug('Creating a duck id=`%s`', finalOptions.id);
 
-	const product = Object.defineProperties(new EventEmitter(), {
-		meta: {
-			get() {
-				return {
-					id: finalOptions.id,
-					name: finalOptions.name,
-					namespace: finalOptions.namespace,
-					version: finalOptions.version,
-					description: finalOptions.description
-				};
-			}
+	const product = {
+		get meta() {
+			return {
+				id: finalOptions.id,
+				name: finalOptions.name,
+				namespace: finalOptions.namespace,
+				version: finalOptions.version,
+				description: finalOptions.description
+			};
 		},
-		components: {
-			get() {
-				return Object.keys(components.metas).map(id => {
-					const meta = components.metas[id];
+		get components() {
+			return Object.keys(components.metas).map(id => {
+				const meta = components.metas[id];
 
-					return {
-						id: meta.id,
-						name: meta.name,
-						description: meta.description,
-						details: meta.getDetails()
-					};
-				});
-			}
-		},
-		duck: {
-			get() {
 				return {
-					version: meta.version,
-					peerDependencies: meta.peerDependencies
+					id: meta.id,
+					name: meta.name,
+					description: meta.description,
+					details: meta.getDetails()
 				};
-			}
+			});
+		},
+		get duck() {
+			return {
+				version: meta.version,
+				peerDependencies: meta.peerDependencies
+			};
 		}
-	});
+	};
 
 	const initObject = Object.assign({ product }, finalOptions.injection);
-	const injection = Injection(initObject, 'duck');
+	const baseInjection = Injection('Duck.Base', initObject);
 
 	debug('The injection of duck has been created.');
-	
+
 	const components = {
 		metas: {},
 		installerList: [],
@@ -68,7 +61,7 @@ function Duck(options, callback = () => {}) {
 	};
 
 	finalOptions.components.forEach(component => {
-		const { 
+		const {
 			id,
 			name,
 			version,
@@ -90,22 +83,25 @@ function Duck(options, callback = () => {}) {
 		components.installerList.push(install);
 		components.createdList.push(created);
 	});
-	debug('Components options has been registered.');
 
-	components.installerList.forEach(install => install(injection));
+	debug('Components options has been registered.');
+	components.installerList.forEach(install => install(baseInjection));
 	debug('`components.install()` has been called.');
-	finalOptions.installed(injection);
+	finalOptions.installed(baseInjection);
 	debug('`options.installed()` has been called.');
-	Object.freeze(injection);
+
+	const installedInjection = baseInjection.$create('Duck.Installed');
+
 	debug('The injection of duck has been freezen.');
-	components.createdList.forEach(created => created(injection));
+	components.createdList.forEach(created => created(installedInjection));
 	debug('`components.created` hooks of components has been called.');
 
 	/**
-	 * Allow to access all injection for final assembling.
+	 * Allow to access all dependencies on `installed injection` in final factory.
 	 */
-	callback(injection);
-	debug('The final `callback()` has been called.');
+	const instance = Instance(installedInjection);
 
-	return product;
+	debug('The final `Instance()` factory has been called.');
+
+	return instance;
 }

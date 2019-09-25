@@ -13,14 +13,14 @@ function ERROR_HANDLER(ctx, errors) {
 }
 
 module.exports = function DuckWebKoaValidator() {
-	return function install(context) {
+	return function install(injection) {
 		function Validator(schema) {
 			const ajv = new Ajv({ allErrors: true, verbose: true });
 
 			return ajv.compile(schema);
 		}
 
-		context.Validator = Validator;
+		injection.Validator = Validator;
 		SCOPES.forEach(scope => {
 			Validator[scope.name] = function ValidatorMiddleware(schema, errorHandler = ERROR_HANDLER) {
 				const validate = Validator(schema);

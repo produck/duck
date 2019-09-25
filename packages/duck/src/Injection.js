@@ -11,6 +11,17 @@ function getInjectionRegistered(injection) {
 	return registered;
 }
 
+function InjectionErrorMessage(injection, message) {
+	const chain = [];
+
+	while (injection !== Object.prototype) {
+		chain.push(injection[INJECTION.SYMBOL.NAME]);
+		injection = Object.getPrototypeOf(injection);
+	}
+
+	return `Injection path:\n${chain.join(' --|> ')}\n${message}`;
+}
+
 const INJECTION = {
 	SYMBOL: {
 		NAME: Symbol('Injection.name'),
@@ -21,28 +32,28 @@ const INJECTION = {
 			const registered = getInjectionRegistered(target);
 
 			if (typeof key !== 'symbol' && !registered[key]) {
-				throw new Error(`The dependence named '${String(key)}' is NOT defined.`);
+				throw new Error(InjectionErrorMessage(target, `The dependence named '${String(key)}' is NOT defined.`));
 			}
-	
+
 			return Reflect.get(target, key, receiver);
 		},
 		set(target, key, value, receiver) {
 			if (typeof key === 'symbol') {
-				throw new Error('The dependence key in injection can NOT be a symbol.');
+				throw new Error(InjectionErrorMessage('The dependence key in injection can NOT be a symbol.'));
 			}
 
 			if (Object.prototype.hasOwnProperty.call(target, key)) {
-				throw new Error(`The dependence named '${String(key)}' has been defined.`);
+				throw new Error(InjectionErrorMessage(`The dependence named '${String(key)}' has been defined.`));
 			}
 
 			target[INJECTION.SYMBOL.REGISTERED][key] = true;
-			
+
 			return Reflect.set(target, key, value, receiver);
 		}
 	}
 };
 
-function Injection(initObject = {}, name = '<anonymous>', _prototype = Object.prototype) {
+function Injection(name = '<anonymous>', initObject = {}, _prototype = Object.prototype) {
 	if (typeof initObject !== 'object') {
 		throw new TypeError('`initObject` MUST be an object.');
 	}
@@ -52,10 +63,10 @@ function Injection(initObject = {}, name = '<anonymous>', _prototype = Object.pr
 
 	Object.assign(injection, initObject);
 	injection[INJECTION.SYMBOL.NAME] = name;
-	injection.$create = function createChild(initObject, name) {
-		return Injection(initObject, name, injection);
+	injection.$create = function createChild(name, initObject) {
+		return Injection(name, initObject, injection);
 	};
-	
+
 	const registered = injection[INJECTION.SYMBOL.REGISTERED] = { then: true, inspect: true };
 
 	Object.keys(injection).forEach(key => registered[key] = true);
@@ -64,13 +75,3 @@ function Injection(initObject = {}, name = '<anonymous>', _prototype = Object.pr
 }
 
 module.exports = Injection;
-
-// const base = Injection({ a: 1 });
-// const c0 = base.$create({ b: 2 });
-// const c1 = c0.$create({ c: 3 });
-
-// base.d = 4;
-// c1.e = 5;
-// c1.a =6;
-
-// c1.a

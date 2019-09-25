@@ -15,17 +15,19 @@ module.exports = function DuckDatahub(modelOptionsList) {
 		name: 'Datahub',
 		description: 'Database middle layout.',
 		install(injection) {
+			const datahubInjection = injection.$create('Datahub', context);
+
 			finalOptions.forEach(options => {
 				Linkers[options.id] = function DatahubLinker(adaptor) {
 					const models = {};
-			
+
 					for (const symbol in options.models) {
-						const modelOptions = options.models[symbol](adaptor, injection, context);
-			
+						const modelOptions = options.models[symbol](adaptor, datahubInjection);
+
 						modelOptions.symbol = symbol;
 						models[symbol] = modelOptions;
 					}
-			
+
 					return Datahub.create({
 						id: options.id,
 						models
@@ -36,8 +38,8 @@ module.exports = function DuckDatahub(modelOptionsList) {
 			debug('DuckDatahub has handled all models options.');
 
 			injection.Datahub = function link(id, adaptor) {
-				debug('Creating a new datahub instance by linkerId=`%s`.', id);
-				
+				debug('Creating a new datahub instance by linker, Id=`%s`.', id);
+
 				const Linker = Linkers[id];
 
 				if (!Linker) {
@@ -46,9 +48,6 @@ module.exports = function DuckDatahub(modelOptionsList) {
 
 				return Linkers[id](adaptor);
 			};
-
-			Object.freeze(Linkers);
-			Object.freeze(context);
 		}
 	};
 };

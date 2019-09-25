@@ -19,19 +19,19 @@ module.exports = function KoaRouterPlugin(options) {
 	const KoaRouter = require(KoaRouterMouduleName);
 	const finalOptions = normalize(options);
 
-	return function install(context, injection) {
-		context.KoaRouter = KoaRouter;
-		
+	return function install(injection) {
+		injection.KoaRouter = KoaRouter;
+
 		function buildRouter(options) {
 			const koaRouterOptions = {};
-	
+
 			if (options.prefix) {
 				koaRouterOptions.prefix = options.prefix;
 			}
-	
+
 			const router = new KoaRouter(koaRouterOptions);
-	
-			options.Router(router, context, injection);
+
+			options.Router(router, injection);
 			options.use.forEach(optionsNode => {
 				const childRouter = buildRouter(optionsNode);
 
@@ -44,8 +44,8 @@ module.exports = function KoaRouterPlugin(options) {
 
 			return router;
 		}
-		
-		context.AppRouter = function ApplicationRouter() {
+
+		injection.AppRouter = function ApplicationRouter() {
 			return buildRouter(finalOptions);
 		};
 	};

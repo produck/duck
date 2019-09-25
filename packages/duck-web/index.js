@@ -9,19 +9,13 @@ module.exports = function DuckWeb(options) {
 	const ApplicationOptionsList = normalize(options);
 	const applications = {};
 
-	let ready = false;
-
 	return {
 		id: 'com.oc.duck.web',
 		name: 'WebApplication',
 		description: 'Used to guide developer to create a web application.',
-		install(injection) {
-			injection.Web = Object.freeze({
+		created(installedInjection) {
+			installedInjection.Web = {
 				Application(id, ...args) {
-					if (!ready) {
-						throw new Error('Could NOT instant any application safely now.');
-					}
-
 					const Application = applications[id];
 
 					if (!Application) {
@@ -32,20 +26,18 @@ module.exports = function DuckWeb(options) {
 				},
 				Http: http,
 				Https: https
-			});
+			};
+
+			const injection = installedInjection.$create('DuckWeb');
 
 			debug('Creating all `Application()` factory from `options`.');
+
 			ApplicationOptionsList.forEach(options => {
 				debug('Building Application id=`%s`', options.id);
 				applications[options.id] = options.Application(injection);
 			});
+
 			debug('All factory has been built %s in total.', ApplicationOptionsList.length);
-			Object.freeze(applications);
-			debug('`Application()` factory store has been freezen. Ready!');
-			
-		},
-		created() {
-			ready = true;
 		},
 		getDetails() {
 			return {

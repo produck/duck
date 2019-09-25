@@ -1,6 +1,5 @@
 'use strict';
 
-const { Injection } = require('@or-change/duck');
 const Koa = require('koa');
 const normalizePlugins = require('./src/normalizePluginsOptions');
 
@@ -18,20 +17,20 @@ module.exports = function KoaApplicationProvider(factory = DEFAULT_FACTORY, opti
 	if (typeof factory !== 'function') {
 		throw new Error('Argument 0 `factory` MUST be a function.');
 	}
-	
+
 	const finalOptions = normalizePlugins(options);
 
-	return function Application(injection) {
-		const context = Injection();
+	return function Application(webInjection) {
+		const webKoaInjection = webInjection.$create('DuckWebKoa');
 
-		finalOptions.plugins.forEach(install => install(context, injection));
-		finalOptions.installed(context, injection);
+		finalOptions.plugins.forEach(install => install(webKoaInjection));
+		finalOptions.installed(webKoaInjection);
 
 		return function KoaApplication(options) {
 			const app = new Koa();
-		
-			factory(app, context, injection, options);
-			
+
+			factory(app, webKoaInjection, options);
+
 			return app.callback();
 		};
 	};
