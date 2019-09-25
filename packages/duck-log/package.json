@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@or-change/duck": "^0.4.0",
+    "dateformat": "^3.0.3",
     "debug": "^4.1.1",
     "streamroller": "^2.1.0"
   },

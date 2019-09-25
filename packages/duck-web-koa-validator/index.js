@@ -34,7 +34,7 @@ module.exports = function DuckWebKoaValidator() {
 
 					return next();
 				};
-			}
+			};
 		});
 
 		debug('DuckWebKoaValidator is installed.');

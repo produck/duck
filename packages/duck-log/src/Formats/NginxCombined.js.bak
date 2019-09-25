@@ -1,0 +1,31 @@
+'use strict';
+
+/**
+$remote_addr变量：记录了客户端的IP地址（普通情况下）。
+$remote_user变量：当nginx开启了用户认证功能后，此变量记录了客户端使用了哪个用户进行了认证。
+$time_local变量：记录了当前日志条目的时间。
+$request变量：记录了当前http请求的方法、url和http协议版本。
+$status变量：记录了当前http请求的响应状态，即响应的状态码，比如200、404等响应码，都记录在此变量中。
+$body_bytes_sent变量：记录了nginx响应客户端请求时，发送到客户端的字节数，不包含响应头的大小。
+$http_referer变量：记录了当前请求是从哪个页面过来的，比如你点了A页面中的超链接才产生了这个请求，那么此变量中就记录了A页面的url。
+$http_user_agent变量：记录了客户端的软件信息，比如，浏览器的名称和版本号。
+ */
+
+module.exports = function NginxCombinedFormat(adapter) {
+
+	return function format(meta, message) {
+		const {
+			clientIP,
+			method,
+			href,
+			protocol,
+			status,
+			bodyBytesSent,
+			referer,
+			userAgent,
+			XFF //X-Forwarded-For
+		} = adapter(message);
+
+		return `[${meta.time.toISOString()}] [${meta.level.name.toUpperCase()}] [${meta.category}]: ${message}`;
+	};
+};

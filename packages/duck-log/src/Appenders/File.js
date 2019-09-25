@@ -13,7 +13,7 @@ const normalize = Normalizer({
 	handler: options => {
 		const finalOptions = {
 			file: {
-				pathname: path.resolve('log/test.log'),
+				pathname: path.resolve('logs/default.log'),
 				size: 64 * 1024,
 				number: 4
 			},

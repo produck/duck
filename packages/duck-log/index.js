@@ -9,56 +9,69 @@ DuckLog.Appender = {
 	Console: require('./src/Appenders/Console')
 };
 
+DuckLog.Format = {
+	ApacheCLF: require('./src/formats/ApacheCLF'),
+	ApacheCLFWithVhost: require('./src/Formats/ApacheCLFWithVhost'),
+	ApacheECLF: require('./src/Formats/ApacheECLF'),
+	// NginxCombined: require('./src/Formats/NginxCombined'),
+	InternalError: require('./src/Formats/InternalError'),
+	General: require('./src/formats/General')
+};
+
+DuckLog.Adapter = {
+	HttpServer: require('./src/Adapters/HttpServer')
+};
+
 module.exports = DuckLog;
 
-function DuckLog() {
-	let configurable = true;
+function DuckLog(loggersOptions) {
+	const finalLoggersOptions = normalizeLoggerOptions(loggersOptions);
 
 	return {
 		id: 'com.orchange.duck.log',
 		name: 'DuckLogger',
 		install(injection) {
-			injection.Logger = Object.freeze(function Logger(options) {
-				if (!configurable) {
-					throw new Error('Configuration can only be done during component installation.');
-				}
+			const Log = injection.Log = {};
 
-				const finalOptions = normalizeLoggerOptions(options);
-				const log = { list: [], map: {} };
-				
-				function append(message) {
-					finalOptions.appenders.forEach(appender => appender.write(message));
-				}
+			for (const categoryName in finalLoggersOptions) {
+				const options = finalLoggersOptions[categoryName];
 
-				finalOptions.levels.forEach(function (levelName, index) {
-					const notPrevented = finalOptions.preventLevels.indexOf(levelName) === -1;
-
-					this.push(log.map[levelName] = notPrevented ? function log(message) {
-						return append(finalOptions.format({
-							level: {
-								name: levelName,
-								number: index
-							},
-							time: new Date(),
-							category: finalOptions.label
-						}, message));
-					} : () => {});
-				}, log.list);
-
-				const { defaultLevel } = finalOptions;
-				const defaultLog = defaultLevel ? log.map[defaultLevel] : log.list[0];
-
-				function logger(message) {
-					return defaultLog(message);
-				}
-
-				Object.assign(logger, log.map);
-
-				return logger;
-			});
-		},
-		created() {
-			configurable = false;
+				Log[categoryName] = Logger(options);
+			}
 		}
 	};
+}
+
+function Logger(options) {
+	const log = { list: [], map: {} };
+
+	function append(message) {
+		options.appenders.forEach(appender => appender.write(message));
+	}
+
+	options.levels.forEach(function (levelName, index) {
+		const notPrevented = options.preventLevels.indexOf(levelName) === -1;
+
+		this.push(log.map[levelName] = notPrevented ? function log(message) {
+			return append(options.format({
+				level: {
+					name: levelName,
+					number: index
+				},
+				time: new Date(),
+				category: options.label
+			}, message));
+		} : () => {});
+	}, log.list);
+
+	const { defaultLevel } = options;
+	const defaultLog = defaultLevel ? log.map[defaultLevel] : log.list[0];
+
+	function logger(message) {
+		return defaultLog(message);
+	}
+
+	Object.assign(logger, log.map);
+
+	return logger;
 }
