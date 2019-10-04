@@ -24,9 +24,9 @@
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
-    "electron": "^6.0.9",
+    "electron": "^6.0.11",
     "electron-mocha": "^8.1.2",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.1"
   },
   "peerDependencies": {
     "electron": ">= 5"

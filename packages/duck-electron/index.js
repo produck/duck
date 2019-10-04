@@ -18,8 +18,8 @@ function DuckElectron(bootstrap, plugins = []) {
 		name: 'DuckElectron',
 		description: '',
 		install(injection) {
-			electron.injection = injection.$create('DuckElectron');
 			injection.Electron = Electron;
+			electron.injection = injection.$create('DuckElectron');
 			plugins.forEach(install => install(electron.injection));
 		},
 		created() {

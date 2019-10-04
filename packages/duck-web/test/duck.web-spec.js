@@ -49,7 +49,7 @@ describe('DuckWeb::', function () {
 						description: 'test',
 						Application() {
 							return function TestingApplication() {
-	
+
 							};
 						}
 					},
@@ -58,7 +58,7 @@ describe('DuckWeb::', function () {
 						description: 'test2',
 						Application() {
 							return function TestingApplication() {
-	
+
 							};
 						}
 					}
@@ -92,7 +92,7 @@ describe('DuckWeb::', function () {
 					],
 					installed({ Web }) {
 						assert.throws(() => Web.Application('Default'), {
-							message: 'Could NOT instant any application safely now.'
+							message: 'The application specified with id=\'Default\' does not exist.'
 						});
 
 						done();
@@ -111,7 +111,7 @@ describe('DuckWeb::', function () {
 					done();
 				});
 			});
-			
+
 			it('should throw error if application is NOT existed.', function (done) {
 				Duck({
 					id: 'test',

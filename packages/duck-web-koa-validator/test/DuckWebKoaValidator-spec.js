@@ -21,7 +21,7 @@ describe('DuckWebKoaValidator', function () {
 							plugins: [
 								DuckWebKoaRouter({
 									prefix: '/api',
-									Router(router, { Validator }, { product }) {
+									Router(router, { Validator, product }) {
 										const validate = Validator.Query({
 											type: 'object',
 											properties: {

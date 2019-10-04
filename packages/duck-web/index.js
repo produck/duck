@@ -13,8 +13,8 @@ module.exports = function DuckWeb(options) {
 		id: 'com.oc.duck.web',
 		name: 'WebApplication',
 		description: 'Used to guide developer to create a web application.',
-		created(installedInjection) {
-			installedInjection.Web = {
+		install(injection) {
+			injection.Web = {
 				Application(id, ...args) {
 					const Application = applications[id];
 
@@ -27,12 +27,15 @@ module.exports = function DuckWeb(options) {
 				Http: http,
 				Https: https
 			};
-
-			const injection = installedInjection.$create('DuckWeb');
+		},
+		created(installedInjection) {
+			const duckWebInjection = installedInjection.$create('DuckWeb');
 
 			debug('Creating all `Application()` factory from `options`.');
 
 			ApplicationOptionsList.forEach(options => {
+				const injection = duckWebInjection.$create(`DuckWeb.Application<${options.id}>`);
+
 				debug('Building Application id=`%s`', options.id);
 				applications[options.id] = options.Application(injection);
 			});

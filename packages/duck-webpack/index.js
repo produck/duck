@@ -33,7 +33,6 @@ module.exports = function DuckWebpack(TemplatesOptions) {
 
 			Webpack.merge = merge;
 			injection.Webpack = Object.freeze(Webpack);
-			Object.freeze(TemplatesOptions);
 			debug('Webpack template manager ready.');
 		}
 	};

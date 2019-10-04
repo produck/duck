@@ -7,14 +7,14 @@ const DuckWeb = require('@or-change/duck-web');
 const DuckWebKoa = require('@or-change/duck-web-koa');
 const DuckWebKoaRouter = require('../');
 
-function APIRouter(router, _context, { foo }) {
+function APIRouter(router, { foo }) {
 	router.get('/', ctx => {
 		ctx.body = foo;
 		ctx.status = 201;
 	});
 }
 
-function TestRouter(router, _context, { baz }) {
+function TestRouter(router, { baz }) {
 	router.get('/', ctx => {
 		ctx.body = baz;
 		ctx.status = 202;

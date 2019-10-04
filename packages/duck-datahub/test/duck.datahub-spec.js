@@ -4,8 +4,8 @@ const Duck = require('@or-change/duck');
 const DuckDatahub = require('../index');
 const assert = require('assert');
 
-const Account = function Account(adaptor, _injection, context) {
-	assert.deepEqual(context, {});
+const Account = function Account(adaptor, injection) {
+	assert(injection);
 
 	return {
 		schemas: {
@@ -66,7 +66,7 @@ describe('Datahub::', function() {
 					}
 				});
 			});
-	
+
 			it('should be accessed in `callback`.', function (done) {
 				Duck({
 					id: '',
@@ -78,7 +78,7 @@ describe('Datahub::', function() {
 					done();
 				});
 			});
-	
+
 			it('should accessing an existed linker successfully.', function () {
 				Duck({
 					id: 'com.oc.DuckDatahub',
@@ -95,7 +95,7 @@ describe('Datahub::', function() {
 					}
 				});
 			});
-	
+
 			it('should throw error if accessing linker not defined.', function () {
 				Duck({
 					id: 'com.oc.DuckDatahub',
@@ -116,7 +116,7 @@ describe('Datahub::', function() {
 					}
 				});
 			});
-	
+
 			it('should instant a datahub with linker by any adaptor.', function (done) {
 				Duck({
 					id: 'com.oc.DuckDatahub',
@@ -125,12 +125,11 @@ describe('Datahub::', function() {
 							{
 								id: 'com.oc.duck.test',
 								models: {
-									Account(adaptor, injection, context) {
+									Account(adaptor, injection) {
 										assert.equal(adaptor.foo, 'bar');
 										assert(injection);
-										assert(context);
 										done();
-	
+
 										return {
 											schemas: {
 												type: 'object',

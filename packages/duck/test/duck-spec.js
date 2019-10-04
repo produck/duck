@@ -2,7 +2,6 @@
 
 const Duck = require('../');
 const assert = require('assert');
-const EventEmitter = require('events');
 const meta = require('../package.json');
 
 describe('Duck::', function () {
@@ -49,17 +48,6 @@ describe('Duck::', function () {
 					id: 'com.orchange.duck.test',
 				}, ({ product }) => {
 					assert.equal(product.meta.id, 'com.orchange.duck.test');
-					done();
-				});
-			});
-
-			it('should NOT append new dependence in callback.', function (done) {
-				Duck({
-					id: 'com.orchange.duck.test',
-				}, ({ injection }) => {
-					assert.throws(() => {
-						injection.test = {};
-					});
 					done();
 				});
 			});
@@ -113,15 +101,6 @@ describe('Duck::', function () {
 		});
 
 		describe('(preset)product::', function () {
-			it('should be a event emitter.', function (done) {
-				Duck({
-					id: 'com.orchange.duck.test',
-				}, ({ product }) => {
-					assert(product instanceof EventEmitter);
-					done();
-				});
-			});
-
 			describe('#meta', function () {
 				it('should get product info correctly.', function (done) {
 					Duck({
@@ -157,7 +136,7 @@ describe('Duck::', function () {
 					});
 				});
 			});
-		
+
 			describe('#components', function () {
 				it('should get [] if no component installed.', function (done) {
 					Duck({
@@ -199,7 +178,7 @@ describe('Duck::', function () {
 					});
 				});
 			});
-		
+
 			describe('#duck', function () {
 				it('should get current duck packge info.', function (done) {
 					Duck({

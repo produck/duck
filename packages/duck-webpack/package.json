@@ -24,7 +24,7 @@
     "url": "https://github.com/or-change/duck/issues"
   },
   "devDependencies": {
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.1"
   },
   "dependencies": {
     "@or-change/duck": "^0.4.0",

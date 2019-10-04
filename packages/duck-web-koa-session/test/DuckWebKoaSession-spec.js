@@ -15,7 +15,7 @@ describe('DuckWebKoaSession::', function () {
 				DuckWeb([
 					{
 						id: 'Testing',
-						Application: DuckWebKoa((app, { Session }, { product }) => {
+						Application: DuckWebKoa((app, { Session, product }) => {
 							Session(app);
 
 							app.use(ctx => {
@@ -40,13 +40,13 @@ describe('DuckWebKoaSession::', function () {
 
 			http.request(`http://127.0.0.1:${server.address().port}`, res => {
 				assert.equal(res.statusCode, 302);
-				
+
 				const request = http.request(`http://127.0.0.1:${server.address().port}`, res => {
 					assert.equal(res.statusCode, 200);
 					server.close();
 					done();
 				});
-				
+
 				request.setHeader('Cookie', res.headers['set-cookie']);
 				request.end();
 			}).end();

@@ -3,7 +3,7 @@
 const Koa = require('koa');
 const normalizePlugins = require('./src/normalizePluginsOptions');
 
-function DEFAULT_FACTORY(app, _context, { product }) {
+function DEFAULT_FACTORY(app, { product }) {
 	app.use(ctx => {
 		ctx.body = 'hello, world!\n\nProduct Meta\n\n';
 		ctx.body += JSON.stringify(product.meta, null, '  ');

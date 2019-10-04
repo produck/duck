@@ -26,7 +26,7 @@ describe('DuckWebKoa::', function () {
 				installed() {}
 			});
 		});
-		
+
 		it('should throw error with invalid factory or plugins', function () {
 			assert.throws(() => DuckWebKoa(1), {
 				message: 'Argument 0 `factory` MUST be a function.'
@@ -57,18 +57,16 @@ describe('DuckWebKoa::', function () {
 		});
 
 		describe('factory::', function () {
-			it('should access app, injection, context when factory().', function (done) {
+			it('should access app, injection when factory().', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
 					components: [
 						DuckWeb([
 							{
 								id: 'DuckKoaApp',
-								Application: DuckWebKoa((app, context, { injection }, options) => {
+								Application: DuckWebKoa((app, { injection }, options) => {
 									assert(app);
 									assert(injection.product);
-									assert(context);
-									assert(Object.isFrozen(injection));
 									assert.deepEqual(options, { a: 1 });
 									done();
 								})
@@ -79,7 +77,7 @@ describe('DuckWebKoa::', function () {
 					Web.Application('DuckKoaApp', { a: 1 });
 				});
 			});
-	
+
 			it('should respond successfully by default factory().', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
@@ -94,7 +92,7 @@ describe('DuckWebKoa::', function () {
 				}, ({ Web }) => {
 					const demo = Web.Application('DuckKoaApp');
 					const server = Web.Http.createServer(demo).listen();
-	
+
 					http.request(`http://127.0.0.1:${server.address().port}`, res => {
 						assert.equal(res.statusCode, 200);
 						server.close();
@@ -102,7 +100,7 @@ describe('DuckWebKoa::', function () {
 					}).end();
 				});
 			});
-	
+
 			it('should respond successfully by with assigned factory().', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
@@ -121,7 +119,7 @@ describe('DuckWebKoa::', function () {
 				}, ({ Web }) => {
 					const demo = Web.Application('DuckKoaApp');
 					const server = Web.Http.createServer(demo).listen();
-	
+
 					http.request(`http://127.0.0.1:${server.address().port}`, res => {
 						assert.equal(res.statusCode, 400);
 						server.close();
@@ -132,47 +130,23 @@ describe('DuckWebKoa::', function () {
 		});
 
 		describe('plugins::', function () {
-			it('should be that injection, context can be access in plugin install.', function (done) {
+			it('should be that injection can be access in plugin install.', function (done) {
 				Duck({
 					id: 'com.orchange.DuckWebKoa.test',
 					components: [
 						DuckWeb([
 							{
 								id: 'DuckKoaApp',
-								Application: DuckWebKoa((_app, context) => {
-									assert.equal(context.foo, 'bar');
+								Application: DuckWebKoa((_app, injection) => {
+									assert.equal(injection.foo, 'bar');
 									done();
 								}, {
 									plugins: [
-										function install(context, injection) {
-											context.foo = 'bar';
+										function install(injection) {
+											injection.foo = 'bar';
 											assert(injection.product);
 										}
 									]
-								})
-							}
-						])
-					]
-				}, ({ Web }) => {
-					Web.Application('DuckKoaApp');
-				});
-			});
-			
-			it('should be that injection, context can be access in `options.installed`.', function (done) {
-				Duck({
-					id: 'com.orchange.DuckWebKoa.test',
-					components: [
-						DuckWeb([
-							{
-								id: 'DuckKoaApp',
-								Application: DuckWebKoa((_app, context) => {
-									assert.equal(context.a, 'b');
-									done();
-								}, {
-									installed(context, injection) {
-										context.a = 'b';
-										assert(injection);
-									}
 								})
 							}
 						])

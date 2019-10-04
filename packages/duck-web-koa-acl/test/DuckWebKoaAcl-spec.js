@@ -26,12 +26,12 @@ describe('DuckWebKoaAcl::', function () {
 				DuckWeb([
 					{
 						id: 'Testing',
-						Application: DuckWebKoa((app, { AccessControl }, { product }) => {
+						Application: DuckWebKoa((app, { AccessControl, product }) => {
 							app.use(AccessControl('duck.test')).use(ctx => {
 								ctx.body = product.meta;
 							});
 						}, {
-							
+
 							plugins: [
 								DuckWebKoaAcl(aclOptions)
 							]

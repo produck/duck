@@ -19,7 +19,8 @@ function InjectionErrorMessage(injection, message) {
 		injection = Object.getPrototypeOf(injection);
 	}
 
-	return `Injection path:\n${chain.join(' --|> ')}\n${message}`;
+	return `${message}\n[${chain.join('] --|> [')}]`;
+
 }
 
 const INJECTION = {
@@ -39,11 +40,11 @@ const INJECTION = {
 		},
 		set(target, key, value, receiver) {
 			if (typeof key === 'symbol') {
-				throw new Error(InjectionErrorMessage('The dependence key in injection can NOT be a symbol.'));
+				throw new Error(InjectionErrorMessage(target, 'The dependence key in injection can NOT be a symbol.'));
 			}
 
 			if (Object.prototype.hasOwnProperty.call(target, key)) {
-				throw new Error(InjectionErrorMessage(`The dependence named '${String(key)}' has been defined.`));
+				throw new Error(InjectionErrorMessage(target, `The dependence named '${String(key)}' has been defined.`));
 			}
 
 			target[INJECTION.SYMBOL.REGISTERED][key] = true;
@@ -53,9 +54,13 @@ const INJECTION = {
 	}
 };
 
-function Injection(name = '<anonymous>', initObject = {}, _prototype = Object.prototype) {
+function Injection(name = '<Anonymous>', initObject = {}, _prototype = Object.prototype) {
 	if (typeof initObject !== 'object') {
-		throw new TypeError('`initObject` MUST be an object.');
+		throw new TypeError('Injection() `initObject` MUST be an object.');
+	}
+
+	if (typeof name !== 'string') {
+		throw new TypeError('Injection() `name` MUST be a string.');
 	}
 
 	const injection = Object.create(_prototype);

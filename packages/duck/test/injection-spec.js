@@ -12,22 +12,30 @@ describe('Injection::', function () {
 		});
 
 		it('should create a injection successfully with initObject.', function () {
-			Injection({ foo: 'bar' });
+			Injection('test', { foo: 'bar' });
 		});
 
 		it('should throw error if initObject provided but not a object.', function () {
 			assert.throws(() => {
-				Injection(1);
+				Injection('test', 1);
 			}, {
-				message: '`initObject` MUST be an object.'
+				message: 'Injection() `initObject` MUST be an object.'
 			});
 		});
 
 		it('should with name', function () {
-			Injection({ foo: 'bar' }, 'test');
+			Injection('test', { foo: 'bar' });
+		});
+
+		it('should throw error if name is NOT a string.', function () {
+			assert.throws(() => {
+				Injection([], { foo: 'bar' });
+			}, {
+				message: 'Injection() `name` MUST be a string.'
+			});
 		});
 	});
-	
+
 	describe('$create()', function () {
 		it('should created a child injetion successfully.', function () {
 			const root = Injection();
@@ -35,10 +43,10 @@ describe('Injection::', function () {
 			root.$create();
 		});
 
-		it('should prototype chain.', function () {
-			const root = Injection({ a: 1 });
-			const child0 = root.$create({ b: 2 });
-			const child1 = child0.$create({ c: 3 });
+		it('should be prototype chain.', function () {
+			const root = Injection('base-0', { a: 1 });
+			const child0 = root.$create('1', { b: 2 });
+			const child1 = child0.$create('2', { c: 3 });
 
 			assert.equal(child1.a, 1);
 			assert.equal(child1.b, 2);
@@ -54,7 +62,7 @@ describe('Injection::', function () {
 	describe('proxy::', function () {
 
 		beforeEach(function () {
-			this.injection = Injection({
+			this.injection = Injection('test', {
 				dependenceA: { a: true },
 				dependenceB: { b: true }
 			});
@@ -70,7 +78,7 @@ describe('Injection::', function () {
 				assert.throws(() => {
 					this.injection.notExisted;
 				}, {
-					message: 'The dependence named \'notExisted\' is NOT defined.'
+					message: 'The dependence named \'notExisted\' is NOT defined.\n[test]'
 				});
 			});
 		});
@@ -84,7 +92,7 @@ describe('Injection::', function () {
 				assert.throws(() => {
 					this.injection.dependenceA = { a: true };
 				}, {
-					message: 'The dependence named \'dependenceA\' has been defined.'
+					message: 'The dependence named \'dependenceA\' has been defined.\n[test]'
 				});
 			});
 
@@ -92,8 +100,22 @@ describe('Injection::', function () {
 				assert.throws(() => {
 					this.injection[Symbol()] = {};
 				}, {
-					message: 'The dependence key in injection can NOT be a symbol.'
+					message: 'The dependence key in injection can NOT be a symbol.\n[test]'
 				});
+			});
+		});
+
+	});
+
+	describe('Error chains stack::', function () {
+		it('should [b] --|> [a] when error caught.', function () {
+			const a = Injection('a', { a: 1 });
+			const b = a.$create('b', { b: 2 });
+
+			assert.throws(() => {
+				b.injection.notExisted;
+			}, {
+				message: 'The dependence named \'notExisted\' is NOT defined.\n[b] --|> [a]'
 			});
 		});
 	});
