@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-web-koa-session",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/or-change/duck#readme",
   "devDependencies": {
-    "@or-change/duck-web": "^0.1.2",
-    "@or-change/duck-web-koa": "^0.2.1",
+    "@or-change/duck-web": "^0.2.0",
+    "@or-change/duck-web-koa": "^0.3.0",
     "koa-session": "^5.12.3",
     "mocha": "^6.2.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.4.0",
+    "@or-change/duck": "^0.5.0",
     "debug": "^4.1.1"
   }
 }
