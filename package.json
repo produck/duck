@@ -5,10 +5,11 @@
     "lint": "eslint --fix packages/**/*.js",
     "dev:install": "lerna bootstrap --hoist",
     "prepublish": "npm run lint && npm run test",
-    "docs": "vuepress dev docs"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress dev docs"
   },
   "devDependencies": {
-    "lerna": "^3.16.4",
+    "lerna": "^3.17.0",
     "vuepress": "^1.1.0"
   }
 }
