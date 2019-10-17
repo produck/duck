@@ -6,7 +6,7 @@
     "dev:install": "lerna bootstrap --hoist",
     "prepublish": "npm run lint && npm run test",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress dev docs"
+    "docs:build": "vuepress build docs"
   },
   "devDependencies": {
     "lerna": "^3.17.0",
