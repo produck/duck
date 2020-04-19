@@ -36,7 +36,7 @@ describe('DuckWebKoaSession::', function () {
 				])
 			]
 		}, ({ Web }) => {
-			const server = Web.Http.createServer(Web.Application('Testing')).listen();
+			const server = http.createServer(Web.Application('Testing')).listen();
 
 			http.request(`http://127.0.0.1:${server.address().port}`, res => {
 				assert.equal(res.statusCode, 302);

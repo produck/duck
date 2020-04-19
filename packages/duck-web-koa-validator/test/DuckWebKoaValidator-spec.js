@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('assert');
+const http = require('http');
 const Duck = require('@or-change/duck');
 const DuckWeb = require('@or-change/duck-web');
 const DuckWebKoa = require('@or-change/duck-web-koa');
@@ -45,9 +46,9 @@ describe('DuckWebKoaValidator', function () {
 			]
 		}, ({ Web }) => {
 			const app = Web.Application('DuckWebKoaValidatorTesting');
-			const server = Web.Http.createServer(app).listen();
+			const server = http.createServer(app).listen();
 
-			Web.Http.request(`http://127.0.0.1:${server.address().port}/api/product`, res => {
+			http.request(`http://127.0.0.1:${server.address().port}/api/product`, res => {
 				assert.equal(res.statusCode, 400);
 				server.close();
 				done();

@@ -7,7 +7,6 @@ const normalize = require('./src/normalizeOptions');
 module.exports = function DuckDatahub(modelOptionsList) {
 	const finalOptions = normalize(modelOptionsList);
 
-	const context = {};
 	const Linkers = {};
 
 	return {
@@ -15,7 +14,7 @@ module.exports = function DuckDatahub(modelOptionsList) {
 		name: 'Datahub',
 		description: 'Database middle layout.',
 		install(injection) {
-			const datahubInjection = injection.$create('Datahub', context);
+			const datahubInjection = injection.$create('Datahub');
 
 			finalOptions.forEach(options => {
 				Linkers[options.id] = function DatahubLinker(adaptor) {

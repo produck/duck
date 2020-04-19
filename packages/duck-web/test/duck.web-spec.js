@@ -4,7 +4,6 @@ const assert = require('assert');
 const DuckWeb = require('../');
 const Duck = require('@or-change/duck');
 const http = require('http');
-const https = require('https');
 
 describe('DuckWeb::', function () {
 	describe('constructor()', function () {
@@ -78,8 +77,6 @@ describe('DuckWeb::', function () {
 				}, ({ Web }) => {
 					assert(Web);
 					assert(Web.Application);
-					assert.equal(Web.Http, http);
-					assert.equal(Web.Https, https);
 					done();
 				});
 			});
@@ -134,7 +131,7 @@ describe('DuckWeb::', function () {
 						DuckWeb()
 					],
 				}, ({ Web }) => {
-					const server = Web.Http.createServer(Web.Application('Default')).listen();
+					const server = http.createServer(Web.Application('Default')).listen();
 					const port = server.address().port;
 
 					http.request(`http://127.0.0.1:${port}`, res => {

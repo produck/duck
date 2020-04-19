@@ -19,7 +19,12 @@ function Duck(options, Instance = () => {}) {
 
 	debug('Creating a duck id=`%s`', finalOptions.id);
 
-	const product = {
+	const baseInjection = Injection('Duck.Base');
+
+	/**
+	 * Generate product context
+	 */
+	baseInjection.product =  {
 		get meta() {
 			return {
 				id: finalOptions.id,
@@ -49,11 +54,9 @@ function Duck(options, Instance = () => {}) {
 		}
 	};
 
-	const initObject = Object.assign({ product }, finalOptions.injection);
-	const baseInjection = Injection('Duck.Base', initObject);
-
-	debug('The injection of duck has been created.');
-
+	/**
+	 * Handle components
+	 */
 	const components = {
 		metas: {},
 		installerList: [],

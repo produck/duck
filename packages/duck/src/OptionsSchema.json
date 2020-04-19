@@ -20,9 +20,6 @@
 		"description": {
 			"type": "string"
 		},
-		"injection": {
-			"type": "object"
-		},
 		"installed": {
 			"instanceof": "Function"
 		},

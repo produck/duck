@@ -54,22 +54,22 @@ const INJECTION = {
 	}
 };
 
-function Injection(name = '<Anonymous>', initObject = {}, _prototype = Object.prototype) {
-	if (typeof initObject !== 'object') {
-		throw new TypeError('Injection() `initObject` MUST be an object.');
-	}
-
+function Injection(name = '<Anonymous>', _parent = Object.prototype) {
 	if (typeof name !== 'string') {
 		throw new TypeError('Injection() `name` MUST be a string.');
 	}
 
-	const injection = Object.create(_prototype);
+	/**
+	 * Make the new injection extends from a parent injection by `parent`.
+	 * The `parent` MUST be an injection or `Object.prototype` if it is a root injection.
+	 */
+	const injection = Object.create(_parent);
 	const proxy = injection.injection = new Proxy(injection, INJECTION.PROXY_OPTIONS);
 
-	Object.assign(injection, initObject);
 	injection[INJECTION.SYMBOL.NAME] = name;
-	injection.$create = function createChild(name, initObject) {
-		return Injection(name, initObject, injection);
+
+	injection.$create = function createChild(name) {
+		return Injection(name, injection);
 	};
 
 	const registered = injection[INJECTION.SYMBOL.REGISTERED] = { then: true, inspect: true };

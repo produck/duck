@@ -1,7 +1,5 @@
 'use strict';
 
-const http = require('http');
-const https = require('https');
 const debug = require('debug')('duck:web');
 const normalize = require('./src/normalizeOptions');
 
@@ -24,8 +22,6 @@ module.exports = function DuckWeb(options) {
 
 					return new Application(...args);
 				},
-				Http: http,
-				Https: https
 			};
 		},
 		created(installedInjection) {

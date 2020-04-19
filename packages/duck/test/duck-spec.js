@@ -56,31 +56,16 @@ describe('Duck::', function () {
 
 	describe('hooks::', function () {
 		describe('installed::', function () {
-			it('should be called correctly.', function (done) {
-				Duck({
-					id: 'com.orchange.duck.test',
-					injection: {
-						test: true
-					},
-					installed({ test }) {
-						assert.strictEqual(test, true);
-						done();
-					}
-				});
-			});
-
 			it('should can append new dependence in options.installed.', function (done) {
+				const sample = {};
+
 				Duck({
 					id: 'com.orchange.duck.test',
-					injection: {
-						test: true
-					},
 					installed({ injection }) {
-						injection.newone = {};
+						injection.newone = sample;
 					}
-				}, ({ test, newone }) => {
-					assert.strictEqual(test, true);
-					assert.deepEqual(newone, {});
+				}, ({ newone }) => {
+					assert.strictEqual(newone, sample);
 					done();
 				});
 			});
@@ -88,18 +73,6 @@ describe('Duck::', function () {
 	});
 
 	describe('dependence::', function () {
-		it('should set a dependence into injection by options.injection directly.', function (done) {
-			Duck({
-				id: 'com.orchange.duck.test',
-				injection: {
-					test: true
-				}
-			}, ({ test }) => {
-				assert.strictEqual(test, true);
-				done();
-			});
-		});
-
 		describe('(preset)product::', function () {
 			describe('#meta', function () {
 				it('should get product info correctly.', function (done) {

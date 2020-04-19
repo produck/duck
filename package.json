@@ -4,6 +4,7 @@
     "test": "lerna run test --parallel",
     "lint": "eslint --fix packages/**/*.js",
     "dev:install": "lerna bootstrap --hoist",
+    "prepublish": "npm run lint && npm run test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },

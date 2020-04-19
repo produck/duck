@@ -5,16 +5,12 @@ const Validator = require('./Validator');
 const schema = require('./OptionsSchema.json');
 
 module.exports = Normalizer({
-	defaults() {
-		return {};
-	},
 	handler(options) {
 		const finalOptions = {
 			name: 'Default Product Name',
 			namespace: '',
 			version: '0.0.0',
 			description: 'No descrition',
-			injection: {},
 			installed: () => {},
 			components: []
 		};
@@ -25,7 +21,6 @@ module.exports = Normalizer({
 			namespace: _namespace = finalOptions.namespace,
 			version: _version = finalOptions.version,
 			description: _description = finalOptions.description,
-			injection: _injection = finalOptions.injection,
 			installed: _installed = finalOptions.installed,
 			components: _components = finalOptions.components
 		} = options;
@@ -35,7 +30,6 @@ module.exports = Normalizer({
 		finalOptions.namespace = _namespace;
 		finalOptions.version = _version;
 		finalOptions.description = _description;
-		finalOptions.injection = _injection;
 		finalOptions.installed = _installed;
 		finalOptions.components = _components.map(options => {
 			const finalOptions = {

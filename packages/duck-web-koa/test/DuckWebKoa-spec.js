@@ -91,7 +91,7 @@ describe('DuckWebKoa::', function () {
 					]
 				}, ({ Web }) => {
 					const demo = Web.Application('DuckKoaApp');
-					const server = Web.Http.createServer(demo).listen();
+					const server = http.createServer(demo).listen();
 
 					http.request(`http://127.0.0.1:${server.address().port}`, res => {
 						assert.equal(res.statusCode, 200);
@@ -118,7 +118,7 @@ describe('DuckWebKoa::', function () {
 					]
 				}, ({ Web }) => {
 					const demo = Web.Application('DuckKoaApp');
-					const server = Web.Http.createServer(demo).listen();
+					const server = http.createServer(demo).listen();
 
 					http.request(`http://127.0.0.1:${server.address().port}`, res => {
 						assert.equal(res.statusCode, 400);

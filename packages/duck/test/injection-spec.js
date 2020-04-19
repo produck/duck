@@ -11,18 +11,6 @@ describe('Injection::', function () {
 			assert.equal(injection, injection.injection);
 		});
 
-		it('should create a injection successfully with initObject.', function () {
-			Injection('test', { foo: 'bar' });
-		});
-
-		it('should throw error if initObject provided but not a object.', function () {
-			assert.throws(() => {
-				Injection('test', 1);
-			}, {
-				message: 'Injection() `initObject` MUST be an object.'
-			});
-		});
-
 		it('should with name', function () {
 			Injection('test', { foo: 'bar' });
 		});
@@ -44,9 +32,17 @@ describe('Injection::', function () {
 		});
 
 		it('should be prototype chain.', function () {
-			const root = Injection('base-0', { a: 1 });
-			const child0 = root.$create('1', { b: 2 });
-			const child1 = child0.$create('2', { c: 3 });
+			const root = Injection('base-0');
+
+			root.a = 1;
+
+			const child0 = root.$create('1');
+
+			child0.b = 2;
+
+			const child1 = child0.$create('2');
+
+			child1.c = 3;
 
 			assert.equal(child1.a, 1);
 			assert.equal(child1.b, 2);
@@ -62,7 +58,9 @@ describe('Injection::', function () {
 	describe('proxy::', function () {
 
 		beforeEach(function () {
-			this.injection = Injection('test', {
+			this.injection = Injection('test');
+
+			Object.assign(this.injection, {
 				dependenceA: { a: true },
 				dependenceB: { b: true }
 			});
@@ -109,8 +107,8 @@ describe('Injection::', function () {
 
 	describe('Error chains stack::', function () {
 		it('should [b] --|> [a] when error caught.', function () {
-			const a = Injection('a', { a: 1 });
-			const b = a.$create('b', { b: 2 });
+			const a = Injection('a');
+			const b = a.$create('b');
 
 			assert.throws(() => {
 				b.injection.notExisted;
