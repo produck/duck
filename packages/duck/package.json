@@ -28,21 +28,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/or-change/duck.git"
+    "url": "git+https://github.com/produck/duck.git"
   },
   "scripts": {
     "test": "mocha"
   },
   "bugs": {
-    "url": "https://github.com/or-change/duck/issues"
+    "url": "https://github.com/produck/duck/issues"
   },
   "dependencies": {
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.1",
     "ajv-keywords": "^3.4.1",
     "debug": "^4.1.1"
   },
   "devDependencies": {
-    "mocha": "^6.2.1"
+    "mocha": "^7.1.1"
   },
-  "homepage": "https://github.com/or-change/duck/tree/master/packages/duck#readme"
+  "homepage": "https://github.com/produck/duck/tree/master/packages/duck#readme"
 }

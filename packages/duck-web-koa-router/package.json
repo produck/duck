@@ -15,20 +15,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/or-change/duck.git"
+    "url": "git+https://github.com/produck/duck.git"
   },
   "scripts": {
     "test": "mocha"
   },
   "bugs": {
-    "url": "https://github.com/or-change/duck/issues"
+    "url": "https://github.com/produck/duck/issues"
   },
-  "homepage": "https://github.com/or-change/duck#readme",
+  "homepage": "https://github.com/produck/duck#readme",
   "devDependencies": {
-    "@koa/router": "^8.0.1",
+    "@koa/router": "^9.0.0",
     "@or-change/duck-web": "^0.2.0",
     "@or-change/duck-web-koa": "^0.3.0",
-    "mocha": "^6.2.1"
+    "mocha": "^7.1.1"
   },
   "dependencies": {
     "@or-change/duck": "^0.5.0",

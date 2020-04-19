@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
-  "homepage": "https://github.com/or-change/duck#readme",
+  "homepage": "https://github.com/produck/duck#readme",
   "license": "MIT",
   "main": "lib/duck-web-koa-validator.js",
   "files": [
@@ -15,23 +15,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/or-change/duck.git"
+    "url": "git+https://github.com/produck/duck.git"
   },
   "scripts": {
     "test": "mocha"
   },
   "bugs": {
-    "url": "https://github.com/or-change/duck/issues"
+    "url": "https://github.com/produck/duck/issues"
   },
   "devDependencies": {
     "@or-change/duck": "^0.5.0",
     "@or-change/duck-web-koa": "^0.3.0",
     "@or-change/duck-web-koa-router": "^0.2.0",
-    "mocha": "^6.2.1"
+    "mocha": "^7.1.1"
   },
   "dependencies": {
     "@or-change/duck-web": "^0.2.0",
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.1",
     "debug": "^4.1.1"
   }
 }

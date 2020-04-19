@@ -4,12 +4,11 @@
     "test": "lerna run test --parallel",
     "lint": "eslint --fix packages/**/*.js",
     "dev:install": "lerna bootstrap --hoist",
-    "prepublish": "npm run lint && npm run test",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
   "devDependencies": {
-    "lerna": "^3.17.0",
-    "vuepress": "^1.1.0"
+    "lerna": "^3.20.2",
+    "vuepress": "^1.4.1"
   }
 }
