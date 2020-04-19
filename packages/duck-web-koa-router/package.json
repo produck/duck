@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-web-koa-router",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -26,12 +26,12 @@
   "homepage": "https://github.com/produck/duck#readme",
   "devDependencies": {
     "@koa/router": "^9.0.0",
-    "@or-change/duck-web": "^0.2.0",
-    "@or-change/duck-web-koa": "^0.3.0",
+    "@or-change/duck-web": "^0.2.1",
+    "@or-change/duck-web-koa": "^0.3.1",
     "mocha": "^7.1.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.5.0",
+    "@or-change/duck": "^0.5.1",
     "debug": "^4.1.1"
   }
 }

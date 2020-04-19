@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-electron",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Development for electron application in duck to get other runtime dependencies.",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -32,7 +32,7 @@
     "electron": ">= 5"
   },
   "dependencies": {
-    "@or-change/duck": "^0.5.0",
+    "@or-change/duck": "^0.5.1",
     "debug": "^4.1.1"
   }
 }
