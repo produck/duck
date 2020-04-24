@@ -42,14 +42,15 @@ describe('Duck::', function () {
 			});
 		});
 
-		describe('callback::', function () {
+		describe('assembler::', function () {
 			it('should access product.meta to get id.', function (done) {
 				Duck({
 					id: 'com.orchange.duck.test',
-				}, ({ product }) => {
+				}, ({ product }, options) => {
 					assert.equal(product.meta.id, 'com.orchange.duck.test');
+					assert.deepEqual(options, { a: 1 });
 					done();
-				});
+				})({ a: 1 });
 			});
 		});
 	});
@@ -67,7 +68,7 @@ describe('Duck::', function () {
 				}, ({ newone }) => {
 					assert.strictEqual(newone, sample);
 					done();
-				});
+				})();
 			});
 		});
 	});
@@ -91,7 +92,7 @@ describe('Duck::', function () {
 							description: 'test description',
 						});
 						done();
-					});
+					})();
 				});
 
 				it('should get default product info correctly.', function (done) {
@@ -106,7 +107,7 @@ describe('Duck::', function () {
 							description: 'No descrition',
 						});
 						done();
-					});
+					})();
 				});
 			});
 
@@ -117,7 +118,7 @@ describe('Duck::', function () {
 					}, ({ product }) => {
 						assert.deepEqual(product.components, []);
 						done();
-					});
+					})();
 				});
 
 				it('should get all info if a component installed.', function (done) {
@@ -148,7 +149,7 @@ describe('Duck::', function () {
 							}
 						]);
 						done();
-					});
+					})();
 				});
 			});
 
@@ -162,7 +163,7 @@ describe('Duck::', function () {
 							peerDependencies: meta.peerDependencies
 						});
 						done();
-					});
+					})();
 				});
 			});
 		});

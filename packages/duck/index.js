@@ -9,22 +9,43 @@ const normalize = require('./src/normalizeOptions');
 
 const meta = require('./package.json');
 
-Duck.Normalizer = Normalizer;
-Duck.Injection = Injection;
-Duck.Validator = Validator;
-module.exports = Duck;
+ProductProvider.Normalizer = Normalizer;
+ProductProvider.Injection = Injection;
+ProductProvider.Validator = Validator;
 
-function Duck(options, Instance = () => {}) {
+module.exports = ProductProvider;
+
+function ProductProvider(options, assembler = () => {}) {
 	const finalOptions = normalize(options);
 
-	debug('Creating a duck id=`%s`', finalOptions.id);
-
-	const baseInjection = Injection('Duck.Base');
-
 	/**
-	 * Generate product context
+	 * Handle components
 	 */
-	baseInjection.product =  {
+	const components = {
+		metas: {},
+		installerList: [],
+		createdList: []
+	};
+
+	finalOptions.components.forEach(component => {
+		const { id, name, version, description, install, created } = component;
+
+		if (components.metas[id]) {
+			throw new Error(`Dumplicated product component '${id}' defined.`);
+		}
+
+		components.metas[id] = {
+			id, name, version, description,
+			getDetails() {
+				return component.getDetails();
+			}
+		};
+
+		components.installerList.push(install);
+		components.createdList.push(created);
+	});
+
+	const product = Object.freeze({
 		get meta() {
 			return {
 				id: finalOptions.id,
@@ -52,59 +73,38 @@ function Duck(options, Instance = () => {}) {
 				peerDependencies: meta.peerDependencies
 			};
 		}
-	};
-
-	/**
-	 * Handle components
-	 */
-	const components = {
-		metas: {},
-		installerList: [],
-		createdList: []
-	};
-
-	finalOptions.components.forEach(component => {
-		const {
-			id,
-			name,
-			version,
-			description,
-			install,
-			created,
-		} = component;
-
-		if (components.metas[id]) {
-			throw new Error(`Dumplicated product component '${id}' defined.`);
-		}
-
-		components.metas[id] = {
-			id, name, version, description,
-			getDetails() {
-				return component.getDetails();
-			}
-		};
-		components.installerList.push(install);
-		components.createdList.push(created);
 	});
 
-	debug('Components options has been registered.');
-	components.installerList.forEach(install => install(baseInjection));
-	debug('`components.install()` has been called.');
-	finalOptions.installed(baseInjection);
-	debug('`options.installed()` has been called.');
+	function InstalledInjection() {
+		debug('Creating a duck id=`%s`', finalOptions.id);
 
-	const installedInjection = baseInjection.$create('Duck.Installed');
+		const baseInjection = Injection('Duck.Base');
 
-	debug('The injection of duck has been freezen.');
-	components.createdList.forEach(created => created(installedInjection));
-	debug('`components.created` hooks of components has been called.');
+		/**
+		 * Generate product context
+		 */
+		baseInjection.product = product;
 
-	/**
-	 * Allow to access all dependencies on `installed injection` in final factory.
-	 */
-	const instance = Instance(installedInjection);
+		debug('Components options has been registered.');
 
-	debug('The final `Instance()` factory has been called.');
+		components.installerList.forEach(install => install(baseInjection));
+		debug('`components.install()` has been called.');
 
-	return instance;
+		finalOptions.installed(baseInjection);
+		debug('`options.installed()` has been called.');
+
+		const installedInjection = baseInjection.$create('Duck.Installed');
+
+		components.createdList.forEach(created => created(installedInjection));
+		debug('`components.created` hooks of components has been called.');
+
+		return installedInjection;
+	}
+
+	return function Product(options) {
+		/**
+		 * Allow to access all dependencies on `installed injection` in the final factory.
+		 */
+		return assembler(InstalledInjection(), options);
+	};
 }
