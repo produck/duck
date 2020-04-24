@@ -50,6 +50,6 @@ describe('DuckWebKoaSession::', function () {
 				request.setHeader('Cookie', res.headers['set-cookie']);
 				request.end();
 			}).end();
-		});
+		})();
 	});
 });

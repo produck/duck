@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "lerna run test --parallel",
+    "test": "lerna run test",
     "lint": "eslint --fix packages/**/*.js",
     "dev:install": "lerna bootstrap --hoist",
     "prepublish": "npm run lint && npm run test",

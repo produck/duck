@@ -5,7 +5,7 @@ const DuckLog = require('../');
 const http = require('http');
 
 describe('DuckLog::', function () {
-	it('default', function () {
+	it('default', function (done) {
 		Duck({
 			id: 'test',
 			components: [
@@ -17,7 +17,8 @@ describe('DuckLog::', function () {
 			Log.default.trace('111155');
 			Log.default.debug('1111000');
 			Log.default.info('1111000');
-		});
+			done();
+		})();
 	});
 
 	it.skip('debug', function () {

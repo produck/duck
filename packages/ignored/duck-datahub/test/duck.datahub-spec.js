@@ -53,21 +53,7 @@ describe('Datahub::', function() {
 
 	describe('Dependence', function () {
 		describe('Datahub::', function () {
-
-			it('should be accessed in `options.installed`.', function (done) {
-				Duck({
-					id: 'com.orchange.duckdatahub.test',
-					components: [
-						DuckDatahub()
-					],
-					installed({ Datahub }) {
-						assert(Datahub);
-						done();
-					}
-				});
-			});
-
-			it('should be accessed in `callback`.', function (done) {
+			it('should be accessed in `Instance`.', function (done) {
 				Duck({
 					id: '',
 					components: [
@@ -76,7 +62,7 @@ describe('Datahub::', function() {
 				}, ({ Datahub }) => {
 					assert(Datahub);
 					done();
-				});
+				})();
 			});
 
 			it('should accessing an existed linker successfully.', function () {
@@ -89,11 +75,10 @@ describe('Datahub::', function() {
 								models: { Account }
 							}
 						])
-					],
-					installed({ Datahub }) {
-						Datahub('com.oc.duck.test');
-					}
-				});
+					]
+				}, ({ Datahub }) => {
+					Datahub('com.oc.duck.test');
+				})();
 			});
 
 			it('should throw error if accessing linker not defined.', function () {
@@ -106,15 +91,14 @@ describe('Datahub::', function() {
 								models: { Account }
 							}
 						])
-					],
-					installed({ Datahub, injection }) {
-						assert.throws(() => {
-							injection.Model = Datahub('test', {}).model;
-						}, {
-							message: 'Datahub id=\'test\' is NOT defined.'
-						});
-					}
-				});
+					]
+				}, ({ Datahub, injection }) => {
+					assert.throws(() => {
+						injection.Model = Datahub('test', {}).model;
+					}, {
+						message: 'Datahub id=\'test\' is NOT defined.'
+					});
+				})();
 			});
 
 			it('should instant a datahub with linker by any adaptor.', function (done) {
@@ -147,11 +131,10 @@ describe('Datahub::', function() {
 								}
 							}
 						])
-					],
-					installed({ Datahub }) {
-						Datahub('com.oc.duck.test', { foo: 'bar' });
-					}
-				});
+					]
+				}, ({ Datahub }) => {
+					Datahub('com.oc.duck.test', { foo: 'bar' });
+				})();
 			});
 		});
 	});

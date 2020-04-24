@@ -51,6 +51,6 @@ describe('DuckWebKoaAcl::', function () {
 				}).end();
 			}).end();
 
-		});
+		})();
 	});
 });

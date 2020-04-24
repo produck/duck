@@ -53,6 +53,6 @@ describe('DuckWebKoaValidator', function () {
 				server.close();
 				done();
 			}).end();
-		});
+		})();
 	});
 });

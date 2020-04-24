@@ -40,7 +40,7 @@ describe('DuckWebKoa::', function () {
 	});
 
 	describe('With DuckWeb', function () {
-		it('should be registed as a applications successfully..', function () {
+		it('should be registed as a applications successfully..', function (done) {
 			Duck({
 				id: 'com.orchange.DuckWebKoa.test',
 				components: [
@@ -53,7 +53,8 @@ describe('DuckWebKoa::', function () {
 				]
 			}, ({ Web }) => {
 				Web.Application('DuckKoaApp');
-			});
+				done();
+			})();
 		});
 
 		describe('factory::', function () {
@@ -75,7 +76,7 @@ describe('DuckWebKoa::', function () {
 					]
 				}, ({ Web }) => {
 					Web.Application('DuckKoaApp', { a: 1 });
-				});
+				})();
 			});
 
 			it('should respond successfully by default factory().', function (done) {
@@ -98,7 +99,7 @@ describe('DuckWebKoa::', function () {
 						server.close();
 						done();
 					}).end();
-				});
+				})();
 			});
 
 			it('should respond successfully by with assigned factory().', function (done) {
@@ -125,7 +126,7 @@ describe('DuckWebKoa::', function () {
 						server.close();
 						done();
 					}).end();
-				});
+				})();
 			});
 		});
 
@@ -153,7 +154,7 @@ describe('DuckWebKoa::', function () {
 					]
 				}, ({ Web }) => {
 					Web.Application('DuckKoaApp');
-				});
+				})();
 			});
 		});
 	});

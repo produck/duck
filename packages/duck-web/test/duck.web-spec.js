@@ -78,23 +78,7 @@ describe('DuckWeb::', function () {
 					assert(Web);
 					assert(Web.Application);
 					done();
-				});
-			});
-
-			it('should no applications registed before installed.', function (done) {
-				Duck({
-					id: 'test',
-					components: [
-						DuckWeb()
-					],
-					installed({ Web }) {
-						assert.throws(() => Web.Application('Default'), {
-							message: 'The application specified with id=\'Default\' does not exist.'
-						});
-
-						done();
-					}
-				});
+				})();
 			});
 
 			it('should be access a registed after installed.', function (done) {
@@ -106,7 +90,7 @@ describe('DuckWeb::', function () {
 				}, ({ Web }) => {
 					Web.Application('Default');
 					done();
-				});
+				})();
 			});
 
 			it('should throw error if application is NOT existed.', function (done) {
@@ -121,7 +105,7 @@ describe('DuckWeb::', function () {
 					});
 
 					done();
-				});
+				})();
 			});
 
 			it('should launch a default application server and get expected response.', function (done) {
@@ -139,10 +123,10 @@ describe('DuckWeb::', function () {
 						server.close();
 						done();
 					}).end();
-				});
+				})();
 			});
 
-			it('should get details of all applications.', function () {
+			it('should get details of all applications.', function (done) {
 				Duck({
 					id: 'test',
 					components: [
@@ -164,7 +148,9 @@ describe('DuckWeb::', function () {
 							}
 						}
 					]);
-				});
+
+					done();
+				})();
 			});
 		});
 	});

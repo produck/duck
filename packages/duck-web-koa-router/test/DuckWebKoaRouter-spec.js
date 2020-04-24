@@ -63,6 +63,6 @@ describe('DuckWebKoaRouter::', function () {
 					done();
 				}).end();
 			}).end();
-		});
+		})();
 	});
 });
