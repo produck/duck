@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-log",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -24,7 +24,7 @@
     "url": "https://github.com/produck/duck/issues"
   },
   "dependencies": {
-    "@or-change/duck": "^0.5.1",
+    "@or-change/duck": "^0.6.0",
     "dateformat": "^3.0.3",
     "debug": "^4.1.1",
     "streamroller": "^2.2.3"
