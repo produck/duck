@@ -16,7 +16,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/produck/duck.git"
-  },
+	},
+	"types": "index.d.ts",
   "scripts": {
     "test": "mocha"
   },

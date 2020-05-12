@@ -1,9 +1,11 @@
 'use strict';
 
 const assert = require('assert');
-const DuckWeb = require('../');
 const Duck = require('@or-change/duck');
+const DuckWeb = require('../index');
 const http = require('http');
+
+Duck({}, ({  }) => {})
 
 describe('DuckWeb::', function () {
 	describe('constructor()', function () {
