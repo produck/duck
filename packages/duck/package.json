@@ -20,8 +20,9 @@
     "test": "test"
   },
   "files": [
-    "src",
-    "index.js"
+    "/src",
+    "/index.js",
+    "/index.d.ts"
   ],
   "publishConfig": {
     "access": "public"
