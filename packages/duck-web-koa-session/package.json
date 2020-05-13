@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-web-koa-session",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/produck/duck#readme",
   "devDependencies": {
-    "@or-change/duck-web": "^0.2.2",
-    "@or-change/duck-web-koa": "^0.3.2",
+    "@or-change/duck-web": "^0.2.3",
+    "@or-change/duck-web-koa": "^0.3.3",
     "koa-session": "^5.13.1",
     "mocha": "^7.1.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.6.0",
+    "@or-change/duck": "^0.6.1",
     "debug": "^4.1.1"
   }
 }

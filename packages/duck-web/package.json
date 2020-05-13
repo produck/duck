@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-web",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -16,8 +16,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/produck/duck.git"
-	},
-	"types": "index.d.ts",
+  },
+  "types": "index.d.ts",
   "scripts": {
     "test": "mocha"
   },
@@ -28,7 +28,7 @@
     "mocha": "^7.1.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.6.0",
+    "@or-change/duck": "^0.6.1",
     "ajv-keywords": "^3.4.1",
     "debug": "^4.1.1"
   }

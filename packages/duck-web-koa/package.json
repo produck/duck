@@ -1,6 +1,6 @@
 {
   "name": "@or-change/duck-web-koa",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -29,8 +29,8 @@
     "mocha": "^7.1.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.6.0",
-    "@or-change/duck-web": "^0.2.2",
+    "@or-change/duck": "^0.6.1",
+    "@or-change/duck-web": "^0.2.3",
     "debug": "^4.1.1"
   },
   "peerDependencies": {
