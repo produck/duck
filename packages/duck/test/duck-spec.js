@@ -10,6 +10,7 @@ describe('Duck::', function () {
 			Duck({
 				id: 'com.orchange.duck.test'
 			});
+
 		});
 
 		it('should throw error if lose options.id', function () {

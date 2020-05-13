@@ -4,24 +4,26 @@ const { Normalizer, Validator } = require('@or-change/duck');
 const schema = require('./OptionsSchema.json');
 const AjvKeywords = require('ajv-keywords');
 
+function DefaultApplicationProvider({ product }) {
+	return function DefaultApplication(...args) {
+		console.log(...args);
+
+		return function requestListener(_request, response) {
+			response.end(JSON.stringify({
+				meta: product.meta,
+				components: product.components
+			}, null, '  '));
+		};
+	};
+}
+
 module.exports = Normalizer({
 	defaults() {
 		return [
 			{
 				id: 'Default',
 				description: 'Default application example can view `meta`, `components`, `duck` of `product`.',
-				Application: function DefaultApplicationProvider({ product }) {
-					return function DefaultApplication(...args) {
-						console.log(...args);
-
-						return function requestListener(_request, response) {
-							response.end(JSON.stringify({
-								meta: product.meta,
-								components: product.components
-							}, null, '  '));
-						};
-					};
-				}
+				Application: DefaultApplicationProvider
 			}
 		];
 	},

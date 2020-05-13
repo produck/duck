@@ -2,10 +2,8 @@
 
 const assert = require('assert');
 const Duck = require('@or-change/duck');
-const DuckWeb = require('../index');
+const DuckWeb = require('..');
 const http = require('http');
-
-Duck({}, ({  }) => {})
 
 describe('DuckWeb::', function () {
 	describe('constructor()', function () {
@@ -119,6 +117,8 @@ describe('DuckWeb::', function () {
 				}, ({ Web }) => {
 					const server = http.createServer(Web.Application('Default')).listen();
 					const port = server.address().port;
+
+					const a = Web.Application('default');
 
 					http.request(`http://127.0.0.1:${port}`, res => {
 						assert(res.statusCode, 200);

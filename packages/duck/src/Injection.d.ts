@@ -1,41 +1,45 @@
 
 declare namespace Injection {
-	type name = string;
+	type name = string
 
-	declare interface Proxy {
+	interface Proxy {
 
 		/**
 		 * The reference of this injection for esay setting.
 		 */
-		injection: Proxy
+		readonly injection: Proxy
 
 		/**
 		 * To create a new injection base on this one.
+		 *
+		 * [this] <|-- [new]
+		 * newInjection.prototype = this
 		 */
-		$create(
+		readonly $create(
 
 			/**
 			 * The name of the new injection.
 			 */
 			name: name
-		): Proxy;
+		): Proxy
 	}
 }
 
 /**
  * InjectionProxy object, `injection.foo = {}` to set a new function.
  */
-function Injection(
+declare function Injection(
 
 	/**
 	 * The name of the new injection.
 	 */
-	name?: Injection.name = '<Anonymous>',
+	name?: Injection.name,
 
 	/**
 	 * The prototype of the new injection proxy.
+	 * You may NOT use it.
 	 */
-	_parent?: !Object = Object.prototype,
+	_parent?: Object,
 ): Injection.Proxy
 
-export = Injection;
+export = Injection

@@ -1,18 +1,41 @@
 
 declare namespace Normalizer {
-	declare interface Options {
+	function validator(
+		/**
+		 * The `options` waiting to be detected.
+		 */
+		options: any
+	): Boolean
 
-		handler?: (any: any) => any;
+	interface Options {
+		/**
+		 * How to handle a `options` to be a `finalOptions`.
+		 */
+		handler?: (options: any) => any
 
-		default?: () => any;
+		/**
+		 * Providing an initial `options`
+		 */
+		default?: () => any
 
-		validate?: (any: any) => Boolean;
+		/**
+		 * Assertion for the input `options`.
+		 * Throw a exception if options is invalid.
+		 */
+		validate?: (options: any) => Boolean
 	}
+
+	interface FinalOptions extends Options {}
 }
 
-function Normalizer(
-
+/**
+ * Use to create a normalizer to help normalizing options.
+ */
+declare function Normalizer(
+	/**
+	 * The options to create a normalizer
+	 */
 	options: Normalizer.Options
-): Normalizer.finalOptions;
+): Normalizer.FinalOptions
 
-export = Normalizer;
+export = Normalizer
