@@ -118,8 +118,6 @@ describe('DuckWeb::', function () {
 					const server = http.createServer(Web.Application('Default')).listen();
 					const port = server.address().port;
 
-					const a = Web.Application('default');
-
 					http.request(`http://127.0.0.1:${port}`, res => {
 						assert(res.statusCode, 200);
 						server.close();

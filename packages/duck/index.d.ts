@@ -3,6 +3,7 @@ import Normalizer from './src/Normalizer'
 import Validator from './src/Validator'
 
 declare namespace ProductProvider {
+
 	namespace product {
 		interface meta {
 
@@ -99,15 +100,17 @@ declare namespace ProductProvider {
 
 	interface InstalledInjection extends BaseInjection {}
 
-	function Product(
+	class Product {
+		constructor(
 
-		/**
-		 * You MAY provide a options to affect the final product instance.
-		 */
-		options: any
-	): any
+			/**
+			 * You MAY provide a options to affect the final product instance.
+			 */
+			options: any
+		)
+	}
 
-	export declare interface Component {
+	export interface Component {
 
 		/**
 		 * The component unique id.
@@ -123,7 +126,7 @@ declare namespace ProductProvider {
 
 		/**
 		 * Invoking when Product is called.
-		 * Some functions CAN be set into baseInjection
+		 * Some new functions CAN be set into baseInjection
 		 */
 		install: (
 			injection: BaseInjection
@@ -148,16 +151,19 @@ declare namespace ProductProvider {
 		getDetails?(): any
 	}
 
-	declare interface Options {
+	interface Options {
+		/**
+		 * Product id
+		 */
 		id: String
 
-		name?: String = 'Default Product Name'
+		name?: String
 
-		namespace?: String = ''
+		namespace?: String
 
-		version?: String = '0.0.0'
+		version?: String
 
-		description?: String = 'No descrition'
+		description?: String
 
 		/**
 		 * Duck components list. Use to mixin some function into injection.

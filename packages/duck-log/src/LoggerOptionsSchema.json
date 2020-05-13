@@ -21,16 +21,10 @@
 						"pattern": "^[a-z][a-z0-9]*$"
 					}
 				},
-				"appenders": {
+				"AppenderList": {
 					"type": "array",
 					"items": {
-						"type": "object",
-						"required": ["write"],
-						"properties": {
-							"write": {
-								"instanceof": "Function"
-							}
-						}
+						"instanceof": "Function"
 					}
 				},
 				"defaultLevel": true,

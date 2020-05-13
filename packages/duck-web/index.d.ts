@@ -1,14 +1,14 @@
-import Duck = require('@or-change/duck');
-import http from 'http';
+import Duck from '@or-change/duck'
+import http from 'http'
 
-declare module "@or-change/duck" {
-	interface InstalledInjection {
+declare module '@or-change/duck' {
+	interface BaseInjection {
 		/**
 		 * Web Application Factory Manager
 		 */
-		Web: DuckWeb.Web;
-	};
-};
+		Web: DuckWeb.Web
+	}
+}
 
 declare namespace DuckWeb {
 
@@ -57,11 +57,11 @@ declare namespace DuckWeb {
 			/**
 			 * Application Instancing Parameters
 			 */
-			...args?: any[]
+			...args: any[]
 		): http.RequestListener
 	}
 
 	function Provider(optsions?: Options[]): Duck.Component
 }
 
-export = DuckWeb.Provider;
+export = DuckWeb.Provider

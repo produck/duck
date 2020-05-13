@@ -15,7 +15,7 @@ declare namespace Injection {
 		 * [this] <|-- [new]
 		 * newInjection.prototype = this
 		 */
-		readonly $create(
+		$create(
 
 			/**
 			 * The name of the new injection.

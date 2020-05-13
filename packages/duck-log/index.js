@@ -24,29 +24,40 @@ DuckLog.Adapter = {
 
 module.exports = DuckLog;
 
+/**
+ * @returns {import('@or-change/duck').Component}
+ */
 function DuckLog(loggersOptions) {
 	const finalLoggersOptions = normalizeLoggerOptions(loggersOptions);
+
+	let injection = null;
+
+	const manager = function bootstrap() {
+		for (const categoryName in finalLoggersOptions) {
+			const options = finalLoggersOptions[categoryName];
+
+			manager[categoryName] = Logger(options, injection);
+		}
+	};
 
 	return {
 		id: 'com.orchange.duck.log',
 		name: 'DuckLogger',
 		install(injection) {
-			const Log = injection.Log = {};
-
-			for (const categoryName in finalLoggersOptions) {
-				const options = finalLoggersOptions[categoryName];
-
-				Log[categoryName] = Logger(options);
-			}
+			injection.Log = manager;
+		},
+		created({ injection: installedInjection }) {
+			injection = installedInjection.$create('DuckLog');
 		}
 	};
 }
 
-function Logger(options) {
+function Logger(options, injection) {
 	const log = { list: [], map: {} };
+	const appenders = options.AppenderList.map(Appender => Appender(injection));
 
 	function append(message) {
-		options.appenders.forEach(appender => appender.write(message));
+		appenders.forEach(appender => appender.write(message));
 	}
 
 	options.levels.forEach(function (levelName, index) {

@@ -12,6 +12,8 @@ describe('DuckLog::', function () {
 				DuckLog()
 			],
 		}, ({ Log }) => {
+			Log();
+
 			Log.default('111100');
 			Log.default.error('111177');
 			Log.default.trace('111155');
@@ -27,14 +29,25 @@ describe('DuckLog::', function () {
 			components: [
 				DuckLog({
 					default: {
-						appenders: [
+						AppenderList: [
 							DuckLog.Appender.Console(),
-							DuckLog.Appender.File()
+							DuckLog.Appender.File({
+								file: {
+									pathname(injection) {
+										console.log(injection);
+
+										return 'logs/default.log';
+									}
+								}
+							})
 						]
 					}
 				})
 			]
 		}, ({ Log }) => {
+
+			Log();
+
 			Log.default('111100');
 			Log.default.error('111177');
 			Log.default.trace('111155');
@@ -44,7 +57,7 @@ describe('DuckLog::', function () {
 			setInterval(() => {
 				Log.default('This returns a WritableStream. changes then the current');
 			}, 50);
-		});
+		})();
 	});
 
 	it.skip('debug-http-adapter', function () {

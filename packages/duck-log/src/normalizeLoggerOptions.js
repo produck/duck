@@ -16,7 +16,7 @@ module.exports = Normalizer({
 				label: 'default',
 				format: GeneralFormat(),
 				levels: DEFAULT_LEVELS.slice(0),
-				appenders: [AppenderConsole()],
+				AppenderList: [AppenderConsole()],
 				preventLevels: [],
 				defaultLevel: 'info',
 			}
@@ -32,7 +32,7 @@ module.exports = Normalizer({
 				label: 'default',
 				format: GeneralFormat(),
 				levels: DEFAULT_LEVELS.slice(0),
-				appenders: [AppenderConsole()],
+				AppenderList: [AppenderConsole()],
 				preventLevels: [],
 				defaultLevel: 'info',
 			};
@@ -41,7 +41,7 @@ module.exports = Normalizer({
 				label: _label = finalOptions.label,
 				format:  _format = finalOptions.format,
 				levels: _levels = finalOptions.levels,
-				appenders: _appenders = finalOptions.appenders,
+				AppenderList: _appenders = finalOptions.AppenderList,
 				preventLevels: _preventLevels = finalOptions.preventLevels,
 				defaultLevel: _defaultLevel = finalOptions.defaultLevel
 			} = options;
@@ -49,7 +49,7 @@ module.exports = Normalizer({
 			finalOptions.label = _label;
 			finalOptions.format = _format;
 			finalOptions.levels = _levels;
-			finalOptions.appenders = _appenders;
+			finalOptions.AppenderList = _appenders;
 			finalOptions.preventLevels = _preventLevels;
 			finalOptions.defaultLevel = _defaultLevel;
 

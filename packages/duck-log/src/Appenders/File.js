@@ -49,7 +49,14 @@ const normalize = Normalizer({
 				additionalProperties: false,
 				properties: {
 					pathname: {
-						type: 'string'
+						oneOf: [
+							{
+								instanceof: 'Function',
+							},
+							{
+								type: 'string'
+							}
+						]
 					},
 					size: {},
 					number: {
@@ -68,21 +75,27 @@ const normalize = Normalizer({
 	})
 });
 
-module.exports = function DuckLogAppenderFile(options) {
+module.exports = function DuckLogFileAppenderProvider(options) {
 	const finalOptions = normalize(options);
 	const { file, streamOptions } = finalOptions;
 
-	debug('Creating file appender (%j).', file);
+	return function DuckLogFileAppender(injection) {
+		debug('Creating file appender (%j).', file);
 
-	const stream = new RollingFileStream(file.pathname, file.size, file.number, streamOptions);
+		const pathname = typeof file.pathname === 'string' ?
+			file.pathname :
+			file.pathname(injection);
 
-	stream.on('error', error => {
-		console.error('DuckLogFileAppender - Writing to file %s, error happened ', file, error); //eslint-disable-line
-	});
+		const stream = new RollingFileStream(pathname, file.size, file.number, streamOptions);
 
-	return {
-		write(message) {
-			stream.write(message + EOL, 'utf-8');
-		}
+		stream.on('error', error => {
+			console.error('DuckLogFileAppender - Writing to file %s, error happened ', file, error); //eslint-disable-line
+		});
+
+		return {
+			write(message) {
+				stream.write(message + EOL, 'utf-8');
+			}
+		};
 	};
 };
