@@ -10,12 +10,12 @@ DuckLog.Appender = {
 };
 
 DuckLog.Format = {
-	ApacheCLF: require('./src/formats/ApacheCLF'),
+	ApacheCLF: require('./src/Formats/ApacheCLF'),
 	ApacheCLFWithVhost: require('./src/Formats/ApacheCLFWithVhost'),
 	ApacheECLF: require('./src/Formats/ApacheECLF'),
 	// NginxCombined: require('./src/Formats/NginxCombined'),
 	InternalError: require('./src/Formats/InternalError'),
-	General: require('./src/formats/General')
+	General: require('./src/Formats/General')
 };
 
 DuckLog.Adapter = {

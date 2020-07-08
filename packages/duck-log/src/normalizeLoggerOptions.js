@@ -2,7 +2,7 @@
 
 const { Normalizer, Validator } = require('@or-change/duck');
 const AppenderConsole = require('./Appenders/Console');
-const GeneralFormat = require('./formats/General');
+const GeneralFormat = require('./Formats/General');
 const schema = require('./LoggerOptionsSchema.json');
 
 const DEFAULT_LEVELS = schema.definitions.defaultLevels.enum = [
