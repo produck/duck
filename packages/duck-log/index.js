@@ -41,7 +41,7 @@ function DuckLog(loggersOptions) {
 	};
 
 	return {
-		id: 'com.orchange.duck.log',
+		id: 'org.duck.log',
 		name: 'DuckLogger',
 		install(injection) {
 			injection.Log = manager;

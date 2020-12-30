@@ -14,7 +14,7 @@ function DuckElectron(bootstrap, plugins = []) {
 	};
 
 	return {
-		id: 'com.oc.duck.electron',
+		id: 'org.duck.electron',
 		name: 'DuckElectron',
 		description: '',
 		install(injection) {

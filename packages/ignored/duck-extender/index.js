@@ -21,7 +21,7 @@ module.exports = function DuckExtender(options, extensionsOptions) {
 	}
 
 	return {
-		id: 'com.orchange.duck.extender',
+		id: 'org.duck.extender',
 		name: 'Extender',
 		description: 'Help to construct plugins platform for product.',
 		install(injection) {

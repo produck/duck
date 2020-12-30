@@ -10,7 +10,7 @@ module.exports = function DuckDatahub(modelOptionsList) {
 	const Linkers = {};
 
 	return {
-		id: 'com.oc.duck.datahub',
+		id: 'org.duck.datahub',
 		name: 'Datahub',
 		description: 'Database middle layout.',
 		install(injection) {

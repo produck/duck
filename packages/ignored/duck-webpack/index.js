@@ -17,7 +17,7 @@ module.exports = function DuckWebpack(TemplatesOptions) {
 	}
 
 	return {
-		id: 'com.oc.duck.webpack',
+		id: 'org.duck.webpack',
 		name: 'WebpackConfigTemplateManager',
 		description: 'Used to guide developer to create a web application.',
 		install(injection) {
