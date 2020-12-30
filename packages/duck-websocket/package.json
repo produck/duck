@@ -6,6 +6,9 @@
   "homepage": "https://github.com/produck/duck#readme",
   "license": "MIT",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "/src",
     "/index.js",
@@ -18,5 +21,6 @@
   "scripts": {},
   "bugs": {
     "url": "https://github.com/produck/duck/issues"
-  }
+  },
+  "gitHead": "40b94efced8e3651f99ee92a3584cca8a925145b"
 }
