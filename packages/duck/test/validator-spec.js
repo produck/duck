@@ -17,7 +17,7 @@ describe('Validator::', function () {
 			assert.throws(() => {
 				Validator();
 			}, {
-				message: 'schema should be object or boolean'
+				message: 'schema must be object or boolean'
 			});
 		});
 
@@ -46,7 +46,7 @@ describe('Validator::', function () {
 		it('should pass validate successfully.', function () {
 			this.validate({ foo: 0 });
 		});
-	
+
 		it('should throw error if NOT passed and errors can be caught.', function () {
 			assert.throws(() => {
 				this.validate({ foo: 'string' });

@@ -1,0 +1,36 @@
+{
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"file": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"pathname": {
+					"oneOf": [
+						{
+							"instanceof": "Function"
+						},
+						{
+							"type": "string"
+						}
+					]
+				},
+				"size": {},
+				"number": {
+					"type": "integer"
+				}
+			}
+		},
+		"streamOptions": {
+			"type": "object",
+			"properties": {
+				"encoding": {},
+				"mode": {},
+				"flags": {},
+				"compress": {},
+				"keepFileExt": {}
+			}
+		}
+	}
+}

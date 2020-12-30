@@ -1,6 +1,6 @@
 'use strict';
 
-const Ajv = require('ajv');
+const Ajv = require('ajv').default;
 const AjvKeywords = require('ajv-keywords');
 
 const AJV = {

@@ -27,7 +27,7 @@
 			"type": "array",
 			"items": {
 				"type": "object",
-				"additionalProperty": false,
+				"additionalProperties": false,
 				"required": [
 					"id",
 					"name",

@@ -135,7 +135,7 @@ describe('DuckWeb::', function () {
 				}, ({ product }) => {
 					assert.deepEqual(product.components, [
 						{
-							id: 'com.oc.duck.web',
+							id: 'org.produck.web',
 							name: 'WebApplication',
 							description: 'Used to guide developer to create a web application.',
 							details: {

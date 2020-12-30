@@ -1,8 +1,7 @@
 {
 	"definitions": {
 		"defaultLevels": {
-			"type": "string",
-			"_enum": "/* The real value is in normalize.js */"
+			"type": "string"
 		},
 		"loggerOptions": {
 			"type": "object",
