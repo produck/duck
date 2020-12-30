@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-web",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -29,7 +29,7 @@
     "mocha": "^8.2.1"
   },
   "dependencies": {
-    "@produck/duck": "^0.6.2",
+    "@produck/duck": "^0.6.3",
     "ajv-keywords": "^4.0.0",
     "debug": "^4.3.1"
   }

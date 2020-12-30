@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-websocket",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "> TODO: description",
   "author": "ChaosLee <chaos2lee@qq.com>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -15,9 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/produck/duck.git"
   },
-  "scripts": {
-
-  },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/produck/duck/issues"
   }
