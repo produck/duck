@@ -4,7 +4,7 @@ const { RollingFileStream } = require('streamroller');
 const path = require('path');
 const debug = require('debug')('duck:log:appender:file');
 const os = require('os');
-const { Normalizer, Validator } = require('@or-change/duck');
+const { Normalizer, Validator } = require('@produck/duck');
 
 const EOL = os.EOL || '\n';
 

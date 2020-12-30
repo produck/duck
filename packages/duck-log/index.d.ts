@@ -1,6 +1,6 @@
-import Duck from '@or-change/duck'
+import Duck from '@produck/duck'
 
-declare module '@or-change/duck' {
+declare module '@produck/duck' {
 
 	interface BaseInjection {
 		/**

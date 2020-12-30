@@ -69,7 +69,7 @@ module.exports = function PlumberhubWebSocket(options) {
 	}
 
 	return {
-		id: 'org.duck.websocket',
+		id: 'org.produck.websocket',
 		name: 'websockets binder',
 		install({ injection }) {
 			injection.WebSocket = { attach };

@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const Duck = require('@or-change/duck');
+const Duck = require('@produck/duck');
 const DuckWeb = require('..');
 const http = require('http');
 

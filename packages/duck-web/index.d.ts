@@ -1,7 +1,7 @@
-import Duck from '@or-change/duck'
+import Duck from '@produck/duck'
 import http from 'http'
 
-declare module '@or-change/duck' {
+declare module '@produck/duck' {
 	interface BaseInjection {
 		/**
 		 * Web Application Factory Manager

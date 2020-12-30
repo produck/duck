@@ -1,6 +1,6 @@
 'use strict';
 
-const { Normalizer, Validator } = require('@or-change/duck');
+const { Normalizer, Validator } = require('@produck/duck');
 const schema = require('./OptionsSchema.json');
 const AjvKeywords = require('ajv-keywords');
 

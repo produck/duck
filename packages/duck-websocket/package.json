@@ -1,5 +1,5 @@
 {
-  "name": "duck-websocket",
+  "name": "@produck/duck-websocket",
   "version": "0.1.0",
   "description": "> TODO: description",
   "author": "ChaosLee <chaos2lee@qq.com>",
@@ -16,7 +16,7 @@
     "url": "git+https://github.com/produck/duck.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+
   },
   "bugs": {
     "url": "https://github.com/produck/duck/issues"

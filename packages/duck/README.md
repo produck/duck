@@ -15,7 +15,7 @@ Duck is used to build product!
 # Installation
 
 ```
-npm install @or-change/duck
+npm install @produck/duck
 ```
 
 # Usage
@@ -23,7 +23,7 @@ npm install @or-change/duck
 To build a very simple product,
 
 ```js
-const Duck = require('@or-change/duck');
+const Duck = require('@produck/duck');
 const meta = require('./package.json');
 
 // To create the product factory named Simple.
@@ -36,7 +36,7 @@ function Simple() {
     version: meta.version
   }, ({ product }) => {
     // There will be 2 methods on a Simple product instance.
-    
+
     simple.getMeta = function getMeta() {
       return product.meta;
     };
@@ -87,7 +87,7 @@ A duck instance is just an ``EventEmitter`` instance without any preset event. E
 <a id="duck-factory"></a>
 ### Duck(options[, callback])
 
-``options`` is an object. ``callback`` is a function. Return a product instance. The product instance is extended from ``EventEmitter``. 
+``options`` is an object. ``callback`` is a function. Return a product instance. The product instance is extended from ``EventEmitter``.
 
 <a id="duck-factory-options"></a>
 ### Options
@@ -119,7 +119,7 @@ Injection is very IMPORTANT to be careful for using. Avoid to change injection o
 Best practice example,
 
 ```js
-const Duck = require('@or-change/duck');
+const Duck = require('@produck/duck');
 const http = require('http');
 
 function MyProduct() {
@@ -187,7 +187,7 @@ function MyProductB() {
   * **Invoking all created hooks** of components
   * Accessing dependencies safely but can NOT changing injection any more
 
-<!-- 
+<!--
 5. Freezing injection
   * Making injection non-extensible -->
 
@@ -241,7 +241,7 @@ Duck({
 <a id="duck-component"></a>
 ## Component
 
-``Component`` is use to append some runtime dependencies into injection. Each component instance MUST include 3 items to describe the features & meta of itself. They are ``id``, ``name``, ``install``. 
+``Component`` is use to append some runtime dependencies into injection. Each component instance MUST include 3 items to describe the features & meta of itself. They are ``id``, ``name``, ``install``.
 
 In addition, ``component.description`` is a string for describing what the component is. ``component.created`` a hook function will be called after the duck has been created.
 
@@ -268,7 +268,7 @@ Properties Table
 Create a component directly,
 
 ```js
-const Duck = require('@or-change/duck');
+const Duck = require('@produck/duck');
 
 Duck({
   id: 'com.orchange.duck.demo',
@@ -290,13 +290,13 @@ Duck({
 });
 ```
 
-The example is just want to tell developers that create a component by literal is be allowed. There is NO magic about component. Everyone can do everything in this pattern. [RECOMMANDED] Defining a factory to build a component instance like a provider can make the code clear and maintainable. Many native components have been defined in ``@or-change/duck``. Enjoy them!
+The example is just want to tell developers that create a component by literal is be allowed. There is NO magic about component. Everyone can do everything in this pattern. [RECOMMANDED] Defining a factory to build a component instance like a provider can make the code clear and maintainable. Many native components have been defined in ``@produck/duck``. Enjoy them!
 
 Simple web application example,
 
 ```js
 const http = require('http');
-const Duck = require('@or-change/duck');
+const Duck = require('@produck/duck');
 
 Duck({
   id: 'com.orchange.duck.demo',
@@ -348,7 +348,7 @@ Injection is the core function to manage dependencies regularly. Dependencies co
 <a id="duck-injection-instance"></a>
 ### Instance
 
-An injection is use to set, get, transmit and manage dependencies to everywhere in a product. Each duck instance will create only one injection for itself. 
+An injection is use to set, get, transmit and manage dependencies to everywhere in a product. Each duck instance will create only one injection for itself.
 
 About injection, some facts MUST be known,
 

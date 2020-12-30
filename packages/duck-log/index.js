@@ -25,7 +25,7 @@ DuckLog.Adapter = {
 module.exports = DuckLog;
 
 /**
- * @returns {import('@or-change/duck').Component}
+ * @returns {import('@produck/duck').Component}
  */
 function DuckLog(loggersOptions) {
 	const finalLoggersOptions = normalizeLoggerOptions(loggersOptions);
@@ -41,7 +41,7 @@ function DuckLog(loggersOptions) {
 	};
 
 	return {
-		id: 'org.duck.log',
+		id: 'org.produck.log',
 		name: 'DuckLogger',
 		install(injection) {
 			injection.Log = manager;

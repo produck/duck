@@ -1,6 +1,6 @@
 'use strict';
 
-const { Normalizer, Validator } = require('@or-change/duck');
+const { Normalizer, Validator } = require('@produck/duck');
 const AppenderConsole = require('./Appenders/Console');
 const GeneralFormat = require('./Formats/General');
 const schema = require('./LoggerOptionsSchema.json');

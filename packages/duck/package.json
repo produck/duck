@@ -1,5 +1,5 @@
 {
-  "name": "@or-change/duck",
+  "name": "@produck/duck",
   "version": "0.6.2",
   "description": "Duck is an extensible, lightweight, flexible, progressive software development frameworks for building software product.",
   "keywords": [
@@ -38,12 +38,12 @@
     "url": "https://github.com/produck/duck/issues"
   },
   "dependencies": {
-    "ajv": "^6.12.4",
-    "ajv-keywords": "^3.5.2",
-    "debug": "^4.1.1"
+    "ajv": "^7.0.2",
+    "ajv-keywords": "^4.0.0",
+    "debug": "^4.3.1"
   },
   "devDependencies": {
-    "mocha": "^8.1.3"
+    "mocha": "^8.2.1"
   },
   "homepage": "https://github.com/produck/duck/tree/master/packages/duck#readme"
 }

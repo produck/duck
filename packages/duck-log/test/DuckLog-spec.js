@@ -1,6 +1,6 @@
 'use strict';
 
-const Duck = require('@or-change/duck');
+const Duck = require('@produck/duck');
 const DuckLog = require('../');
 const http = require('http');
 

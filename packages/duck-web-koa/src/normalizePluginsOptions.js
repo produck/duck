@@ -1,6 +1,6 @@
 'use strict';
 
-const { Normalizer, Validator } = require('@or-change/duck');
+const { Normalizer, Validator } = require('@produck/duck');
 
 module.exports = Normalizer({
 	defaults: () => ({}),

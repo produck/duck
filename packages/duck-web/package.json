@@ -1,5 +1,5 @@
 {
-  "name": "@or-change/duck-web",
+  "name": "@produck/duck-web",
   "version": "0.2.4",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -26,11 +26,11 @@
     "url": "https://github.com/produck/duck/issues"
   },
   "devDependencies": {
-    "mocha": "^7.1.1"
+    "mocha": "^8.2.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.6.2",
-    "ajv-keywords": "^3.4.1",
-    "debug": "^4.1.1"
+    "@produck/duck": "^0.6.2",
+    "ajv-keywords": "^4.0.0",
+    "debug": "^4.3.1"
   }
 }

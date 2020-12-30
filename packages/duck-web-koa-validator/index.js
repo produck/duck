@@ -1,6 +1,6 @@
 'use strict';
 
-const Ajv = require('ajv');
+const Ajv = require('ajv').default;
 const debug = require('debug')('duck:web:koa:validator');
 
 const SCOPES = [

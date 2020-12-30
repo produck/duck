@@ -8,7 +8,7 @@ module.exports = function DuckWeb(options) {
 	const applications = {};
 
 	return {
-		id: 'org.duck.web',
+		id: 'org.produck.web',
 		name: 'WebApplication',
 		description: 'Used to guide developer to create a web application.',
 		install(injection) {

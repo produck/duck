@@ -2,9 +2,9 @@
 
 const assert = require('assert');
 const http = require('http');
-const Duck = require('@or-change/duck');
-const DuckWeb = require('@or-change/duck-web');
-const DuckWebKoa = require('@or-change/duck-web-koa');
+const Duck = require('@produck/duck');
+const DuckWeb = require('@produck/duck-web');
+const DuckWebKoa = require('@produck/duck-web-koa');
 const DuckWebKoaRouter = require('../');
 
 function APIRouter(router, { foo }) {

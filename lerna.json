@@ -1,6 +1,6 @@
 {
   "packages": [
-    "packages/duck*"
+    "packages/*"
   ],
   "npmClient": "npm",
   "command": {
@@ -11,6 +11,7 @@
       ]
     },
     "publish": {
+      "registry": "https://registry.npmjs.org/",
       "ignoreChanges": [
         "*.md"
       ]

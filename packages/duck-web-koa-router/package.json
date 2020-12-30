@@ -1,5 +1,5 @@
 {
-  "name": "@or-change/duck-web-koa-router",
+  "name": "@produck/duck-web-koa-router",
   "version": "0.2.4",
   "description": "",
   "keywords": [],
@@ -26,13 +26,13 @@
   },
   "homepage": "https://github.com/produck/duck#readme",
   "devDependencies": {
-    "@koa/router": "^9.0.0",
-    "@or-change/duck-web": "^0.2.4",
-    "@or-change/duck-web-koa": "^0.3.4",
-    "mocha": "^7.1.1"
+    "@koa/router": "^10.0.0",
+    "@produck/duck-web": "^0.2.4",
+    "@produck/duck-web-koa": "^0.3.4",
+    "mocha": "^8.2.1"
   },
   "dependencies": {
-    "@or-change/duck": "^0.6.2",
-    "debug": "^4.1.1"
+    "@produck/duck": "^0.6.2",
+    "debug": "^4.3.1"
   }
 }
