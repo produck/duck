@@ -3,6 +3,7 @@ import Normalizer from './Normalizer';
 
 declare namespace Validator {
 
+	type DuckAjvValidator = (schema: Boolean | Object, ajvModifier?: (ajv: ajv.Ajv) => void) => Normalizer.Validator;
 	/**
 	 * A Helper for creating ajv validator
 	 */
@@ -16,7 +17,7 @@ declare namespace Validator {
 		 * Getting a ajv instance to modify it in this function.
 		 */
 		ajvModifier?: (ajv: ajv.Ajv) => void
-	): typeof Normalizer.validator;
+	): Normalizer.Validator;
 }
 
 export = Validator.DuckAjvValidator;

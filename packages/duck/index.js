@@ -9,12 +9,6 @@ const normalize = require('./src/normalizeOptions');
 
 const meta = require('./package.json');
 
-ProductProvider.Normalizer = Normalizer;
-ProductProvider.Injection = Injection;
-ProductProvider.Validator = Validator;
-
-module.exports = ProductProvider;
-
 function ProductProvider(options, assembler = () => {}) {
 	const finalOptions = normalize(options);
 
@@ -108,3 +102,9 @@ function ProductProvider(options, assembler = () => {}) {
 		return assembler(InstalledInjection(), options);
 	};
 }
+
+ProductProvider.Normalizer = Normalizer;
+ProductProvider.Injection = Injection;
+ProductProvider.Validator = Validator;
+
+module.exports = ProductProvider;

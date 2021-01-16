@@ -7,8 +7,7 @@ declare namespace Injection {
 		/**
 		 * The reference of this injection for esay setting.
 		 */
-		readonly injection: Proxy
-
+		readonly injection: Proxy;
 		/**
 		 * To create a new injection base on this one.
 		 *
@@ -21,8 +20,16 @@ declare namespace Injection {
 			 * The name of the new injection.
 			 */
 			name: name
-		): Proxy
+		): Proxy;
 	}
+
+	interface MyInjection extends Proxy {
+		[index: string]: any;
+	}
+}
+
+interface Injection {
+	(name?: Injection.name, _parent?: Object,): Injection.Proxy;
 }
 
 /**
@@ -40,6 +47,6 @@ declare function Injection(
 	 * You may NOT use it.
 	 */
 	_parent?: Object,
-): Injection.Proxy
+): Injection.Proxy;
 
 export = Injection

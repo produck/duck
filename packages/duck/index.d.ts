@@ -1,11 +1,14 @@
-import Injection from './src/Injection'
+import Injection from './src/Injection';
 import Normalizer from './src/Normalizer'
 import Validator from './src/Validator'
 
 declare namespace ProductProvider {
+	const Injection: Injection;
+	const Normalizer: Normalizer;
+	const Validator: Validator;
 
-	namespace product {
-		interface meta {
+	namespace ProductInfo {
+		interface Meta {
 
 			/**
 			 * The product id
@@ -33,7 +36,7 @@ declare namespace ProductProvider {
 			description: String
 		}
 
-		interface components {
+		interface Component {
 
 			id: String
 
@@ -44,7 +47,7 @@ declare namespace ProductProvider {
 			details: any
 		}
 
-		interface duck {
+		interface Duck {
 
 			/**
 			 * Duck version
@@ -58,22 +61,22 @@ declare namespace ProductProvider {
 		}
 	}
 
-	interface product {
+	interface ProductInfo {
 
 		/**
 		 * Product meta information
 		 */
-		readonly meta: product.meta
+		readonly meta: ProductInfo.Meta
 
 		/**
 		 * Abstracts of this ProductProvider
 		 */
-		readonly components: product.components[]
+		readonly components: Array<ProductInfo.Component>
 
 		/**
 		 * Information of Duck
 		 */
-		readonly duck: product.duck
+		readonly duck: ProductInfo.Duck
 	}
 
 	interface BaseInjection extends Injection.Proxy {
@@ -81,34 +84,11 @@ declare namespace ProductProvider {
 		/**
 		 * The assembly information & meta about Product.
 		 */
-		product: product
+		product: ProductInfo;
 	}
 
-	function Assembler(
-
-		/**
-		 * Installed injection that all component.created()
-		 * have been called.
-		 */
-		injection: InstalledInjection,
-
-		/**
-		 * The `options` of Product()
-		 */
-		options?: any
-	): Product
 
 	interface InstalledInjection extends BaseInjection {}
-
-	class Product {
-		constructor(
-
-			/**
-			 * You MAY provide a options to affect the final product instance.
-			 */
-			options: any
-		)
-	}
 
 	export interface Component {
 
@@ -148,14 +128,16 @@ declare namespace ProductProvider {
 		/**
 		 * Getting state or data of the component implemented by components
 		 */
-		getDetails?(): any
+		getDetails?<Detail>(): Detail
 	}
+
+	type Installed = (injection: BaseInjection) => void;
 
 	interface Options {
 		/**
 		 * Product id
 		 */
-		id: String
+		id?: String
 
 		name?: String
 
@@ -165,6 +147,8 @@ declare namespace ProductProvider {
 
 		description?: String
 
+		installed?: Installed
+
 		/**
 		 * Duck components list. Use to mixin some function into injection.
 		 */
@@ -172,22 +156,15 @@ declare namespace ProductProvider {
 	}
 }
 
-declare function ProductProvider(
-	/**
-	 * The options for Duck(ProductProvider)
-	 */
-	options: ProductProvider.Options,
+type Product<ProductType> = (options: object) => ProductType;
 
-	/**
-	 * Use to create product instance by injeciton & options.
-	 * `options` is from Product(options)
-	 *
-	 */
-	assembler?: typeof ProductProvider.Assembler
-): typeof ProductProvider.Product
+type Assembler<ProductType> = (injection: ProductProvider.InstalledInjection, options: object) => ProductType;
 
-ProductProvider.Injection = Injection
-ProductProvider.Normalizer = Normalizer
-ProductProvider.Validator = Validator
+interface ProductProviderOptions<ProductType> {
+	options: ProductProvider.Options;
+	assembler: Assembler<ProductType>
+}
 
-export = ProductProvider
+declare function ProductProvider<ProductType>(options: ProductProvider.Options, assembler: Assembler<ProductType>): Product<ProductType>;
+
+export = ProductProvider;
