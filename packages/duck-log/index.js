@@ -54,28 +54,29 @@ function DuckLog(loggersOptions) {
 
 function Logger(options, injection) {
 	const log = { list: [], map: {} };
-	const appenders = options.AppenderList.map(Appender => Appender(injection));
+	const finalOptions = typeof options === 'function' ? options(injection) : options;
+	const appenders = finalOptions.AppenderList.map(Appender => Appender());
 
 	function append(message) {
 		appenders.forEach(appender => appender.write(message));
 	}
 
-	options.levels.forEach(function (levelName, index) {
-		const notPrevented = options.preventLevels.indexOf(levelName) === -1;
+	finalOptions.levels.forEach(function (levelName, index) {
+		const notPrevented = finalOptions.preventLevels.indexOf(levelName) === -1;
 
 		this.push(log.map[levelName] = notPrevented ? function log(message) {
-			return append(options.format({
+			return append(finalOptions.format({
 				level: {
 					name: levelName,
 					number: index
 				},
 				time: new Date(),
-				category: options.label
+				category: finalOptions.label
 			}, message));
 		} : () => {});
 	}, log.list);
 
-	const { defaultLevel } = options;
+	const { defaultLevel } = finalOptions;
 	const defaultLog = defaultLevel ? log.map[defaultLevel] : log.list[0];
 
 	function logger(message) {

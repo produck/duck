@@ -71,7 +71,14 @@
 	"additionalProperties": false,
 	"patternProperties": {
 		"^[a-zA-Z][A-Za-z0-9_$]*$": {
-			"$ref": "#/definitions/loggerOptions"
+			"oneOf": [
+				{
+					"$ref": "#/definitions/loggerOptions"
+				},
+				{
+					"instanceof": "Function"
+				}
+			]
 		}
 	}
 }
