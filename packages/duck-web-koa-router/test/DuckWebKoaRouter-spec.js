@@ -5,21 +5,22 @@ const http = require('http');
 const Duck = require('@produck/duck');
 const DuckWeb = require('@produck/duck-web');
 const DuckWebKoa = require('@produck/duck-web-koa');
-const DuckWebKoaRouter = require('../');
+const DuckWebKoaRouterPlugin = require('../');
+const { DuckWebKoaRouter } = DuckWebKoaRouterPlugin;
 
-function APIRouter(router, { foo }) {
+const APIRouter = DuckWebKoaRouter(function APIRouter(router, { foo }) {
 	router.get('/', ctx => {
 		ctx.body = foo;
 		ctx.status = 201;
 	});
-}
+});
 
-function TestRouter(router, { baz }) {
+const TestRouter = DuckWebKoaRouter(function TestRouter(router, { baz }) {
 	router.get('/', ctx => {
 		ctx.body = baz;
 		ctx.status = 202;
 	});
-}
+})
 
 describe('DuckWebKoaRouter::', function () {
 	it('debug', function (done) {
@@ -37,7 +38,7 @@ describe('DuckWebKoaRouter::', function () {
 							app.use(AppRouter().routes());
 						}, {
 							plugins: [
-								DuckWebKoaRouter({
+								DuckWebKoaRouterPlugin({
 									prefix: '/api',
 									Router: APIRouter,
 									use: [

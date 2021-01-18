@@ -26,13 +26,13 @@
   },
   "homepage": "https://github.com/produck/duck#readme",
   "devDependencies": {
-    "@koa/router": "^10.0.0",
-    "@produck/duck-web": "^0.2.5",
-    "@produck/duck-web-koa": "^0.3.5",
     "mocha": "^8.2.1"
   },
   "dependencies": {
+    "@koa/router": "^10.0.0",
     "@produck/duck": "^0.6.3",
+    "@produck/duck-web": "^0.2.5",
+    "@produck/duck-web-koa": "^0.3.5",
     "debug": "^4.3.1"
   }
 }

@@ -12,14 +12,20 @@
 			"instanceof": "Function"
 		},
 		"mount": {
-			"type": [
-				"null",
-				"string",
-				"array"
-			],
-			"items": {
-				"type": "string"
-			}
+			"oneOf": [
+				{
+					"type": "null"
+				},
+				{
+					"type": "string"
+				},
+				{
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			]
 		},
 		"use": {
 			"type": "array",

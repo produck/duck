@@ -1,14 +1,31 @@
-import DuckWebKoa from "../duck-web-koa";
+import DuckWebKoa from '@produck/duck-web-koa'
+import KoaRouter from '@koa/router'
 
-declare namespace DuckWebKoaRouter {
+declare namespace DuckWebKoaRouterPlugin {
+	interface DuckWebKoaRouterInjection extends DuckWebKoa.DuckWebKoaInjection {}
+	interface DuckWebKoaRouterInstanceInjection extends DuckWebKoaRouterInjection {}
+
 	interface Options {
-		Router: Function;
-		prefix?: string;
+		Router: assembler
+		prefix?: string
 		mount: null | string | Array<string>
 		use: Array<Options>
 	}
+
+	type assembler = (
+		router: KoaRouter,
+		injection: DuckWebKoaRouterInstanceInjection
+	) => void
 }
 
-declare function DuckWebKoaRouter(options: DuckWebKoaRouter.Options): DuckWebKoa.Plugin;
+declare function DuckWebKoaRouterPlugin(
+	options: DuckWebKoaRouterPlugin.Options
+): DuckWebKoa.Plugin
 
-export = DuckWebKoaRouter;
+declare function DuckWebKoaRouter(
+	assembler: DuckWebKoaRouterPlugin.assembler
+): DuckWebKoaRouterPlugin.assembler
+
+DuckWebKoaRouterPlugin.Router = DuckWebKoaRouter
+DuckWebKoaRouterPlugin.Plugin = DuckWebKoaRouterPlugin
+export = DuckWebKoaRouterPlugin

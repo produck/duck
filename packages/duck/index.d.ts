@@ -1,11 +1,11 @@
-import Injection from './src/Injection';
+import Injection from './src/Injection'
 import Normalizer from './src/Normalizer'
 import Validator from './src/Validator'
 
 declare namespace ProductProvider {
-	const Injection: Injection;
-	const Normalizer: Normalizer;
-	const Validator: Validator;
+	const Injection: Injection
+	const Normalizer: Normalizer
+	const Validator: Validator
 
 	namespace ProductInfo {
 		interface Meta {
@@ -84,7 +84,7 @@ declare namespace ProductProvider {
 		/**
 		 * The assembly information & meta about Product.
 		 */
-		product: ProductInfo;
+		product: ProductInfo
 	}
 
 
@@ -131,7 +131,7 @@ declare namespace ProductProvider {
 		getDetails?<Detail>(): Detail
 	}
 
-	type Installed = (injection: BaseInjection) => void;
+	type Installed = (injection: BaseInjection) => void
 
 	interface Options {
 		/**
@@ -156,10 +156,16 @@ declare namespace ProductProvider {
 	}
 }
 
-type Product<ProductType> = (options: object) => ProductType;
+type Product<ProductType> = (options: object) => ProductType
 
-type Assembler<ProductType> = (injection: ProductProvider.InstalledInjection, options: object) => ProductType;
+type Assembler<ProductType> = (
+	injection: ProductProvider.InstalledInjection,
+	options: object
+) => ProductType
 
-declare function ProductProvider<ProductType>(options: ProductProvider.Options, assembler: Assembler<ProductType>): Product<ProductType>;
+declare function ProductProvider<ProductType>(
+	options: ProductProvider.Options,
+	assembler: Assembler<ProductType>
+): Product<ProductType>
 
-export = ProductProvider;
+export = ProductProvider

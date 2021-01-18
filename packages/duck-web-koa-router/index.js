@@ -1,26 +1,15 @@
 'use strict';
 
+const KoaRouter = require('@koa/router');
 const normalize = require('./src/normalizeOptions');
 
-module.exports = function KoaRouterPlugin(options) {
-	const KoaRouterMouduleName = ['koa-router', '@koa/router'].find(moduleName => {
-		try {
-			require.resolve(moduleName);
-			return true;
-		} catch(error) {
-			return false;
-		}
-	});
-
-	if (!KoaRouterMouduleName) {
-		throw new Error('Cannot find module \'koa-router\' or \'@koa/router\'.');
-	}
-
-	const KoaRouter = require(KoaRouterMouduleName);
+function KoaRouterPlugin(options) {
 	const finalOptions = normalize(options);
 
 	return function install(injection) {
 		injection.KoaRouter = KoaRouter;
+
+		const duckWebKoaRouterInjection = injection.$create('DuckWebKoaRouter');
 
 		function buildRouter(options) {
 			const koaRouterOptions = {};
@@ -30,6 +19,8 @@ module.exports = function KoaRouterPlugin(options) {
 			}
 
 			const router = new KoaRouter(koaRouterOptions);
+			const name = options.Router.name || 'anonymous';
+			const injection = duckWebKoaRouterInjection.$create(`DuckWebKoaRouter<${name}>`);
 
 			options.Router(router, injection);
 			options.use.forEach(optionsNode => {
@@ -49,4 +40,16 @@ module.exports = function KoaRouterPlugin(options) {
 			return buildRouter(finalOptions);
 		};
 	};
-};
+}
+
+function DuckWebKoaRouter(assembler) {
+	if (typeof assembler !== 'function') {
+		throw new TypeError('An assembler MUST be a function.');
+	}
+
+	return assembler;
+}
+
+KoaRouterPlugin.Router = DuckWebKoaRouter;
+KoaRouterPlugin.Plugin = KoaRouterPlugin;
+module.exports = KoaRouterPlugin;
