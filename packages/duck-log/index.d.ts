@@ -14,7 +14,7 @@ declare namespace DuckLog {
 	interface DuckLogInjecion extends Duck.InstalledInjection {};
 
 	interface Log {
-		[channelName: String]: writeToDefaultLevel
+		[channelName: string]: writeToDefaultLevel
 	}
 
 	/**
@@ -60,7 +60,7 @@ declare namespace DuckLog {
 	}
 
 	interface Options {
-		[channelName: String]: ChannelOptions
+		[channelName: string]: ChannelOptions
 	}
 }
 

@@ -11,7 +11,11 @@ declare namespace DuckWebKoa {
 		installed?: Function,
 	}
 
-	type Assembler = (app: Koa<Koa.DefaultState, Koa.DefaultContext>, injection: DuckWeb, options?: Options) => void;
+	type Assembler = (
+		app: Koa<Koa.DefaultState, Koa.DefaultContext>,
+		injection: DuckWeb.DuckWebApplicationInjection,
+		options?: Options
+	) => void;
 }
 
 declare function DuckWebKoa(factory: DuckWebKoa.Assembler, options: DuckWebKoa.Options): DuckWeb.ApplicationProvider;

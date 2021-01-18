@@ -6,7 +6,7 @@ const Duck = require('@produck/duck');
 const DuckWeb = require('@produck/duck-web');
 const DuckWebKoa = require('@produck/duck-web-koa');
 const DuckWebKoaRouterPlugin = require('../');
-const { DuckWebKoaRouter } = DuckWebKoaRouterPlugin;
+const { Router: DuckWebKoaRouter } = DuckWebKoaRouterPlugin;
 
 const APIRouter = DuckWebKoaRouter(function APIRouter(router, { foo }) {
 	router.get('/', ctx => {
