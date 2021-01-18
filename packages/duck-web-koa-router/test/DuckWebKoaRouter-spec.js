@@ -20,7 +20,7 @@ const TestRouter = DuckWebKoaRouter(function TestRouter(router, { baz }) {
 		ctx.body = baz;
 		ctx.status = 202;
 	});
-})
+});
 
 describe('DuckWebKoaRouter::', function () {
 	it('debug', function (done) {
