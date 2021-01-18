@@ -29,7 +29,7 @@ describe('DuckLog::', function () {
 			components: [
 				DuckLog({
 					access(injection) {
-						console.log(injection)
+						console.log(injection);
 
 						return {
 							format: DuckLog.Format.ApacheCLF(),

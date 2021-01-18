@@ -38,7 +38,7 @@ function DuckLog(loggersOptions) {
 		name: 'DuckLogger',
 		install(injection) {
 			const manager = function bootstrap() {
-				const options = normalize(finalLoggersOptions, installedInjection)
+				const options = normalize(finalLoggersOptions, installedInjection);
 
 				for (const categoryName in options) {
 					manager[categoryName] = Logger(options[categoryName]);
