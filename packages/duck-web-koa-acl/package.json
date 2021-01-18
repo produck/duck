@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-web-koa-acl",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -25,12 +25,12 @@
     "url": "https://github.com/produck/duck/issues"
   },
   "devDependencies": {
-    "@produck/duck-web": "^0.2.5",
-    "@produck/duck-web-koa": "^0.3.5",
+    "@produck/duck-web": "^0.2.6",
+    "@produck/duck-web-koa": "^0.3.6",
     "mocha": "^8.2.1"
   },
   "dependencies": {
-    "@produck/duck": "^0.6.3",
+    "@produck/duck": "^0.6.4",
     "debug": "^4.3.1"
   }
 }
