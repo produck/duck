@@ -90,7 +90,7 @@ declare namespace ProductProvider {
 
 	interface InstalledInjection extends BaseInjection {}
 
-	export interface Component {
+	interface Component {
 
 		/**
 		 * The component unique id.
@@ -159,11 +159,6 @@ declare namespace ProductProvider {
 type Product<ProductType> = (options: object) => ProductType;
 
 type Assembler<ProductType> = (injection: ProductProvider.InstalledInjection, options: object) => ProductType;
-
-interface ProductProviderOptions<ProductType> {
-	options: ProductProvider.Options;
-	assembler: Assembler<ProductType>
-}
 
 declare function ProductProvider<ProductType>(options: ProductProvider.Options, assembler: Assembler<ProductType>): Product<ProductType>;
 

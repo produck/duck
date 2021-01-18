@@ -5,11 +5,14 @@ const normalizePlugins = require('./src/normalizePluginsOptions');
 
 function DEFAULT_FACTORY(app, { product }) {
 	app.use(ctx => {
-		ctx.body = 'hello, world!\n\nProduct Meta\n\n';
-		ctx.body += JSON.stringify(product.meta, null, '  ');
-		ctx.body += '\n\nProduct Components\n\n';
-		ctx.body += JSON.stringify(product.components, null, '  ');
-		ctx.body += '\n\n--Duck Quack~';
+		ctx.body = [
+			'hello, world!',
+			'Product Meta',
+			JSON.stringify(product.meta, null, '  '),
+			'Product Components',
+			JSON.stringify(product.components, null, '  '),
+			'--Duck Quack~',
+		].join('\n\n');
 	});
 }
 

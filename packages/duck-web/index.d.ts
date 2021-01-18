@@ -1,22 +1,13 @@
 import Duck from '@produck/duck'
 import http from 'http'
 
-declare module '@produck/duck' {
-	interface BaseInjection {
-		/**
-		 * Web Application Factory Manager
-		 */
-		Web: DuckWeb.Web
-	}
-}
-
 declare namespace DuckWeb {
 
 	interface DuckWebInjection extends Duck.InstalledInjection {}
 
 	interface DuckWebApplicationInjection extends DuckWebInjection {}
 
-	type Application = () => http.RequestListener
+	type Application = (options?: object) => http.RequestListener;
 
 	type ApplicationProvider = (
 		/**
@@ -26,24 +17,24 @@ declare namespace DuckWeb {
 		 * <|-- [DuckWeb.Application<app_id>]
 		 */
 		injection: DuckWebApplicationInjection
-	) => Application
+	) => Application;
 
-	export interface Options {
+	interface Options {
 
 		/**
 		 * Unique application id
 		 */
-		id
+		id: string;
 
 		/**
 		 * The description of this Application
 		 */
-		description
+		description?: string;
 
 		/**
 		 * The ApplicationProvider
 		 */
-		Application: ApplicationProvider
+		Application: ApplicationProvider;
 	}
 
 	interface Web {
@@ -52,16 +43,25 @@ declare namespace DuckWeb {
 			/**
 			 * The registed Application name
 			 */
-			name,
+			name: string,
 
 			/**
 			 * Application Instancing Parameters
 			 */
-			...args: any[]
-		): http.RequestListener
+			...args: any[],
+		): http.RequestListener;
 	}
-
-	function Provider(optsions?: Options[]): Duck.Component
 }
 
-export = DuckWeb.Provider
+declare module '@produck/duck' {
+	interface BaseInjection {
+		/**
+		 * Web Application Factory Manager
+		 */
+		Web: DuckWeb.Web;
+	}
+}
+
+declare function DuckWeb(options: Array<DuckWeb.Options>): Duck.Component;
+
+export = DuckWeb;
