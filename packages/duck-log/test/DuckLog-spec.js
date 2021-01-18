@@ -23,6 +23,34 @@ describe('DuckLog::', function () {
 		})();
 	});
 
+	it('A channel options in Function', function (done) {
+		Duck({
+			id: 'test',
+			components: [
+				DuckLog({
+					access(injection) {
+						console.log(injection)
+
+						return {
+							format: DuckLog.Format.ApacheCLF(),
+							AppenderList: [DuckLog.Appender.Console()]
+						};
+					}
+				})
+			],
+		}, ({ Log }) => {
+			Log();
+
+			const server = http.createServer(DuckLog.Adapter.HttpServer((req, res) => {
+				res.end('ok');
+				done();
+				server.close();
+			}, abstract => Log.access(abstract))).listen(8080);
+
+			http.get('http://127.0.0.1:8080');
+		})();
+	});
+
 	it.skip('debug', function () {
 		Duck({
 			id: 'test',

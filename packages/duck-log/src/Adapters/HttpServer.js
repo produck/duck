@@ -1,14 +1,14 @@
 'use strict';
 
 function ConnectionAbstract(req, res, time) {
-	const { address, port } = req.connection.server.address();
+	const address = req.connection.server.address();
 
 	return {
 		get a() {
 			return req.connection.remoteAddress;
 		},
 		get A() {
-			return address;
+			return address && address.address;
 		},
 		get B() {
 			const value = req.headers['content-length'];
@@ -64,7 +64,7 @@ function ConnectionAbstract(req, res, time) {
 			return res.getHeader(name);
 		},
 		get p() {
-			return port;
+			return address.port;
 		},
 		get P() {
 			return process.pid;

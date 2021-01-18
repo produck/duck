@@ -1,6 +1,7 @@
 'use strict';
 
 const normalizeLoggerOptions = require('./src/normalizeLoggerOptions');
+const { normalize } = require('./src/normalize');
 
 DuckLog.Appender = {
 	File: require('./src/Appenders/File'),
@@ -30,53 +31,52 @@ module.exports = DuckLog;
 function DuckLog(loggersOptions) {
 	const finalLoggersOptions = normalizeLoggerOptions(loggersOptions);
 
-	let injection = null;
-
-	const manager = function bootstrap() {
-		for (const categoryName in finalLoggersOptions) {
-			const options = finalLoggersOptions[categoryName];
-
-			manager[categoryName] = Logger(options, injection);
-		}
-	};
+	let installedInjection = null;
 
 	return {
 		id: 'org.produck.log',
 		name: 'DuckLogger',
 		install(injection) {
+			const manager = function bootstrap() {
+				const options = normalize(finalLoggersOptions, installedInjection)
+
+				for (const categoryName in options) {
+					manager[categoryName] = Logger(options[categoryName]);
+				}
+			};
+
 			injection.Log = manager;
 		},
-		created({ injection: installedInjection }) {
-			injection = installedInjection.$create('DuckLog');
+		created({ injection }) {
+			installedInjection = injection;
 		}
 	};
 }
 
-function Logger(options, injection) {
+function Logger(options) {
 	const log = { list: [], map: {} };
-	const finalOptions = typeof options === 'function' ? options(injection) : options;
-	const appenders = finalOptions.AppenderList.map(Appender => Appender());
+	const appenders = options.AppenderList.map(Appender => Appender());
 
 	function append(message) {
 		appenders.forEach(appender => appender.write(message));
 	}
 
-	finalOptions.levels.forEach(function (levelName, index) {
-		const notPrevented = finalOptions.preventLevels.indexOf(levelName) === -1;
+	options.levels.forEach(function (levelName, index) {
+		const notPrevented = options.preventLevels.indexOf(levelName) === -1;
 
 		this.push(log.map[levelName] = notPrevented ? function log(message) {
-			return append(finalOptions.format({
+			return append(options.format({
 				level: {
 					name: levelName,
 					number: index
 				},
 				time: new Date(),
-				category: finalOptions.label
+				category: options.label
 			}, message));
 		} : () => {});
 	}, log.list);
 
-	const { defaultLevel } = finalOptions;
+	const { defaultLevel } = options;
 	const defaultLog = defaultLevel ? log.map[defaultLevel] : log.list[0];
 
 	function logger(message) {
