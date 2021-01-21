@@ -15,10 +15,10 @@ module.exports = function SessionPlugin(originalOptions) {
 					},
 					set(any) {
 						if (any === null) {
-							return options.destroy(ctx);
+							options.destroy(ctx);
 						}
 
-						return options.set(ctx, any);
+						options.set(ctx, any);
 					}
 				});
 

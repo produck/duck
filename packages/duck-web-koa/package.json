@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/produck/duck#readme",
   "devDependencies": {
+    "@types/koa": "^2.11.6",
     "koa": "^2.13.0",
     "mocha": "^8.2.1"
   },

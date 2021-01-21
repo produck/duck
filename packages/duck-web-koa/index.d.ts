@@ -2,7 +2,7 @@ import Koa from 'koa';
 import DuckWeb from '@produck/duck-web';
 
 declare namespace DuckWebKoa {
-	interface DuckWebKoaInjection extends DuckWeb.DuckWebInjection {}
+	interface DuckWebKoaInjection extends DuckWeb.DuckWebApplicationInjection {}
 
 	type Plugin = (injection: DuckWebKoaInjection) => void;
 
@@ -13,7 +13,7 @@ declare namespace DuckWebKoa {
 
 	type Assembler = (
 		app: Koa<Koa.DefaultState, Koa.DefaultContext>,
-		injection: DuckWeb.DuckWebApplicationInjection,
+		injection: DuckWebKoaInjection,
 		options?: Options
 	) => void;
 }

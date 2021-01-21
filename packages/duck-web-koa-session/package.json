@@ -28,6 +28,8 @@
   "devDependencies": {
     "@produck/duck-web": "^0.2.6",
     "@produck/duck-web-koa": "^0.3.6",
+    "@types/koa": "^2.11.6",
+    "@types/koa-session": "^5.10.3",
     "koa-session": "^6.1.0",
     "mocha": "^8.2.1"
   },
