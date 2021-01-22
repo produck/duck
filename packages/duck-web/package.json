@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@produck/duck": "^0.6.4",
+    "ajv": "^7.0.3",
     "ajv-keywords": "^4.0.0",
     "debug": "^4.3.1"
   }
