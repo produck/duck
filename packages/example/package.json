@@ -1,0 +1,27 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "ChaosLee <chaos2lee@qq.com>",
+  "homepage": "https://github.com/produck/duck#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://lichaozhy:P%40ssw0rdcaonima438@github.com/produck/duck.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/produck/duck/issues"
+  },
+  "devDependencies": {
+    "@produck/duck": "^0.6.4",
+    "@produck/duck-log": "^0.4.2",
+    "@produck/duck-web": "^0.2.7",
+    "@produck/duck-web-koa": "^0.3.7",
+    "@produck/duck-web-koa-router": "^0.3.1"
+  }
+}
