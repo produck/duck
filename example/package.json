@@ -9,7 +9,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://lichaozhy:P%40ssw0rdcaonima438@github.com/produck/duck.git"
+    "url": "git+https://github.com/produck/duck.git"
   },
   "types": "index.d.ts",
   "scripts": {

@@ -27,7 +27,7 @@ interface Workspace {
 		/**
 		 * The name of path.
 		 */
-		name: stirng,
+		name: string,
 
 		/**
 		 * A relative path after the path specify by the name.
