@@ -4,4 +4,4 @@ module.exports = DuckWebKoa(function ExampleApplication(app, {
 	injection
 }) {
 
-})
+});

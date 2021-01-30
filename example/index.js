@@ -1,7 +1,7 @@
-const Duck = require('@produck/duck');
-const DuckWeb = require('@produck/duck-web');
-const DuckLog = require('@produck/duck-log');
-const DuckWorkspace = require('@produck/duck-workspace');
+const Duck = require('../packages/duck');
+const DuckWeb = require('../packages/duck-web');
+const DuckLog = require('../packages/duck-log');
+const DuckWorkspace = require('../packages/duck-workspace');
 const meta = require('./package.json');
 
 module.exports = Duck({
