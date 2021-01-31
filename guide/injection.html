@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dependencies &amp; Injection | Duck</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="Or-change Duck Application Dev Framework">
+    
+    <link rel="preload" href="/assets/css/0.styles.25ae91cb.css" as="style"><link rel="preload" href="/assets/js/app.5351e437.js" as="script"><link rel="preload" href="/assets/js/2.68641783.js" as="script"><link rel="preload" href="/assets/js/13.4a93e498.js" as="script"><link rel="preload" href="/assets/js/3.5c5a2781.js" as="script"><link rel="prefetch" href="/assets/js/10.9a33d6d9.js"><link rel="prefetch" href="/assets/js/11.c6dbefc8.js"><link rel="prefetch" href="/assets/js/12.a8432ee5.js"><link rel="prefetch" href="/assets/js/14.634c0f66.js"><link rel="prefetch" href="/assets/js/15.7ed70c69.js"><link rel="prefetch" href="/assets/js/16.22b178f4.js"><link rel="prefetch" href="/assets/js/17.1e006bae.js"><link rel="prefetch" href="/assets/js/18.1a9ee776.js"><link rel="prefetch" href="/assets/js/19.c573cefc.js"><link rel="prefetch" href="/assets/js/20.0dbc2cbe.js"><link rel="prefetch" href="/assets/js/21.fb627d11.js"><link rel="prefetch" href="/assets/js/22.9c19c578.js"><link rel="prefetch" href="/assets/js/23.4af12f95.js"><link rel="prefetch" href="/assets/js/24.30126934.js"><link rel="prefetch" href="/assets/js/4.51a0d4cb.js"><link rel="prefetch" href="/assets/js/5.dbfe0154.js"><link rel="prefetch" href="/assets/js/6.9558f2c9.js"><link rel="prefetch" href="/assets/js/7.7bf8847f.js"><link rel="prefetch" href="/assets/js/8.c03a0769.js"><link rel="prefetch" href="/assets/js/9.2ceaea63.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.25ae91cb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Duck</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/guide/" class="nav-link router-link-active">
+  Guide
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  External
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/guide/injection.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/langs/zh/guide/injection.html" class="nav-link">
+  简体中文
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/guide/" class="nav-link router-link-active">
+  Guide
+</a></div><div class="nav-item"><a href="https://google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  External
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">Languages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">Languages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/guide/injection.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/langs/zh/guide/injection.html" class="nav-link">
+  简体中文
+</a></li></ul></div></div> <!----></nav> <div class="carbon-ads"></div> <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/guide/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/guide/getting-started.html" class="sidebar-link">Getting started</a></li><li><a href="/guide/directory-structure.html" class="sidebar-link">Directory Structure</a></li><li><a href="/guide/injection.html" aria-current="page" class="active sidebar-link">Dependencies &amp; Injection</a></li><li><a href="/guide/using-component.html" class="sidebar-link">Using Components</a></li><li><a href="/guide/web-application.html" class="sidebar-link">Creating A Web Application</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Advanced</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/guide/developing-a-component.html" class="sidebar-link">Developing A Component</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="dependencies-injection"><a href="#dependencies-injection" class="header-anchor">#</a> Dependencies &amp; Injection</h1></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">1/31/2021, 4:52:36 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/guide/directory-structure.html" class="prev">
+        Directory Structure
+      </a></span> <span class="next"><a href="/guide/using-component.html">
+        Using Components
+      </a>
+      →
+    </span></p></div> <div class="bsa-cpc-wrapper"><div class="bsa-cpc"></div></div></main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.5351e437.js" defer></script><script src="/assets/js/2.68641783.js" defer></script><script src="/assets/js/13.4a93e498.js" defer></script><script src="/assets/js/3.5c5a2781.js" defer></script>
+  </body>
+</html>
