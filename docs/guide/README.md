@@ -1,6 +1,3 @@
----
-sidebar: auto
----
 
 # dfafdafsafdsf
 # dfafdafsafdsf3
