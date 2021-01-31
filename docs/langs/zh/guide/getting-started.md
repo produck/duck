@@ -1,5 +1,56 @@
-# 介绍
+# 快速上手
+本文会帮助您从0开始利用`@produck/duck`定义一个产品。
 
-VuePress 由两部分组成：第一部分是一个[极简静态网站生成器](https://github.com/vuejs/vuepress/tree/master/packages/%40vuepress/core)，它包含由 Vue 驱动的[主题系统](../theme/README.md)和[插件 API](../plugin/README.md)，另一个部分是为书写技术文档而优化的[默认主题](../theme/default-theme-config.md)，它的诞生初衷是为了支持 Vue 及其子项目的文档需求。
+## 安装
+1. 如同你习惯的一样利用`npm`或者`yarn`之类的工具，初始化一个工程，
+```bash
+npm init
+```
+2. 安装`@produck/duck`作为运行时依赖，
+```bash
+npm install @produck/duck
+```
+## 开始一个简单的产品
 
-每一个由 VuePress 生成的页面都带有预渲染好的 HTML，也因此具有非常好的加载性能和搜索引擎优化（SEO）。同时，一旦页面被加载，Vue 将接管这些静态内容，并将其转换成一个完整的单页应用（SPA），其他的页面则会只在用户浏览到的时候才按需加载。
+```js
+// index.js
+
+const Duck = require('@produck/duck');
+const meta = require('./package.json');
+
+const ExampleFactory = Duck({
+	id: 'any.yourgroup.example.other', // 强制为产品设置一个ID
+	name: meta.name, // 给产品一个可读的名称
+	version: meta.version // 引用产品的版本，可以无关于package.json的内容
+}, function Example({ product, injection }, options) {
+	// 注入、模块的组装工作在这里进行。
+
+	// 处理一下配置对象
+	const timeout = options.timeout;
+
+	// 使用注入对象or注入其他功能
+	injection.foo = 'bar';
+	//...
+
+	// 导出该产品实例
+	return {
+		showMeta() {
+			// 在指定时间后，用控制台打印该产品的元信息
+			setTimeout(() => console.log(product.meta), timeout);
+		}
+	};
+});
+
+// 现在，可以创建一个Example实例.
+const example = ExampleFactory({
+	timeout: 50
+});
+
+// 然后可以使用example.
+example.showMeta();
+
+// 或者，作为模块导出
+module.exports = ExampleFactory;
+```
+
+看上去，产品的名字已经起好啦！开始思考如何补充功能吧。

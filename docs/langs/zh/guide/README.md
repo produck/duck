@@ -1,74 +1,70 @@
 # 介绍
 
-VuePress 由两部分组成：第一部分是一个[极简静态网站生成器](https://github.com/vuejs/vuepress/tree/master/packages/%40vuepress/core)，它包含由 Vue 驱动的[主题系统](../theme/README.md)和[插件 API](../plugin/README.md)，另一个部分是为书写技术文档而优化的[默认主题](../theme/default-theme-config.md)，它的诞生初衷是为了支持 Vue 及其子项目的文档需求。
+Duck是一个可扩展、轻量级、灵活的、渐进式产品组装框架。它依据“依赖注入(DI)”和“控制反转(IoC)”的概念（类似JAVA的Srping Core）帮助开发者创建、使用、管理多种运行时对象作为注入到所需要的任何地方。每位开发者都能以最小的代价扩展框架。
 
-每一个由 VuePress 生成的页面都带有预渲染好的 HTML，也因此具有非常好的加载性能和搜索引擎优化（SEO）。同时，一旦页面被加载，Vue 将接管这些静态内容，并将其转换成一个完整的单页应用（SPA），其他的页面则会只在用户浏览到的时候才按需加载。
+在过去，我们在用Node.js开发时，经常面对一些不灵活的目录组织问题。很多开发者都应该会懊恼从父级目录引用，就像是``require('../../some.js')``。这种现象当然也暗示了某种未预料的耦合设计失控。Duck解决了以上问题并提供了一种编程模式来帮助开发者避免不恰当的设计，同时也鼓励开发者依据具体产品，设置因地制宜的项目结构。
 
-## 它是如何工作的？
+Duck并不强制规范你的代码风格。不过它仍然提供一些必要的指引来推动正确的设计。所以当你使用Duck时，请勇敢的利用你的想象来解决你所面临的问题。
 
-事实上，一个 VuePress 网站是一个由 [Vue](http://vuejs.org/)、[Vue Router](https://github.com/vuejs/vue-router) 和 [webpack](http://webpack.js.org/) 驱动的单页应用。如果你以前使用过 Vue 的话，当你在开发一个自定义主题的时候，你会感受到非常熟悉的开发体验，你甚至可以使用 Vue DevTools 去调试你的自定义主题。
+另一方面来说，Duck是一个面向架构师或技术领袖组织研发任务的好用的框架，高层研发工程师会觉得如此构建工作是理所当然的。具体功能的研发工程师也能够在组装功能时感到合理舒适。Duck希望每位开发者不需要拘泥于官方推荐的某种实践风格。Duck尊重和支持每个研发团队自己的实践风格。
 
-在构建时，我们会为应用创建一个服务端渲染（SSR）的版本，然后通过虚拟访问每一条路径来渲染对应的HTML。这种做法的灵感来源于 [Nuxt](https://nuxtjs.org/) 的 `nuxt generate` 命令，以及其他的一些项目，比如 [Gatsby](https://www.gatsbyjs.org/)。
+> 春江水暖鸭先知<br>The DUCK knows first when the river becomes warm in SPRING.
 
-## Features
+用Duck来定义你的产品！
 
-**内置的 Markdown 拓展**
+## 它是如何工作的?
 
-* [目录](../guide/markdown.md#目录)
-* [自定义容器](../guide/markdown.md#自定义容器)
-* [代码块中的行高亮](../guide/markdown.md#代码块中的行高亮)
-* [行号](../guide/markdown.md#行号)
-* [导入代码段](../guide/markdown.md#导入代码段)
+Javascript有一种让`对象实例A`继承`对象实例B`的能力——原型继承模型。利用该特性，Duck构造一个从“抽象作用域”到“具体作用域”的注入树（`Injection` Tree）。首先，内置两个层次：
 
-**在 Markdown 中 使用 Vue**
+1. BaseInjection - 提供了Duck原生的注入，支持通过[Component](./using-component.html)方式追加到BaseInjection；
+2. InstalledInjection - 组件完成安装后，抛出的注入对象，由Duck用户(User)接手继续混合。
 
-* [模板语法](../guide/using-vue.md#模板语法)
-* [使用组件](../guide/using-vue.md#使用组件)
+脱离Duck的直接体系之后，扔可以继续派生注入对象。总体来说，从树根到树叶的方向，看上去就像是问题从抽象到具体。
 
-**Vue驱动的自定义主题系统**
+```
+抽象 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 具体
 
-* [网站和页面的元数据](../theme/writing-a-theme.md#网站和页面的元数据)
-* [内容摘抄](../theme/writing-a-theme.md#内容摘抄)
+┏━━━━━━━━━━━━━━━┓      ┏━━━━━━━━━━━━━━━━━━━━┓      ┏━━━━━━━━━━━━━━━━━━┓     ┏━━━━━━┓
+┃ BaseInjection ┃      ┃ InstalledInjection ┃ <|-- ┃ OtherInjection A ┃<|-- ┃ ...  ┃
+┃               ┃      ┃                    ┃      ┗━━━━━━━━━━━━━━━━━━┛     ┗━━━━━━┛
+┃ * internal    ┃ <|-- ┃ * component        ┃      ┏━━━━━━━━━━━━━━━━━━┓
+┃ * component   ┃      ┃ * user             ┃ <|-- ┃ OtherInjection.. ┃
+┗━━━━━━━━━━━━━━━┛      ┗━━━━━━━━━━━━━━━━━━━━┛      ┗━━━━━━━━━━━━━━━━━━┛
+```
 
-**默认主题**
+以上的注入对象树带来了很多使用上的便利：
 
-* Responsive layout
-* [首页](../theme/default-theme-config.md#首页)
-* [内置的搜索](../theme/default-theme-config.md#内置搜索)
-* [Algolia 搜索](../theme/default-theme-config.md#algolia-搜索)
-* 可定制的 [navbar](../theme/default-theme-config.md#navbar) and [sidebar](../theme/default-theme-config.md#sidebar)
-* [自动生成的 GitHub 链接和页面编辑链接](../theme/default-theme-config.md#Git-仓库和编辑链接)
-* [PWA: 刷新内容的 Popup](../theme/default-theme-config.md#popup-ui-to-refresh-contents)
-* [最后更新时间](../theme/default-theme-config.md#最后更新时间)
-* [多语言支持](../guide/i18n.md)
+* **轻松注入**：当前注入（Injection）可以随时增加新标识符混入（mixin）新功能，
+  ```js
+	injection.baz = 'Something';
+	injection.foo = function Foo() {
+		//....
+	};
 
-**博客主题**
+	injection.baz; // >> 'Something'
+	```
+* **简单派生**：可以通过十分自然的语法，为“更具体”的作用域提供一个子注入（Child Injection），
+  ```js
+	injection.foo = 'bar';
 
-* [文档](https://vuepress-theme-blog.ulivz.com/)
-* [在线案例](https://ulivz.com/)
+	const childInjection = injection.$create();
 
-**Plugin**
+	childInjection.foo; // >> 'bar'
+	```
+* **无害隔离**：可以访问父级注入（Parent Injection）注册的功能，可以安全隔离地在重载父级的标识符
+  > 因为Javascript原型继承的原因，在当前混入新标识符不会导致prototype对象的修改。
+  ```js
+	injection.foo = 'bar';
 
-* [强大的 Plugin API](../plugin/README.md)
-* [博客插件](https://vuepress-plugin-blog.ulivz.com/)
-* [PWA 插件](../plugin/official/plugin-pwa.md)
-* [Google Analytics 插件](../plugin/official/plugin-google-analytics.md)
-* ...
+	const childInjection = injection.$create();
 
-## 为什么不是...?
+  // 在子依赖上访问父级依赖的foo
+	childInjection.foo; // >> 'bar'
 
-### Nuxt
+	// 在子依赖上重载foo
+	childInjection.foo = 123;
 
-VuePress 能做的事情，Nuxt 理论上确实能够胜任，但 Nuxt 是为构建应用程序而生的，而 VuePress 则专注在以内容为中心的静态网站上，同时提供了一些为技术文档定制的开箱即用的特性。
-
-### Docsify / Docute
-
-这两个项目同样都是基于 Vue，然而它们都是完全的运行时驱动，因此对 SEO 不够友好。如果你并不关注 SEO，同时也不想安装大量依赖，它们仍然是非常好的选择！
-
-### Hexo
-
-Hexo 一直驱动着 Vue 的文档 —— 事实上，在把我们的主站从 Hexo 迁移到 VuePress 之前，我们可能还有很长的路要走。Hexo 最大的问题在于他的主题系统太过于静态以及过度地依赖纯字符串，而我们十分希望能够好好地利用 Vue 来处理我们的布局和交互，同时，Hexo 的 Markdown 渲染的配置也不是最灵活的。
-
-### GitBook
-
-我们的子项目文档一直都在使用 GitBook。GitBook 最大的问题在于当文件很多时，每次编辑后的重新加载时间长得令人无法忍受。它的默认主题导航结构也比较有限制性，并且，主题系统也不是 Vue 驱动的。GitBook 背后的团队如今也更专注于将其打造为一个商业产品而不是开源工具。
+  // 分别访问
+	childInjection.foo; // >> 123
+	injection.foo; // >> 'bar'
+	```

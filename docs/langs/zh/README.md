@@ -13,10 +13,10 @@ features:
 - title: 渐进式
   details: 随着项目实现目标的逐渐清晰，问题变得越来越具体，可以不断地增加新的组件或依赖满足研发需求。
 - title: 轻量级
-  details: 没有多余的实现，专注于对项目进行分工。
+  details: 没有多余的实现，专注于对研发任务进行分工。
 - title: 控制反转
-  details: 层次丰富的“注入对象”设计，轻松实现运行时依赖的访问与共享。
+  details: 层次丰富的“注入对象”设计，轻松实现运行时依赖访问与向下传递。
 - title: 易用
   details: Duck几乎不创造任何专属“概念”，适应你的编程习惯。
-footer: 遵循 MIT 开源协议 | Copyright © 2019 ChaosLee
+footer: 遵循 MIT 开源协议 | Copyright © 2019 @produck
 ---

@@ -16,6 +16,7 @@ module.exports = {
   theme: '@vuepress/vue',
   themeConfig: {
 		smoothScroll: true,
+    editLinks: true,
 		locales: {
 			'/': {
 				lang: 'en-US',
@@ -44,7 +45,7 @@ module.exports = {
 					{ text: '外链', link: 'https://google.com' }
 				],
 				sidebar: {
-					'/guide/': Sidebar.GuideSidebar('指南', '深入')
+					'/langs/zh/guide/': Sidebar.GuideSidebar('指南', '深入')
 				}
 			}
 		},
@@ -55,6 +56,6 @@ module.exports = {
     ['@vuepress/medium-zoom', true],
 	],
 	extraWatchFiles: [
-		'./Sidebar.js'
+		'.vuepress/Sidebar.js'
 	]
 };

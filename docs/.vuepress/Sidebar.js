@@ -6,17 +6,17 @@ function GuideSidebar(guideTitle, advancedTitle) {
 			children: [
 				'',
         'getting-started',
-				// 'directory-structure',
-				// 'injection',
-				// 'using-component',
-				// 'web-application'
+				'directory-structure',
+				'injection',
+				'using-component',
+				'web-application'
 			]
 		},
 		{
 			title: advancedTitle,
 			collapsable: false,
 			children: [
-				// 'define-a-component'
+				'developing-a-component'
 			]
 		}
 	]
