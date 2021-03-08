@@ -84,9 +84,6 @@ function ProductProvider(options, assembler = () => {}) {
 		components.installerList.forEach(install => install(baseInjection));
 		debug('`components.install()` has been called.');
 
-		finalOptions.installed(baseInjection);
-		debug('`options.installed()` has been called.');
-
 		const installedInjection = baseInjection.$create('Duck.Installed');
 
 		components.createdList.forEach(created => created(installedInjection));

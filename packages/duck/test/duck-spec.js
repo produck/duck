@@ -56,24 +56,6 @@ describe('Duck::', function () {
 		});
 	});
 
-	describe('hooks::', function () {
-		describe('installed::', function () {
-			it('should can append new dependence in options.installed.', function (done) {
-				const sample = {};
-
-				Duck({
-					id: 'com.orchange.duck.test',
-					installed({ injection }) {
-						injection.newone = sample;
-					}
-				}, ({ newone }) => {
-					assert.strictEqual(newone, sample);
-					done();
-				})();
-			});
-		});
-	});
-
 	describe('dependence::', function () {
 		describe('(preset)product::', function () {
 			describe('#meta', function () {

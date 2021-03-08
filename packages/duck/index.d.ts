@@ -147,8 +147,6 @@ declare namespace ProductProvider {
 
 		description?: String
 
-		installed?: Installed
-
 		/**
 		 * Duck components list. Use to mixin some function into injection.
 		 */
