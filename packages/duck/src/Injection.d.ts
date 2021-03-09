@@ -7,7 +7,7 @@ declare namespace Injection {
 		/**
 		 * The reference of this injection for esay setting.
 		 */
-		readonly injection: Proxy;
+		readonly injection: this;
 		/**
 		 * To create a new injection base on this one.
 		 *
