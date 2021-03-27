@@ -26,10 +26,6 @@ describe('DuckWebKoaRouter::', function () {
 	it('debug', function (done) {
 		Duck({
 			id: 'test',
-			installed(injection) {
-				injection.foo = 'bar';
-				injection.baz = 2;
-			},
 			components: [
 				DuckWeb([
 					{
@@ -53,7 +49,10 @@ describe('DuckWebKoaRouter::', function () {
 					}
 				])
 			]
-		}, ({ Web }) => {
+		}, ({ Web, injection }) => {
+			injection.foo = 'bar';
+			injection.baz = 2;
+
 			const server = http.createServer(Web.Application('Testing')).listen();
 
 			http.request(`http://127.0.0.1:${server.address().port}/api`, res => {

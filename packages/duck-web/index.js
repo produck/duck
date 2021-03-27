@@ -2,8 +2,9 @@
 
 const debug = require('debug')('duck:web');
 const normalize = require('./src/normalizeOptions');
+const Application = require('./src/Application');
 
-module.exports = function DuckWeb(options) {
+module.exports = Object.assign(function DuckWeb(options) {
 	const ApplicationOptionsList = normalize(options);
 	const applications = {};
 
@@ -49,4 +50,6 @@ module.exports = function DuckWeb(options) {
 			};
 		}
 	};
-};
+}, {
+	Application
+});
