@@ -8,8 +8,13 @@ module.exports = Object.assign(function DuckLog(options) {
 	const cCategoryLoggerRegistry = {};
 
 	function register(options, categoryName) {
-		cCategoryLoggerRegistry[categoryName] =
-			CategoryLogger(options, categoryName);
+		const existed = cCategoryLoggerRegistry[categoryName];
+
+		if (existed) {
+			throw new Error(`The category named ${categoryName} is existed.`);
+		}
+
+		cCategoryLoggerRegistry[categoryName] = CategoryLogger(options, categoryName);
 	}
 
 	for (const categoryName in finalOptions) {

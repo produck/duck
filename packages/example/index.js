@@ -1,7 +1,7 @@
-const Duck = require('../packages/duck');
-const DuckWeb = require('../packages/duck-web');
-const DuckLog = require('../packages/duck-log');
-const DuckWorkspace = require('../packages/duck-workspace');
+const Duck = require('@produck/duck');
+const DuckWeb = require('@produck/duck-web');
+const DuckLog = require('@produck/duck-log');
+const DuckWorkspace = require('@produck/duck-workspace');
 const meta = require('./package.json');
 
 module.exports = Duck({
@@ -15,9 +15,10 @@ module.exports = Duck({
 		DuckWorkspace()
 	]
 }, function Example({
-	injection, Web, Mock, Workspace
+	injection, Web, Mock, Workspace, Log
 }, options) {
 	console.log(options);
+	Log('test', {});
 
 	return {
 		start() {

@@ -1,72 +1,30 @@
-import Duck from '@produck/duck'
+import Duck from '@produck/duck';
+import { CategoryLogger } from './src/CategoryLogger';
 
 declare module '@produck/duck' {
-
 	interface BaseInjection {
-		/**
-		 * Logger Manager
-		 */
-		Log: DuckLog.Log
+		Log: DuckLog.LogInjection;
 	}
 }
 
 declare namespace DuckLog {
-	interface DuckLogInjecion extends Duck.InstalledInjection {};
-
-	interface Log {
-		[channelName: string]: writeToDefaultLevel
-	}
-
-	/**
-	 * Bootstrap Log Manager
-	 */
-	function Log(): void
-
-	type writeToDefaultLevel = (message) => void
-
-	type LevelName = String
-
-	type Message = String
-
-	type Formater =  (
-		meta,
-
-		message: Message
-	) => Message
-
-	interface Appender {
-
-		write(
-			message: Message
-		): void
-	}
-
-	type AppenderProvider = (
-		injection: DuckLogInjecion
-	) => Appender
-
-	interface ChannelOptions {
-		label: String
-
-		format: Formater
-
-		AppenderList: AppenderProvider[]
-
-		preventLevels: LevelName[]
-
-		defaultLevel: LevelName
-
-		levels: LevelName[]
+	interface LogInjection {
+		(categoryName: string, options: CategoryLogger.Options): void;
+		[categoryName: string]: CategoryLogger;
 	}
 
 	interface Options {
-		[channelName: string]: ChannelOptions
+		/**
+		 *
+		 */
+		[categoryName: string]: CategoryLogger.Options | boolean
 	}
 }
 
-declare function DuckLog(
+/**
+ *
+ * @param options
+ */
+declare function DuckLog(options?: DuckLog.Options): Duck.Component
 
-	options?: DuckLog.Options
-): Duck.Component
-
-export = DuckLog
+export = DuckLog;

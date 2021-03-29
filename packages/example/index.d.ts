@@ -1,4 +1,6 @@
 import '@produck/duck'
+import '@produck/duck-log'
+import { CategoryLogger } from '@produck/duck-log/src/CategoryLogger'
 
 declare namespace Mock {
 
@@ -18,5 +20,11 @@ declare module '@produck/duck' {
 
 	interface BaseInjection {
 		Bar: string
+	}
+}
+
+declare module '@produck/duck-log' {
+	interface LogInjection {
+		some: CategoryLogger
 	}
 }
