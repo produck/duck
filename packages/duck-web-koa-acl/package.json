@@ -27,7 +27,7 @@
   "devDependencies": {
     "@produck/duck-web": "^0.2.7",
     "@produck/duck-web-koa": "^0.3.7",
-    "mocha": "^8.2.1"
+    "mocha": "^8.3.2"
   },
   "dependencies": {
     "@produck/duck": "^0.6.4",

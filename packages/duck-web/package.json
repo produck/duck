@@ -26,12 +26,12 @@
     "url": "https://github.com/produck/duck/issues"
   },
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "mocha": "^8.3.2"
   },
   "dependencies": {
     "@produck/duck": "^0.6.4",
-    "ajv": "^7.0.3",
-    "ajv-keywords": "^4.0.0",
+    "ajv": "^8.0.1",
+    "ajv-keywords": "^5.0.0",
     "debug": "^4.3.1"
   }
 }
