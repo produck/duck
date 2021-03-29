@@ -66,19 +66,5 @@
 				}
 			}
 		}
-	},
-	"type": "object",
-	"additionalProperties": false,
-	"patternProperties": {
-		"^[a-zA-Z][A-Za-z0-9_$]*$": {
-			"oneOf": [
-				{
-					"$ref": "#/definitions/loggerOptions"
-				},
-				{
-					"instanceof": "Function"
-				}
-			]
-		}
 	}
 }

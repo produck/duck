@@ -19,7 +19,7 @@ declare namespace Normalizer {
 		/**
 		 * Providing an initial `options`
 		 */
-		default?: () => any;
+		defaults?: () => any;
 
 		/**
 		 * Assertion for the input `options`.

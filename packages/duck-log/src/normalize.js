@@ -1,53 +1,22 @@
 'use strict';
 
-const schema = require('./LoggerOptionsSchema.json');
-const AppenderConsole = require('./Appenders/Console');
-const GeneralFormat = require('./Formats/General');
+const { Normalizer, Validator } = require('@produck/duck');
+const schema = require('./OptionsSchema.json');
+const normalizeCategoryOptions = require('./CategoryLogger/normalize');
+const DEFAULT = require('./CategoryLogger/default');
 
-const DEFAULT_LEVELS = schema.definitions.defaultLevels.enum = [
-	'trace', 'debug', 'info', 'warn', 'error', 'fatal'
-];
+schema.definitions.defaultLevels.enum = DEFAULT.LEVELS;
 
-function normalize(loggersOptions, injection = null) {
-	const finalLoggersOptions = {};
+module.exports = Normalizer({
+	handler: function normalize(_options) {
+		const options = {};
 
-	for (const categoryName in loggersOptions) {
-		const options = loggersOptions[categoryName];
-
-		if (typeof options === 'function' && injection === null) {
-			finalLoggersOptions[categoryName] = options;
-		} else {
-			const finalOptions = {
-				format: GeneralFormat(),
-				levels: DEFAULT_LEVELS.slice(0),
-				AppenderList: [AppenderConsole()],
-				preventLevels: [],
-				defaultLevel: 'info',
-			};
-
-			const {
-				format:  _format = finalOptions.format,
-				levels: _levels = finalOptions.levels,
-				AppenderList: _appenders = finalOptions.AppenderList,
-				preventLevels: _preventLevels = finalOptions.preventLevels,
-				defaultLevel: _defaultLevel = finalOptions.defaultLevel
-			} = typeof options === 'function' ? options(injection) : options;
-
-			finalOptions.label = categoryName;
-			finalOptions.format = _format;
-			finalOptions.levels = _levels;
-			finalOptions.AppenderList = _appenders;
-			finalOptions.preventLevels = _preventLevels;
-			finalOptions.defaultLevel = _defaultLevel;
-
-			finalLoggersOptions[categoryName] = finalOptions;
+		for (const categoryName in _options) {
+			options[categoryName] =
+				normalizeCategoryOptions(_options[categoryName], categoryName);
 		}
 
-	}
-
-	return finalLoggersOptions;
-}
-
-exports.normalize = normalize;
-exports.DEFAULT_LEVELS = DEFAULT_LEVELS;
-exports.schema = schema;
+		return options;
+	},
+	validate: Validator(schema)
+});

@@ -1,6 +1,14 @@
 {
   "packages": [
-    "packages/*"
+    "packages/duck",
+    "packages/duck-log",
+    "packages/duck-web",
+    "packages/duck-web-koa",
+    "packages/duck-web-koa-acl",
+    "packages/duck-web-koa-router",
+    "packages/duck-web-koa-session",
+    "packages/duck-web-koa-validator",
+    "packages/duck-workspace"
   ],
   "npmClient": "npm",
   "command": {

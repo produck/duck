@@ -1,89 +1,58 @@
 'use strict';
 
-const normalizeLoggerOptions = require('./src/normalizeLoggerOptions');
-const { normalize } = require('./src/normalize');
+const normalize = require('./src/normalize');
+const CategoryLogger = require('./src/CategoryLogger');
 
-DuckLog.Appender = {
-	File: require('./src/Appenders/File'),
-	Stdout: require('./src/Appenders/Stdout'),
-	Stderr: require('./src/Appenders/Stderr'),
-	Console: require('./src/Appenders/Console')
-};
+module.exports = Object.assign(function DuckLog(options) {
+	const finalOptions = normalize(options);
+	const cCategoryLoggerRegistry = {};
 
-DuckLog.Format = {
-	ApacheCLF: require('./src/Formats/ApacheCLF'),
-	ApacheCLFWithVhost: require('./src/Formats/ApacheCLFWithVhost'),
-	ApacheECLF: require('./src/Formats/ApacheECLF'),
-	// NginxCombined: require('./src/Formats/NginxCombined'),
-	InternalError: require('./src/Formats/InternalError'),
-	General: require('./src/Formats/General')
-};
+	function register(options, categoryName) {
+		cCategoryLoggerRegistry[categoryName] =
+			CategoryLogger(options, categoryName);
+	}
 
-DuckLog.Adapter = {
-	HttpServer: require('./src/Adapters/HttpServer')
-};
-
-module.exports = DuckLog;
-
-/**
- * @returns {import('@produck/duck').Component}
- */
-function DuckLog(loggersOptions) {
-	const finalLoggersOptions = normalizeLoggerOptions(loggersOptions);
-
-	let installedInjection = null;
+	for (const categoryName in finalOptions) {
+		register(finalOptions[categoryName], categoryName);
+	}
 
 	return {
 		id: 'org.produck.log',
 		name: 'DuckLogger',
 		install(injection) {
-			const manager = function bootstrap() {
-				const options = normalize(finalLoggersOptions, installedInjection);
+			injection.Log = new Proxy(function appendCategoryLogger(categoryName, options) {
+				register(options, categoryName);
+			}, {
+				get(_target, categoryName) {
+					const categoryLogger = cCategoryLoggerRegistry[categoryName];
 
-				for (const categoryName in options) {
-					manager[categoryName] = Logger(options[categoryName]);
+					if (CategoryLogger === undefined) {
+						throw new Error(`A category logger named ${categoryName} is NOT found.`);
+					}
+
+					return categoryLogger;
+				},
+				set() {
+					throw new Error('Illegal setting.');
 				}
-			};
-
-			injection.Log = manager;
-		},
-		created({ injection }) {
-			installedInjection = injection;
+			});
 		}
 	};
-}
-
-function Logger(options) {
-	const log = { list: [], map: {} };
-	const appenders = options.AppenderList.map(Appender => Appender());
-
-	function append(message) {
-		appenders.forEach(appender => appender.write(message));
-	}
-
-	options.levels.forEach(function (levelName, index) {
-		const notPrevented = options.preventLevels.indexOf(levelName) === -1;
-
-		this.push(log.map[levelName] = notPrevented ? function log(message) {
-			return append(options.format({
-				level: {
-					name: levelName,
-					number: index
-				},
-				time: new Date(),
-				category: options.label
-			}, message));
-		} : () => {});
-	}, log.list);
-
-	const { defaultLevel } = options;
-	const defaultLog = defaultLevel ? log.map[defaultLevel] : log.list[0];
-
-	function logger(message) {
-		return defaultLog(message);
-	}
-
-	Object.assign(logger, log.map);
-
-	return logger;
-}
+}, {
+	Appender: Object.freeze({
+		File: require('./src/CategoryLogger/Appenders/File'),
+		Stdout: require('./src/CategoryLogger/Appenders/Stdout'),
+		Stderr: require('./src/CategoryLogger/Appenders/Stderr'),
+		Console: require('./src/CategoryLogger/Appenders/Console')
+	}),
+	Format: Object.freeze({
+		ApacheCLF: require('./src/CategoryLogger/Formats/ApacheCLF'),
+		ApacheCLFWithVhost: require('./src/CategoryLogger/Formats/ApacheCLFWithVhost'),
+		ApacheECLF: require('./src/CategoryLogger/Formats/ApacheECLF'),
+		InternalError: require('./src/CategoryLogger/Formats/InternalError'),
+		General: require('./src/CategoryLogger/Formats/General')
+	}),
+	Adapter: Object.freeze({
+		HttpServer: require('./src/Adapters/HttpServer')
+	})
+});
