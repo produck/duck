@@ -1,7 +1,7 @@
 'use strict';
 
 const Duck = require('@produck/duck');
-const DuckLog = require('../');
+const DuckLog = require('..');
 const http = require('http');
 
 describe('DuckLog::', function () {

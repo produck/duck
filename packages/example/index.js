@@ -10,7 +10,14 @@ module.exports = Duck({
 	name: meta.name,
 	description: meta.description,
 	components: [
-		DuckLog(),
+		DuckLog({
+			test: {
+				AppenderList: [
+					DuckLog.Appender.Console(),
+					DuckLog.Appender.File()
+				]
+			}
+		}),
 		DuckWeb(),
 		DuckWorkspace()
 	]
@@ -19,6 +26,11 @@ module.exports = Duck({
 }, options) {
 	console.log(options);
 	Log('test', {});
+
+	DuckLog.Appender.Console();
+	DuckLog.Format.ApacheCLF();
+
+
 
 	return {
 		start() {
