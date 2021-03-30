@@ -8,6 +8,7 @@ const DEFAULT = require('./CategoryLogger/default');
 schema.definitions.defaultLevels.enum = DEFAULT.LEVELS;
 
 module.exports = Normalizer({
+	defaults: () => ({}),
 	handler: function normalize(_options) {
 		const options = {};
 

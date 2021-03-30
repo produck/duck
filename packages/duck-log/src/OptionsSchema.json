@@ -15,6 +15,7 @@
 				},
 				"levels": {
 					"type": "array",
+					"minItems": 1,
 					"items": {
 						"type": "string",
 						"pattern": "^[a-z][a-z0-9]*$"
@@ -65,6 +66,21 @@
 					}
 				}
 			}
+		}
+	},
+	"type": "object",
+	"additionalProperties": false,
+	"patternProperties": {
+		"^[a-zA-Z][A-Za-z0-9_$]*$": {
+			"oneOf": [
+				{
+					"$ref": "#/definitions/loggerOptions"
+				},
+				{
+					"type": "boolean",
+					"const": true
+				}
+			]
 		}
 	}
 }

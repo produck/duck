@@ -12,9 +12,6 @@
     "url": "git+https://github.com/produck/duck.git"
   },
   "types": "./index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/produck/duck/issues"
   },
