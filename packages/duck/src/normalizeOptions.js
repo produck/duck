@@ -5,6 +5,7 @@ const Validator = require('./Validator');
 const schema = require('./OptionsSchema.json');
 
 module.exports = Normalizer({
+	defaults: () => ({}),
 	handler(options) {
 		const finalOptions = {
 			name: 'Default Product Name',

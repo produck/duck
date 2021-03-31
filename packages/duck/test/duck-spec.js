@@ -44,12 +44,16 @@ describe('Duck::', function () {
 		});
 
 		describe('assembler::', function () {
+			it('should instant a product with default assembler', function () {
+				Duck({ id: 'com.orchange.duck.test' })();
+			});
+
 			it('should access product.meta to get id.', function (done) {
 				Duck({
 					id: 'com.orchange.duck.test',
 				}, ({ product }, options) => {
-					assert.equal(product.meta.id, 'com.orchange.duck.test');
-					assert.deepEqual(options, { a: 1 });
+					assert.strictEqual(product.meta.id, 'com.orchange.duck.test');
+					assert.deepStrictEqual(options, { a: 1 });
 					done();
 				})({ a: 1 });
 			});
@@ -67,7 +71,7 @@ describe('Duck::', function () {
 						version: '1.1.1',
 						description: 'test description',
 					}, ({ product }) => {
-						assert.deepEqual(product.meta, {
+						assert.deepStrictEqual(product.meta, {
 							id: 'com.orchange.duck.test',
 							name: 'test',
 							namespace: 'test-ns',
@@ -82,7 +86,7 @@ describe('Duck::', function () {
 					Duck({
 						id: 'com.orchange.duck.test',
 					}, ({ product }) => {
-						assert.deepEqual(product.meta, {
+						assert.deepStrictEqual(product.meta, {
 							id: 'com.orchange.duck.test',
 							name: 'Default Product Name',
 							namespace: '',
@@ -99,7 +103,7 @@ describe('Duck::', function () {
 					Duck({
 						id: 'com.orchange.duck.test',
 					}, ({ product }) => {
-						assert.deepEqual(product.components, []);
+						assert.deepStrictEqual(product.components, []);
 						done();
 					})();
 				});
@@ -121,7 +125,7 @@ describe('Duck::', function () {
 							},
 						]
 					}, ({ product }) => {
-						assert.deepEqual(product.components, [
+						assert.deepStrictEqual(product.components, [
 							{
 								id: 'private.luo.test.panda',
 								name: 'TeacherLuo',
@@ -141,7 +145,7 @@ describe('Duck::', function () {
 					Duck({
 						id: 'com.orchange.duck.test',
 					}, ({ product }) => {
-						assert.deepEqual(product.duck, {
+						assert.deepStrictEqual(product.duck, {
 							version: meta.version,
 							peerDependencies: meta.peerDependencies
 						});

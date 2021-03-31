@@ -137,7 +137,7 @@ declare namespace ProductProvider {
 		/**
 		 * Product id
 		 */
-		id?: String
+		id: String
 
 		name?: String
 
