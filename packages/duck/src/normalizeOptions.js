@@ -11,7 +11,6 @@ module.exports = Normalizer({
 			namespace: '',
 			version: '0.0.0',
 			description: 'No descrition',
-			installed: () => {},
 			components: []
 		};
 
@@ -21,7 +20,6 @@ module.exports = Normalizer({
 			namespace: _namespace = finalOptions.namespace,
 			version: _version = finalOptions.version,
 			description: _description = finalOptions.description,
-			installed: _installed = finalOptions.installed,
 			components: _components = finalOptions.components
 		} = options;
 
@@ -30,7 +28,6 @@ module.exports = Normalizer({
 		finalOptions.namespace = _namespace;
 		finalOptions.version = _version;
 		finalOptions.description = _description;
-		finalOptions.installed = _installed;
 		finalOptions.components = _components.map(options => {
 			const finalOptions = {
 				description: 'No description',

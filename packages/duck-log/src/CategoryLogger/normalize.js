@@ -5,7 +5,7 @@ const GeneralFormat = require('./Formats/General');
 const DEFAULT = require('./default');
 
 module.exports = function normalize(_options, categoryName) {
-	_options = typeof _options === 'object' ? _options : {};
+	_options = _options === true ? {} : _options;
 
 	const options = {
 		format: GeneralFormat(),

@@ -21,17 +21,19 @@ module.exports = Object.assign(function DuckLog(options) {
 		register(finalOptions[categoryName], categoryName);
 	}
 
+	function appendCategoryLogger(categoryName, options = true) {
+		register(options, categoryName);
+	}
+
 	return {
 		id: 'org.produck.log',
 		name: 'DuckLogger',
 		install(injection) {
-			injection.Log = new Proxy(function appendCategoryLogger(categoryName, options) {
-				register(options, categoryName);
-			}, {
+			injection.Log = new Proxy(appendCategoryLogger, {
 				get(_target, categoryName) {
 					const categoryLogger = cCategoryLoggerRegistry[categoryName];
 
-					if (CategoryLogger === undefined) {
+					if (categoryLogger === undefined) {
 						throw new Error(`A category logger named ${categoryName} is NOT found.`);
 					}
 

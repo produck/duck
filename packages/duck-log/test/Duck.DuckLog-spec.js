@@ -123,7 +123,82 @@ describe('Duck::', function () {
 		});
 
 		describe('Append Category Logger::', function () {
+			it('should be apppended a new category logger only by category name.', function (done) {
+				Duck({
+					id: 'com.produck.ducklog.test',
+					components: [
+						DuckLog({ test: true })
+					]
+				}, async function Test({ Log }) {
+					Log('test2');
 
+					assert(typeof Log.test === 'function');
+					assert(typeof Log.test2 === 'function');
+					assert(typeof Log.test2.info === 'function');
+					assert(typeof Log.test2.error === 'function');
+					assert(typeof Log.test2.warn === 'function');
+
+					done();
+				})();
+			});
+
+			it('should be apppended a new category logger by category name & options.', function (done) {
+				Duck({
+					id: 'com.produck.ducklog.test',
+					components: [
+						DuckLog({ test: true })
+					]
+				}, async function Test({ Log }) {
+					Log('test2', {
+						label: 'hehe'
+					});
+
+					assert(typeof Log.test === 'function');
+					assert(typeof Log.test2 === 'function');
+					assert(typeof Log.test2.info === 'function');
+					assert(typeof Log.test2.error === 'function');
+					assert(typeof Log.test2.warn === 'function');
+
+					done();
+				})();
+			});
+
+			it('should throw an error if apppend a same name category logger.', function (done) {
+				Duck({
+					id: 'com.produck.ducklog.test',
+					components: [
+						DuckLog({ test: true })
+					]
+				}, async function Test({ Log }) {
+					assert.throws(() => Log('test'));
+					done();
+				})();
+			});
+
+			it('should throw an error if setting property to LogInjection.', function (done) {
+				Duck({
+					id: 'com.produck.ducklog.test',
+					components: [
+						DuckLog({ test: true })
+					]
+				}, async function Test({ Log }) {
+					assert.throws(() => Log.a = 1);
+					done();
+				})();
+			});
+
+			it('should throw an error if try to access a non-existed category logger.', function (done) {
+				Duck({
+					id: 'com.produck.ducklog.test',
+					components: [
+						DuckLog({ test: true })
+					]
+				}, async function Test({ Log }) {
+					await Log.test('some');
+					assert.throws(() => Log.a);
+					done();
+				})();
+			});
 		});
 	});
 });
