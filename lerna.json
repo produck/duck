@@ -9,7 +9,7 @@
     "packages/duck-web-koa-session",
     "packages/duck-web-koa-validator",
     "packages/duck-workspace",
-    "packages/example"
+    "example"
   ],
   "npmClient": "npm",
   "command": {

@@ -9,51 +9,70 @@ declare module '@produck/duck' {
 }
 
 declare namespace DuckLog {
-	interface LogInjection {
-		(categoryName: string, options: CategoryLogger.Options): void;
+
+	/**
+	 *
+	 * @param categoryName
+	 * @param options
+	 */
+	type appendCategoryLogger = (categoryName: string, options?: CategoryLogger.Options) => void;
+
+	interface LogInjection extends appendCategoryLogger {
 		[categoryName: string]: CategoryLogger;
 	}
 
 	interface Options {
 		/**
-		 *
+		 * Named category options. A simple style just using `true` to indicate using
+		 * a default category options.
 		 */
 		[categoryName: string]: CategoryLogger.Options | boolean;
 	}
 
 	export namespace CategoryLogger {
 		interface LevelLogger {
-			(messageObject: any): Promise<void>
+			(messageObject: any): Promise<string>;
+			(): void;
 		}
 
 		export interface Options {
 			/**
-			 *
+			 * The category text. It SHOULD be the key, category name if not specified.
 			 */
 			label: String;
 
 			/**
-			 *
+			 * A definition destribing how to generate a string message from log meta
+			 * and custom message object.
 			 */
 			format: Helper.Format.Formatter;
 
 			/**
-			 *
+			 * A list of what to do after a formated message string be get. Like,
+			 *   - output to console
+			 *   - write to fs
+			 *   - send by net work
+			 * ...
 			 */
 			AppenderList: Helper.Appender.Factory[];
 
 			/**
-			 *
+			 * Making a list of specific categories to be silent.
 			 */
 			preventLevels: string[];
 
 			/**
+			 * To indicate a level logger when trying to call like
+			 * `Log.<categoryName>('...')`.
+			 * It is same to call `Log.<categoryName>.<defaultLevel>('...')`.
 			 *
+			 * And the first level is the defualt
 			 */
 			defaultLevel: string;
 
 			/**
-			 *
+			 * Setting a list of level name. The first one is the default level if
+			 * `options.defaultLevel` is NOT indicated.
 			 */
 			levels: string[];
 		}
@@ -67,7 +86,7 @@ declare namespace DuckLog {
 	namespace Helper {
 		namespace Appender {
 			interface Writable {
-				write(messageObject: any): void | Promise<void>;
+				write(messageObject: any): unknown | Promise<unknown>;
 			}
 
 			type Factory = () => Writable;
@@ -81,8 +100,14 @@ declare namespace DuckLog {
 		}
 
 		namespace Format {
+			interface Meta {
+				level: string;
+				time: Date;
+				label: string;
+			}
+
 			interface Formatter {
-				(meta: object, messageObject: any): string;
+				(meta: Meta, messageObject: any): string;
 			}
 
 			type Factory = () => Formatter;
@@ -100,10 +125,16 @@ declare namespace DuckLog {
 			interface RequestListenerWithLog extends http.RequestListener {}
 
 			interface Module {
-				HttpServer: (
+				/**
+				 * Use to generate a log message included `requestListener` from
+				 * original `requestListener`.
+				 * @param requestListener a function as `http.RequestListener`.
+				 * @param callback what to do after http access message getting.
+				 */
+				HttpServer(
 					requestListener: http.RequestListener,
 					callback: (message: string) => any
-				) => RequestListenerWithLog
+				): RequestListenerWithLog
 			}
 		}
 	}

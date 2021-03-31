@@ -25,7 +25,7 @@ describe('DuckLog::', function () {
 					format: (meta, message) => meta + message,
 					levels: ['info', 'error'],
 					AppenderList: [
-						function CustomersAppender() {
+						function CustomAppender() {
 							return { write: message => message };
 						}
 					],

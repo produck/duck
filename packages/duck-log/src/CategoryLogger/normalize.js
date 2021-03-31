@@ -21,7 +21,7 @@ module.exports = function normalize(_options, categoryName) {
 		levels: _levels = options.levels,
 		AppenderList: _appenders = options.AppenderList,
 		preventLevels: _preventLevels = options.preventLevels,
-		defaultLevel: _defaultLevel = options.defaultLevel
+		defaultLevel: _defaultLevel
 	} = _options;
 
 	options.label = _label;
@@ -29,7 +29,7 @@ module.exports = function normalize(_options, categoryName) {
 	options.levels = _levels;
 	options.AppenderList = _appenders;
 	options.preventLevels = _preventLevels;
-	options.defaultLevel = _defaultLevel;
+	options.defaultLevel = _defaultLevel ? _defaultLevel : options.levels[0];
 
 	return options;
 };

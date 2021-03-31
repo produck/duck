@@ -29,14 +29,16 @@ module.exports = function CategoryLogger(options, categoryName) {
 	}
 
 	function LevelLogger(levelName) {
-		return function levelLogger(messageObject) {
+		return async function levelLogger(messageObject) {
 			const message = format({
 				level: levelName,
 				time: new Date(),
 				label: label
 			}, messageObject);
 
-			return appendLogMessage(message);
+			await appendLogMessage(message);
+
+			return message;
 		};
 	}
 
@@ -50,9 +52,7 @@ module.exports = function CategoryLogger(options, categoryName) {
 		mapOfLevelLogger[levelName] = levelLogger;
 	});
 
-	const defaultLevelLogger = defaultLevelName
-		? mapOfLevelLogger[defaultLevelName]
-		: listOfLevelLogger[0];
+	const defaultLevelLogger = mapOfLevelLogger[defaultLevelName];
 
 	return Object.assign(function iLogger(message) {
 		return defaultLevelLogger(message);

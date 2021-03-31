@@ -6,6 +6,6 @@ module.exports = function GeneralFormat() {
 			throw new TypeError('The `message` MUST be a string.');
 		}
 
-		return `[${meta.time.toISOString()}] [${meta.level.name.toUpperCase()}] [${meta.category}]: ${message}`;
+		return `[${meta.time.toISOString()}] [${meta.level.toUpperCase()}] [${meta.label}]: ${message}`;
 	};
 };
