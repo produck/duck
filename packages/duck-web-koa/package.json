@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-web-koa",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -31,8 +31,8 @@
     "mocha": "^8.3.2"
   },
   "dependencies": {
-    "@produck/duck": "^0.6.4",
-    "@produck/duck-web": "^0.2.7",
+    "@produck/duck": "^0.6.5",
+    "@produck/duck-web": "^0.2.8",
     "debug": "^4.3.1"
   },
   "peerDependencies": {

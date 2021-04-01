@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-workspace",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Helping product to manage important path and easy to resolve.",
   "keywords": [
     "workspace"
@@ -32,7 +32,7 @@
     "mocha": "^8.3.2"
   },
   "dependencies": {
-    "@produck/duck": "^0.6.4",
+    "@produck/duck": "^0.6.5",
     "fs-extra": "^9.1.0"
   }
 }
