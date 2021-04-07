@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "> TODO: description",
   "author": "ChaosLee <chaos2lee@qq.com>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -19,8 +19,8 @@
     "@produck/duck": "^0.6.5",
     "@produck/duck-log": "^0.5.0",
     "@produck/duck-web": "^0.2.8",
-    "@produck/duck-web-koa": "^0.3.8",
-    "@produck/duck-web-koa-router": "^0.3.2",
+    "@produck/duck-web-koa": "^0.3.9",
+    "@produck/duck-web-koa-router": "^0.3.3",
     "@produck/duck-workspace": "^0.1.1"
   }
 }
