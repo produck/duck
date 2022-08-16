@@ -5,33 +5,34 @@ const CategoryLogger = require('./src/CategoryLogger');
 
 module.exports = Object.assign(function DuckLog(options) {
 	const finalOptions = normalize(options);
-	const cCategoryLoggerRegistry = {};
-
-	function register(options, categoryName) {
-		const existed = cCategoryLoggerRegistry[categoryName];
-
-		if (existed) {
-			throw new Error(`The category named ${categoryName} is existed.`);
-		}
-
-		cCategoryLoggerRegistry[categoryName] = CategoryLogger(options, categoryName);
-	}
-
-	for (const categoryName in finalOptions) {
-		register(finalOptions[categoryName], categoryName);
-	}
-
-	function appendCategoryLogger(categoryName, options = true) {
-		register(options, categoryName);
-	}
 
 	return {
 		id: 'org.produck.log',
 		name: 'DuckLogger',
 		install(injection) {
+			const categoryLoggerRegistry = {};
+
+			function register(options, categoryName) {
+				const existed = categoryLoggerRegistry[categoryName];
+
+				if (existed) {
+					throw new Error(`The category named ${categoryName} is existed.`);
+				}
+
+				categoryLoggerRegistry[categoryName] = CategoryLogger(options, categoryName);
+			}
+
+			for (const categoryName in finalOptions) {
+				register(finalOptions[categoryName], categoryName);
+			}
+
+			function appendCategoryLogger(categoryName, options = true) {
+				register(options, categoryName);
+			}
+
 			injection.Log = new Proxy(appendCategoryLogger, {
 				get(_target, categoryName) {
-					const categoryLogger = cCategoryLoggerRegistry[categoryName];
+					const categoryLogger = categoryLoggerRegistry[categoryName];
 
 					if (categoryLogger === undefined) {
 						throw new Error(`A category logger named ${categoryName} is NOT found.`);
