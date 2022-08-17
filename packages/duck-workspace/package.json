@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-workspace",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Helping product to manage important path and easy to resolve.",
   "keywords": [
     "workspace"

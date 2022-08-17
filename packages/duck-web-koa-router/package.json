@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-web-koa-router",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "",
   "keywords": [],
   "author": "ChaosLee <lichao@or-change.cn>",
@@ -31,8 +31,8 @@
   "dependencies": {
     "@koa/router": "^10.0.0",
     "@produck/duck": "^0.6.5",
-    "@produck/duck-web": "^0.2.8",
-    "@produck/duck-web-koa": "^0.3.9",
+    "@produck/duck-web": "^0.2.9",
+    "@produck/duck-web-koa": "^0.3.10",
     "@types/koa__router": "^8.0.4",
     "debug": "^4.3.1"
   }

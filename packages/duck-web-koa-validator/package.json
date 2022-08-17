@@ -1,6 +1,6 @@
 {
   "name": "@produck/duck-web-koa-validator",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "",
   "author": "ChaosLee <lichao@or-change.cn>",
   "homepage": "https://github.com/produck/duck#readme",
@@ -26,12 +26,12 @@
   },
   "devDependencies": {
     "@produck/duck": "^0.6.5",
-    "@produck/duck-web-koa": "^0.3.9",
-    "@produck/duck-web-koa-router": "^0.3.3",
+    "@produck/duck-web-koa": "^0.3.10",
+    "@produck/duck-web-koa-router": "^0.3.4",
     "mocha": "^8.3.2"
   },
   "dependencies": {
-    "@produck/duck-web": "^0.2.8",
+    "@produck/duck-web": "^0.2.9",
     "ajv": "^8.0.1",
     "debug": "^4.3.1"
   }
