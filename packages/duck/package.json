@@ -32,19 +32,19 @@
 		"url": "git+https://github.com/produck/duck.git"
 	},
 	"scripts": {
-		"test": "node ./__tests__/@produck/duck.test.js"
+		"build:version": "node script/version.mjs",
+		"build": "npm run build:version && rollup -c script/rollup.config.mjs",
+		"prepublishOnly": " npm run build"
 	},
 	"bugs": {
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"dependencies": {
-		"@produck/kit": "^0.1.1",
-		"@produck/mold": "^0.1.1"
+		"@produck/kit": "^0.1.2",
+		"@produck/mold": "^0.2.2",
+		"semver": "^7.3.7"
 	},
 	"devDependencies": {
-		"c8": "^7.12.0",
-		"eslint": "^8.24.0",
-		"mocha": "^10.0.0",
 		"rollup": "^2.79.1"
 	}
 }
