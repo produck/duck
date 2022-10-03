@@ -3,18 +3,18 @@ import * as Kit from '@produck/kit';
 import semver from 'semver';
 import version from './version.mjs';
 
-const OptionalSemverSchema = S.Value(semver.valid, 'semver string', () => '0.0.0');
+const OptionalSemver = S.Value(semver.valid, 'semver string', () => '0.0.0');
 
 const DuckOptionsSchema = S.Object({
 	id: P.String(),
 	name: P.String('Default Produck Name'),
-	version: OptionalSemverSchema,
+	version: OptionalSemver,
 	description: P.String('No descrition'),
 	components: S.Array({
 		items: S.Object({
 			id: P.String(),
 			name: P.String(),
-			version: OptionalSemverSchema,
+			version: OptionalSemver,
 			description: P.String('No descrition'),
 			install: P.Function(() => {}),
 			created: P.Function(() => {}),
@@ -56,22 +56,24 @@ const ProductProvider = (options, assembler = () => {}) => {
 	});
 
 	const InstalledKit = () => {
-		const BaseKit = ProviderKit('Duck::Instance::Base');
+		const BaseProduckKit = ProviderKit('Duck::Produck::Base');
 
 		for (const component of finalOptions.components) {
-			component.install(BaseKit);
+			component.install(BaseProduckKit);
 		}
 
-		const InstalledKit = BaseKit('Duck::Instance::Installed');
+		const InstalledProduckKit = BaseProduckKit('Duck::Produck::Installed');
 
 		for (const component of finalOptions.components) {
-			component.created(InstalledKit);
+			component.created(InstalledProduckKit);
 		}
 
-		return InstalledKit;
+		return InstalledProduckKit;
 	};
 
 	return (...args) => new assembler(InstalledKit(), ...args);
 };
 
 export { ProductProvider as Duck };
+
+export const defineComponent = any => any;

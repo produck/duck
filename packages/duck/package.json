@@ -14,13 +14,14 @@
 	"main": "index.mjs",
 	"type": "module",
 	"exports": {
-		"import": "./src/index.mjs",
+		"import": "./index.mjs",
 		"require": "./dist/duck.cjs"
 	},
 	"types": "index.d.ts",
 	"files": [
-		"src/**.mjs",
 		"dist/duck.cjs",
+		"index.mjs",
+		"version.mjs",
 		"index.d.ts",
 		"tsconfig.json"
 	],

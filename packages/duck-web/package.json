@@ -1,0 +1,36 @@
+{
+	"name": "@produck/duck-web",
+	"version": "1.0.0",
+	"description": "> TODO: description",
+	"author": "ChaosLee <chaos2lee@qq.com>",
+	"homepage": "https://github.com/produck/duck#readme",
+	"license": "MIT",
+	"main": "lib/duck-web.js",
+	"files": [
+		"dist/duck-web.cjs",
+		"index.mjs",
+		"version.mjs",
+		"index.d.ts",
+		"tsconfig.json"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/produck/duck.git"
+	},
+	"scripts": {
+		"test": "node ./__tests__/@produck/duck-web.test.js"
+	},
+	"bugs": {
+		"url": "https://github.com/produck/duck/issues"
+	},
+	"dependencies": {
+		"@produck/duck": "^1.0.0",
+		"@produck/mold": "^0.2.2"
+	},
+	"devDependencies": {
+		"rollup": "^2.79.1"
+	}
+}
