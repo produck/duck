@@ -6,9 +6,6 @@ import { defineConfig } from 'rollup';
 const require = createRequire(import.meta.url);
 const meta = require('../package.json');
 
-const MODULE_NAME = meta.name;
-const MODULE_FILE_NAME = MODULE_NAME.replace(/@.+\//, '');
-
 const BANNER =
 	'/*!\n' +
 	` * ${meta.name} v${meta.version}\n` +
@@ -18,7 +15,7 @@ const BANNER =
 
 const moduleList = [
 	{
-		output: path.resolve(`dist/${MODULE_FILE_NAME}.cjs`),
+		output: path.resolve('index.cjs'),
 		format: 'cjs',
 		isExternal: true,
 	}
@@ -33,6 +30,9 @@ export default moduleList.map(config => {
 			name: config.name,
 			banner: BANNER
 		},
-		external: (_s, _i, isResolved) => !isResolved
+		external: [
+			...Object.keys(meta.dependencies),
+			/^node:/
+		]
 	});
 });

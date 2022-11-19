@@ -30,6 +30,9 @@ export default moduleList.map(config => {
 			name: config.name,
 			banner: BANNER
 		},
-		external: Object.keys(meta.dependencies)
+		external: [
+			...Object.keys(meta.dependencies),
+			/^node:/
+		]
 	});
 });

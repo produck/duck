@@ -2,6 +2,7 @@ import { S, P, Normalizer, T } from '@produck/mold';
 import * as Kit from '@produck/kit';
 import semver from 'semver';
 import version from './version.mjs';
+import path from 'node:path';
 
 const OptionalSemver = S.Value(semver.valid, 'semver string', () => '0.0.0');
 
@@ -28,6 +29,7 @@ const normalize = Normalizer(DuckOptionsSchema);
 const DuckKit = Kit.global('Duck');
 
 DuckKit.duck = Object.freeze({ version });
+const d = path.resolve('');
 
 const ProductProvider = (options, assembler = () => {}) => {
 	const finalOptions = normalize(options);
