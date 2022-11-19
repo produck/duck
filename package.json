@@ -1,5 +1,5 @@
 {
-	"name": "@produck/duck",
+	"name": "@produck/duck-workspace",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
@@ -8,8 +8,11 @@
 	},
 	"devDependencies": {
 		"c8": "^7.12.0",
-		"eslint": "^8.24.0",
-		"mocha": "^10.0.0",
-		"lerna": "^5.5.4"
-	}
+		"eslint": "^8.28.0",
+		"mocha": "^10.1.0",
+		"lerna": "^6.0.3"
+	},
+	"workspaces": [
+		"packages/*"
+	]
 }

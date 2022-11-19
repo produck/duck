@@ -1,23 +1,10 @@
 {
 	"$schema": "node_modules/lerna/schemas/lerna-schema.json",
 	"useNx": false,
-	"useWorkspaces": false,
+	"useWorkspaces": true,
 	"version": "independent",
 	"packages": [
-		"packages/duck",
-
-		"packages/duck-log",
-		"packages/duck-workspace",
-		"packages/duck-runner",
-
-		"packages/duck-cli",
-		"packages/duck-cli-commander",
-
-		"packages/duck-web",
-		"packages/duck-web-websocket",
-		"packages/duck-web-koa",
-		"packages/duck-web-koa-forker",
-
+		"packages/*",
 		"example/*"
 	]
 }
