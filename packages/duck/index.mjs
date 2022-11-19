@@ -7,7 +7,7 @@ const OptionalSemver = S.Value(semver.valid, 'semver string', () => '0.0.0');
 
 const DuckOptionsSchema = S.Object({
 	id: P.String(),
-	name: P.String('Default Produck Name'),
+	name: P.String('Default Product Name'),
 	version: OptionalSemver,
 	description: P.String('No descrition'),
 	components: S.Array({
@@ -56,13 +56,13 @@ const ProductProvider = (options, assembler = () => {}) => {
 	});
 
 	const InstalledKit = () => {
-		const BaseProduckKit = ProviderKit('Duck::Produck::Base');
+		const BaseProduckKit = ProviderKit('Duck::Product::Base');
 
 		for (const component of finalOptions.components) {
 			component.install(BaseProduckKit);
 		}
 
-		const InstalledProduckKit = BaseProduckKit('Duck::Produck::Installed');
+		const InstalledProduckKit = BaseProduckKit('Duck::Product::Installed');
 
 		for (const component of finalOptions.components) {
 			component.created(InstalledProduckKit);
@@ -71,7 +71,7 @@ const ProductProvider = (options, assembler = () => {}) => {
 		return InstalledProduckKit;
 	};
 
-	return (...args) => new assembler(InstalledKit(), ...args);
+	return (...args) => assembler(InstalledKit(), ...args);
 };
 
 export { ProductProvider as Duck };

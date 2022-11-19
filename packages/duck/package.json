@@ -11,15 +11,15 @@
 	"author": "ChaosLee <chaos2lee@qq.com>",
 	"homepage": "https://github.com/produck/duck#readme",
 	"license": "MIT",
-	"main": "index.mjs",
+	"main": "index.cjs",
 	"type": "module",
 	"exports": {
 		"import": "./index.mjs",
-		"require": "./dist/duck.cjs"
+		"require": "./index.cjs"
 	},
 	"types": "index.d.ts",
 	"files": [
-		"dist/duck.cjs",
+		"index.cjs",
 		"index.mjs",
 		"version.mjs",
 		"index.d.ts",
