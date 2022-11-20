@@ -60,6 +60,12 @@ typings/
 # next.js build output
 .next
 
-.debug.mjs
+# vscode
 .vscode
-dist/
+
+# Development debug
+.debug.mjs
+
+# Duck dist
+packages/**/index.cjs
+packages/**/version.mjs
