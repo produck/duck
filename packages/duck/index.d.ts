@@ -48,23 +48,18 @@ interface Component {
 	 * Invoking when Product is called.
 	 * Some new functions CAN be set into baseInjection
 	 */
-	install?: (Kit: BaseKit) => void;
+	install?: (Kit: BaseKit, scope?: {}) => void;
 
 	/**
 	 * Invoking after all components have been installed.
 	 * You MAY set some new functions into installedInjection
 	 */
-	created?: (Kit: InstalledKit) => void;
+	created?: (Kit: InstalledKit, scope?: {}) => void;
 
 	/**
 	 * Description of the component.
 	 */
-	description?: String
-
-	/**
-	 * Getting state or data of the component implemented by components
-	 */
-	details?<T>(): T;
+	description?: String;
 }
 
 interface ProductProviderOptions {
@@ -88,8 +83,9 @@ interface ProductProviderOptions {
 interface ProductProvider {
 	<Type>(
 		options: ProductProviderOptions,
-		assembler: () => {}
+		assembler: () => any
 	): (...args: any[]) => Type;
 }
 
 export function defineComponent(component: Component): Component;
+export const Provider: ProductProvider;

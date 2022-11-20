@@ -2,7 +2,6 @@ import { S, P, Normalizer, T } from '@produck/mold';
 import * as Kit from '@produck/kit';
 import semver from 'semver';
 import version from './version.mjs';
-import path from 'node:path';
 
 const OptionalSemver = S.Value(semver.valid, 'semver string', () => '0.0.0');
 
@@ -18,21 +17,19 @@ const DuckOptionsSchema = S.Object({
 			version: OptionalSemver,
 			description: P.String('No descrition'),
 			install: P.Function(() => {}),
-			created: P.Function(() => {}),
-			details: P.Function(() => null)
+			created: P.Function(() => {})
 		}),
 		key: item => item.id
 	})
 });
 
 const normalize = Normalizer(DuckOptionsSchema);
-const DuckKit = Kit.global('Duck');
+const DuckKit = Kit.global('Duck::Global');
 
 DuckKit.duck = Object.freeze({ version });
-const d = path.resolve('');
 
 const ProductProvider = (options, assembler = () => {}) => {
-	const finalOptions = normalize(options);
+	const { id, name, version, description, components } = normalize(options);
 
 	if (!T.Native.Function(assembler)) {
 		throw new TypeError('Invalid "assembler", one "function" expected.');
@@ -41,41 +38,38 @@ const ProductProvider = (options, assembler = () => {}) => {
 	const ProviderKit = DuckKit('Duck::Provider');
 
 	ProviderKit.product = Object.freeze({
-		meta: Object.freeze({
-			id: finalOptions.id,
-			name: finalOptions.name,
-			version: finalOptions.version,
-			description: finalOptions.description
-		}),
-		components: Object.freeze(finalOptions.components.map(component => {
-			return Object.freeze({
-				id: component.id,
-				name: component.name,
-				version: component.version,
-				description: component.description
-			});
+		meta: Object.freeze({ id, name, version, description }),
+		components: Object.freeze(components.map(component => {
+			const { id, name, version, description } = component;
+
+			return Object.freeze({ id, name, version, description });
 		}))
 	});
 
 	const InstalledKit = () => {
-		const BaseProduckKit = ProviderKit('Duck::Product::Base');
+		const BaseProductKit = ProviderKit('Product::Base');
+		const privateScope = new WeakMap();
 
-		for (const component of finalOptions.components) {
-			component.install(BaseProduckKit);
+		for (const component of components) {
+			const scope = {};
+
+			component.install(BaseProductKit, scope);
+			privateScope.set(component, scope);
 		}
 
-		const InstalledProduckKit = BaseProduckKit('Duck::Product::Installed');
+		const InstalledProductKit = BaseProductKit('Product::Installed');
 
-		for (const component of finalOptions.components) {
-			component.created(InstalledProduckKit);
+		for (const component of components) {
+			component.created(InstalledProductKit, privateScope.get(component));
 		}
 
-		return InstalledProduckKit;
+		return InstalledProductKit;
 	};
 
 	return (...args) => assembler(InstalledKit(), ...args);
 };
 
-export { ProductProvider as Duck };
+export { ProductProvider as Provider };
+export { DuckOptionsSchema as Schema };
 
 export const defineComponent = any => any;

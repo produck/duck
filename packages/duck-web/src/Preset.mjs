@@ -1,7 +1,5 @@
 function DefaultApplicationProvider({ product }) {
-	return function DefaultApplication(...args) {
-		console.log('Constructor Arguments:\n', ...args);
-
+	return function DefaultApplication() {
 		return function requestListener(_request, response) {
 			response.end(JSON.stringify({
 				meta: product.meta,
