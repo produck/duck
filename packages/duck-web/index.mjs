@@ -2,18 +2,18 @@ import { defineComponent } from '@produck/duck';
 import { Normalizer, P, S, T } from '@produck/mold';
 import version from './version.mjs';
 
-const DescriptorSchema = S.Object({
+const ApplicationDescriptorSchema = S.Object({
 	id: P.String(),
 	provider: P.Function(),
 	description: P.String('No description.')
 });
 
 const DuckWebOptionsSchema = S.Array({
-	items: DescriptorSchema,
+	items: ApplicationDescriptorSchema,
 	key: item => item.id
 });
 
-const normalizeDescriptor = Normalizer(DescriptorSchema);
+const normalizeDescriptor = Normalizer(ApplicationDescriptorSchema);
 const normalize = Normalizer(DuckWebOptionsSchema);
 
 const meta = {
@@ -81,5 +81,5 @@ const DuckWebProvider = (options) => {
 
 export { DuckWebProvider as Provider };
 export { DuckWebOptionsSchema as Schema };
-export { DescriptorSchema };
+export { ApplicationDescriptorSchema };
 export * as Preset from './src/Preset.mjs';

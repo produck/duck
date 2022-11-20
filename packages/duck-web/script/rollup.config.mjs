@@ -1,4 +1,4 @@
-import { createRequire } from 'node:module';
+import { createRequire, builtinModules } from 'node:module';
 import path from 'node:path';
 
 import { defineConfig } from 'rollup';
@@ -32,7 +32,7 @@ export default moduleList.map(config => {
 		},
 		external: [
 			...Object.keys(meta.dependencies),
-			/^node:/
+			...builtinModules
 		]
 	});
 });

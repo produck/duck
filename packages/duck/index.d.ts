@@ -42,6 +42,9 @@ interface Component {
 	 */
 	name: String,
 
+	/**
+	 * The component version in semver.
+	 */
 	version?: String;
 
 	/**
