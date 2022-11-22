@@ -60,6 +60,7 @@ const DuckWebProvider = (options) => {
 				});
 			};
 
+			// Web.Application('name')(...args);
 			const Application = id => {
 				if (!T.Native.String(id)) {
 					throw new TypeError('Invalid "id", one "string" expected.');
