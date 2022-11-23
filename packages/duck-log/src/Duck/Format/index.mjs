@@ -1,1 +1,0 @@
-export { GeneralFormat as General } from './General.mjs';

@@ -1,1 +1,0 @@
-exports.LOGGER_TYPE_REGISTRY = {};
