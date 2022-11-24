@@ -4,10 +4,10 @@ const HEAD_LEVEL = 'info';
 const LEVELS = ['trace', 'debug', HEAD_LEVEL, 'warn', 'error', 'fatal'];
 
 export const SimpleConsoleTranscriber = () => {
-	const consoleLog = console.log.bind(console);
+	const log = console.log.bind(console);
 
 	return (label, level, date, message) =>
-		consoleLog(label, level, date.toISOString(), message);
+		log(label, level, date.toISOString(), message);
 };
 
 export const OptionsSchema = S.Object({

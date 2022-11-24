@@ -8,7 +8,7 @@ const assertLevelExisted = (proxy, level) => {
 	}
 };
 
-export class DuckCategoryLogger {
+class LoggerContext {
 	constructor(options) {
 		const { label, levels, Transcriber } = Options.normalize(options);
 		const sharedDate = new Date();
@@ -75,3 +75,24 @@ export class DuckCategoryLogger {
 		return this.head = level;
 	}
 }
+
+const map = new WeakMap();
+
+const LoggerProxy = options => {
+	const logger = new LoggerContext(options);
+
+	const logHeadLevel = () => {
+
+	};
+
+	const proxy = new Proxy(logHeadLevel, {
+
+	});
+
+	map.set(proxy, logger);
+
+	return proxy;
+};
+
+export const toContext = proxy => map.get(proxy);
+export { LoggerProxy as Proxy };

@@ -1,24 +1,8 @@
 import { defineComponent } from '@produck/duck';
-import { Custom, Normalizer, S } from '@produck/mold';
 
 import * as Logger from './src/LoggerProxy.mjs';
+import * as Options from './Options.mjs';
 import version from './version.mjs';
-
-const DuckLogOptionsSchema = Custom(S.Object(), (_value, _empty, next) => {
-	for (const key in value) {
-		if (value[key].label === undefined) {
-			value[key].label = key;
-		}
-	}
-
-	const value = next();
-
-	for (const key of value) {
-		value[key] = Logger.normalize(value[key]);
-	}
-});
-
-const normalize = Normalizer(DuckLogOptionsSchema);
 
 const meta = {
 	id: 'org.produck.duck.log',
@@ -28,7 +12,7 @@ const meta = {
 };
 
 const DuckLogProvider = options => {
-	const staticLoggerOptionsMap = normalize(options);
+	const staticLoggerOptionsMap = Options.normalize(options);
 
 	return defineComponent({
 		...meta,
@@ -39,7 +23,7 @@ const DuckLogProvider = options => {
 				const existed = registry[categoryName];
 
 				if (existed) {
-					throw new Error(`The category named ${categoryName} is existed.`);
+					throw new Error(`The category logger(${categoryName}) is existed.`);
 				}
 
 				registry[categoryName] = Logger.Proxy(options);
@@ -50,7 +34,7 @@ const DuckLogProvider = options => {
 					const categoryLogger = registry[categoryName];
 
 					if (!categoryLogger) {
-						throw new Error(`A logger named "${categoryName}" is NOT defined.`);
+						throw new Error(`Category logger(${categoryName}) is NOT defined.`);
 					}
 
 					return categoryLogger;
@@ -69,4 +53,5 @@ const DuckLogProvider = options => {
 	});
 };
 
+export { Options };
 export { DuckLogProvider as Provider };
