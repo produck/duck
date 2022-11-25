@@ -76,7 +76,7 @@ class LoggerContext {
 	}
 }
 
-const map = new WeakMap();
+const globalRegistry = new WeakMap();
 
 const LoggerProxy = options => {
 	const logger = new LoggerContext(options);
@@ -89,10 +89,10 @@ const LoggerProxy = options => {
 
 	});
 
-	map.set(proxy, logger);
+	globalRegistry.set(proxy, logger);
 
 	return proxy;
 };
 
-export const toContext = proxy => map.get(proxy);
+export const toContext = proxy => globalRegistry.get(proxy);
 export { LoggerProxy as Proxy };

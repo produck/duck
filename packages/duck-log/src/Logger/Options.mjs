@@ -10,10 +10,10 @@ export const SimpleConsoleTranscriber = () => {
 		log(label, level, date.toISOString(), message);
 };
 
-export const OptionsSchema = S.Object({
+const OptionsSchema = S.Object({
 	Transcriber: P.Function(SimpleConsoleTranscriber),
 	label: P.String(),
-	levels: Custom(S.Object({
+	level: Custom(S.Object({
 		sequence: S.Array({
 			items: P.String(),
 			minLength: 1,
@@ -37,7 +37,10 @@ export const OptionsSchema = S.Object({
 				throw new Error(`The level(${level}) at [${index}] is NOT a member.`);
 			}
 		}
+
+		return levelOptions;
 	})
 });
 
 export const normalize = Normalizer(OptionsSchema);
+export { OptionsSchema as Schema };

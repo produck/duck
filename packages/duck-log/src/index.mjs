@@ -1,6 +1,6 @@
 import { defineComponent } from '@produck/duck';
 
-import * as Logger from './src/LoggerProxy.mjs';
+import * as Logger from './Logger/index.mjs';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
 

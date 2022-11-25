@@ -12,9 +12,7 @@
 		"require": "./index.cjs"
 	},
 	"files": [
-		"index.cjs",
-		"index.mjs",
-		"version.mjs",
+		"src",
 		"index.d.ts",
 		"tsconfig.json"
 	],
@@ -26,8 +24,8 @@
 		"url": "git+https://github.com/produck/duck.git"
 	},
 	"scripts": {
-		"build:version": "node script/version.mjs",
-		"build": "npm run build:version && rollup -c script/rollup.config.mjs",
+		"build:extract": "node script/extract.mjs",
+		"build": "npm run build:extract && rollup -c script/rollup.config.mjs",
 		"prepublishOnly": " npm run build"
 	},
 	"bugs": {
