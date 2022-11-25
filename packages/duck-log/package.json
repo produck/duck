@@ -34,11 +34,11 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"devDependencies": {
-		"rollup": "^3.3.0"
+		"rollup": "^3.4.0"
 	},
 	"dependencies": {
 		"@produck/duck": "^1.0.0",
-		"@produck/mold": "^0.2.4",
+		"@produck/mold": "^0.3.0",
 		"dateformat": "^5.0.3",
 		"streamroller": "^3.1.3"
 	}
