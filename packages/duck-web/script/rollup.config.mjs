@@ -15,7 +15,7 @@ const BANNER =
 
 const moduleList = [
 	{
-		output: path.resolve('index.cjs'),
+		output: path.resolve('src/index.cjs'),
 		format: 'cjs',
 		isExternal: true,
 	}
@@ -23,7 +23,7 @@ const moduleList = [
 
 export default moduleList.map(config => {
 	return defineConfig({
-		input: path.resolve('index.mjs'),
+		input: path.resolve('src/index.mjs'),
 		output: {
 			file: config.output,
 			format: config.format,
