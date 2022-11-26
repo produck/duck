@@ -1,2 +1,3 @@
 export * as Options from './Options.mjs';
-export { Proxy, toContext } from './Proxy.mjs';
+export { DuckLoggerRegistry as Registry } from './Registry.mjs';
+export { LoggerHandler as Handler, MODIFIER } from './Handler.mjs';

@@ -1,7 +1,7 @@
 import { Custom, Normalizer, P, S } from '@produck/mold';
 
-const HEAD_LEVEL = 'info';
-const LEVELS = ['trace', 'debug', HEAD_LEVEL, 'warn', 'error', 'fatal'];
+const HEAD = 'info';
+const LEVELS = Object.freeze(['trace', 'debug', HEAD, 'warn', 'error', 'fatal']);
 
 export const SimpleConsoleTranscriber = () => {
 	const log = console.log.bind(console);
@@ -14,12 +14,12 @@ const OptionsSchema = S.Object({
 	Transcriber: P.Function(SimpleConsoleTranscriber),
 	label: P.String(),
 	level: Custom(S.Object({
+		head: P.String(HEAD),
 		sequence: S.Array({
 			items: P.String(),
 			minLength: 1,
 			key: item => item
 		}, () => [...LEVELS]),
-		head: P.String(HEAD_LEVEL),
 		prevents: S.Array({ items: P.String() })
 	}), (_value, _empty, next) => {
 		const levelOptions = next();
@@ -42,5 +42,6 @@ const OptionsSchema = S.Object({
 	})
 });
 
+export const DEFAULT_LEVELS = LEVELS;
 export const normalize = Normalizer(OptionsSchema);
 export { OptionsSchema as Schema };
