@@ -33,7 +33,7 @@ const DuckWorkspaceProvider = options => {
 	return defineComponent({
 		...meta,
 		created: Kit => {
-			const WorkspaceKit = Kit('Workspace');
+			const WorkspaceKit = Kit('DuckWorkspace');
 			const workspace = Kit.Workspace = new Workspace();
 
 			for (const name of staticNamedPathOptions) {

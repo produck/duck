@@ -32,3 +32,4 @@ export const defineTranscriber = any => any;
 
 export { Options };
 export { DuckLogProvider as Provider };
+export { MODIFIER } from './Logger/index.mjs';
