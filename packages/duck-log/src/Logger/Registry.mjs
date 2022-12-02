@@ -1,26 +1,28 @@
+import { T, Utils } from '@produck/mold';
+import * as Handler from './Handler.mjs';
+
 export class DuckLoggerRegistry {
 	constructor() {
 		this.map = new Map();
-
-		this.proxy = new Proxy((...args) => this.register(...args), {
-			get: (_target, categoryName) {
-				if (!registry.has(categoryName)) {
-					throw new Error(`Category logger(${categoryName}) is NOT defined.`);
-				}
-
-				return register.get(categoryName);
-			},
-			set: () => {
-				throw new Error('Illegal setting property.');
-			}
-		});
 	}
 
 	register(category, options) {
-		if (this.map.has(category)) {
-			throw new Error(`The category logger(${category}) is existed.`);
+		if (!T.Native.String(category)) {
+			Utils.throwError('category', 'string');
 		}
 
-		registry[category] = Logger.Proxy(options);
+		if (this.map.has(category)) {
+			throw new Error(`The category(${category}) is existed.`);
+		}
+
+		const handler = new Handler.LoggerHandler(options);
+
+		this.map.set(category, handler);
+
+		return handler;
+	}
+
+	get(category) {
+		return this.map.get(category);
 	}
 }

@@ -19,11 +19,22 @@ const DuckLogProvider = options => {
 		created: Kit => {
 			const registry = new Logger.Registry();
 
-			for (const categoryName in staticLoggerOptionsMap) {
-				registry.register(categoryName, staticLoggerOptionsMap[categoryName]);
+			for (const category in staticLoggerOptionsMap) {
+				registry.register(category, staticLoggerOptionsMap[category]);
 			}
 
-			Kit.Log = registry.proxy;
+			Kit.Log = new Proxy((...args) => registry.register(...args), {
+				get: (_target, category) => {
+					if (!registry.has(category)) {
+						throw new Error(`Category logger(${category}) is NOT defined.`);
+					}
+
+					return registry.get(category);
+				},
+				set: () => {
+					throw new Error('Illegal setting property.');
+				}
+			});
 		},
 	});
 };

@@ -32,5 +32,4 @@ const DuckRunnerOptionsSchema = S.Object({
 });
 
 export const normalize = Normalizer(DuckRunnerOptionsSchema);
-
 export { DuckRunnerOptionsSchema as Schema };

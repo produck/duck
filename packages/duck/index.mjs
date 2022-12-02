@@ -3,6 +3,14 @@ import * as Kit from '@produck/kit';
 import semver from 'semver';
 import version from './version.mjs';
 
+import { createRequire } from 'node:module';
+
+
+const require = createRequire(import.meta.url);
+createRequire(import.meta.url)();
+
+require();
+
 const OptionalSemver = S.Value(semver.valid, 'semver string', () => '0.0.0');
 
 const DuckOptionsSchema = S.Object({
