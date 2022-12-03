@@ -11,7 +11,7 @@ class Role {
 
 		ActingKit.Acting = { name: this.name, at: Date.now() };
 
-		await this.play(ActingKit);
+		await this.play.call(undefined, ActingKit);
 	}
 }
 
@@ -28,13 +28,13 @@ class Mode {
 
 		BootingKit.actors = function* actors() {
 			for (const role of this.registry.role.values()) {
-				yield async function actor() {
-					role.act(BootingKit);
-				};
+				yield [role.name, async function actor() {
+					await role.act(BootingKit);
+				}];
 			}
 		};
 
-		await this.execute(BootingKit);
+		await this.execute.call(undefined, BootingKit);
 	}
 }
 
@@ -44,7 +44,7 @@ export class RunnerManager {
 		const registry = { mode: new Map(), role: new Map() };
 
 		this.registry = registry;
-		this.Kit = ManagerKit;
+		this.ManagerKit = ManagerKit;
 	}
 
 	Mode(name, execute) {
@@ -61,11 +61,12 @@ export class RunnerManager {
 
 	async run(modeName) {
 		const Bus = new EventEmitter();
-		const RunningKit = this.Kit('Running');
+		const RunningKit = this.ManagerKit('Running');
 		const mode = this.registry.mode.get(modeName);
 
 		RunningKit.Bus = Bus;
-
 		await mode.boot(RunningKit);
+
+		return Bus;
 	}
 }

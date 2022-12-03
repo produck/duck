@@ -26,7 +26,7 @@ const DuckRunnerProvider = options => {
 					U.throwError('mode', 'string');
 				}
 
-				await manager.run(mode);
+				return await manager.run(mode);
 			};
 
 			for (const name of modes) {
@@ -37,10 +37,7 @@ const DuckRunnerProvider = options => {
 				manager.Role(name, roles[name]);
 			}
 
-			const Mode = (name, execute) => manager.Mode(name, execute);
-			const Role = (name, play) => manager.Role(name, play);
-
-			Kit.Runner = Object.freeze({ start, Role, Mode });
+			Kit.Runner = Object.freeze({ start });
 		}
 	});
 };

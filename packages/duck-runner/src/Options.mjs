@@ -14,18 +14,11 @@ const DuckRunnerOptionsSchema = S.Object({
 	/**
 	 * All modes.
 	 */
-	modes: Custom(S.Object({
-		[PROPERTY]: P.Function()
-	}), mixinName),
+	modes: Custom(S.Object({ [PROPERTY]: P.Function() }), mixinName),
 	/**
 	 * All roles.
 	 */
-	roles: Custom(S.Object({
-		[PROPERTY]: S.Object({
-			name: P.String(),
-			play: P.Function()
-		})
-	}), mixinName)
+	roles: Custom(S.Object({ [PROPERTY]: P.Function() ), mixinName)
 });
 
 export const normalize = Normalizer(DuckRunnerOptionsSchema);

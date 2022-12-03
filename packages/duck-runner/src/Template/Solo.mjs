@@ -3,8 +3,8 @@ export function SoloModeTemplateProvider(options) {
 		await options.beforeExecute(BootingKit);
 
 		try {
-			for (const role of BootingKit.roles()) {
-				await role.act();
+			for (const name in BootingKit.actors) {
+				await BootingKit.actors[name]();
 			}
 
 			await options.afterExecute(BootingKit);
