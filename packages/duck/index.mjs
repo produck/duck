@@ -4,6 +4,7 @@ import semver from 'semver';
 import version from './version.mjs';
 
 import { createRequire } from 'node:module';
+import exp from 'node:constants';
 
 
 const require = createRequire(import.meta.url);
@@ -77,7 +78,8 @@ const ProductProvider = (options, assembler = () => {}) => {
 	return (...args) => assembler(InstalledKit(), ...args);
 };
 
+export const define = any => any;
+
 export { ProductProvider as Provider };
 export { DuckOptionsSchema as Schema };
-
-export const defineComponent = any => any;
+export { define as defineComponent };

@@ -1,7 +1,7 @@
-import EventEmitter from 'node:events';
-import { defineComponent } from '@produck/duck';
+import { defineComponent, define } from '@produck/duck';
 import { T, U } from '@produck/mold';
 
+import * as Runner from './Runner/index.mjs';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
 
@@ -18,74 +18,32 @@ const DuckRunnerProvider = options => {
 	return defineComponent({
 		...meta,
 		created: Kit => {
-			const Bus = new EventEmitter();
 			const RunnerKit = Kit('DuckRunner');
+			const manager = new Runner.Manager(RunnerKit);
 
-			let running = false;
-
-			const boot = (mode) => {
-				if (running) {
-					throw new Error('It has been running.');
-				}
-
-				running = true;
-
+			const start = async (mode) => {
 				if (!T.Native.String(mode)) {
 					U.throwError('mode', 'string');
 				}
 
-				const run = modes[mode];
-
-				if (run === undefined) {
-					throw new Error(`Missing mode(${mode}).`);
-				}
-
-				const RunningKit = RunnerKit('Running');
-				const meta = Object.freeze({ mode });
-
-				RunningKit.Runner.meta = meta;
-
-				run(RunningKit);
+				await manager.run(mode);
 			};
 
-			const registry = { modes: {}, roles: {} };
-
-			for (const name in roles) {
-				const NAME = `playAsRole${name}`;
-				const play = roles[name].play;
-
-				registry.roles[name] = {
-					[NAME]: (Kit) => play(Kit(`Running::Role<${name}>`))
-				}[NAME];
+			for (const name of modes) {
+				manager.Mode(name, modes[name]);
 			}
 
-			for (const name in modes) {
-				const NAME = `runInMode${name}`;
-				const execute = modes[name].execute;
-
-				registry.modes[name] = {
-					[NAME]: (Kit) => {
-						const ModeKit = Kit(`Running::Mode<${name}>`);
-						const play = execute(ModeKit);
-
-						for (const name in registry.roles) {
-							play(name, () => registry.roles[name](ModeKit));
-						}
-					}
-				}[NAME];
+			for (const name of roles) {
+				manager.Role(name, roles[name]);
 			}
 
-			const Role = () => {
+			const Mode = (name, execute) => manager.Mode(name, execute);
+			const Role = (name, play) => manager.Role(name, play);
 
-			};
-
-			const Mode = () => {
-
-			};
-
-			Kit.Runner = Object.freeze({ boot, Bus, Role, Mode });
+			Kit.Runner = Object.freeze({ start, Role, Mode });
 		}
 	});
 };
 
 export { DuckRunnerProvider as Provider };
+export { define as defineExecute, define as definePlay };

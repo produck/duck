@@ -15,10 +15,7 @@ const DuckRunnerOptionsSchema = S.Object({
 	 * All modes.
 	 */
 	modes: Custom(S.Object({
-		[PROPERTY]: S.Object({
-			name: P.String(),
-			execute: P.Function()
-		})
+		[PROPERTY]: P.Function()
 	}), mixinName),
 	/**
 	 * All roles.
