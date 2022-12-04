@@ -18,7 +18,7 @@ const DuckRunnerOptionsSchema = S.Object({
 	/**
 	 * All roles.
 	 */
-	roles: Custom(S.Object({ [PROPERTY]: P.Function() ), mixinName)
+	roles: Custom(S.Object({ [PROPERTY]: P.Function() }), mixinName)
 });
 
 export const normalize = Normalizer(DuckRunnerOptionsSchema);

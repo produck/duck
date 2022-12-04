@@ -1,10 +1,10 @@
 export function SoloModeTemplateProvider(options) {
-	return async function execute(BootingKit) {
+	return async function execute({ Kit: BootingKit, Booting }) {
 		await options.beforeExecute(BootingKit);
 
 		try {
-			for (const name in BootingKit.actors) {
-				await BootingKit.actors[name]();
+			for (const name in Booting.actors) {
+				await Booting.actors[name]();
 			}
 
 			await options.afterExecute(BootingKit);

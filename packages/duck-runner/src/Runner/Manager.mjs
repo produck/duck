@@ -3,38 +3,34 @@ import EventEmitter from 'node:events';
 class Role {
 	constructor(name, play) {
 		this.name = name;
-		this.play = play;
+		this.play = play.bind();
 	}
 
 	async act(BootingKit) {
 		const ActingKit = BootingKit(`Acting<${this.name}>`);
 
 		ActingKit.Acting = { name: this.name, at: Date.now() };
-
-		await this.play.call(undefined, ActingKit);
+		await this.play(undefined, ActingKit);
 	}
 }
 
 class Mode {
 	constructor(name, execute) {
 		this.name = name;
-		this.execute = execute;
+		this.execute = execute.bind();
 	}
 
 	async boot(RunningKit) {
 		const BootingKit = RunningKit(`Booting<${this.name}>`);
+		const actors = {};
 
-		BootingKit.Booting = { name: this.name, at: Date.now() };
+		for (const role of this.registry.role.values()) {
+			actors[role.name] = async () => await role.act(BootingKit);
+		}
 
-		BootingKit.actors = function* actors() {
-			for (const role of this.registry.role.values()) {
-				yield [role.name, async function actor() {
-					await role.act(BootingKit);
-				}];
-			}
-		};
-
-		await this.execute.call(undefined, BootingKit);
+		Object.freeze(actors);
+		BootingKit.Booting = { name: this.name, at: Date.now(), actors };
+		await this.execute(undefined, BootingKit);
 	}
 }
 
