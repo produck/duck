@@ -1,29 +1,4 @@
-import { Circ, Normalizer, P, PROPERTY, S } from '@produck/mold';
-
-const CommandDescriptorSchema = S.Object({
-	name: P.String(),
-	description: P.String(''),
-	alias: S.Array({ items: P.String(), key: _ => _ }),
-	options: S.Object({
-		[PROPERTY]: S.Object({
-			name: P.String(),
-			alias: P.String(),
-			description: P.OrNull(P.String()),
-			value: P.OrNull(P.String(), false)
-		})
-	}),
-	arguments: S.Array({
-		items: S.Object({
-			name: P.String(),
-			required: P.Boolean(false),
-			variadic: P.Boolean(false),
-		}),
-		key: _ => _.name
-	}),
-	handler: P.Function(() => {}),
-});
-
-const normalize = Normalizer(CommandDescriptorSchema);
+import * as Options from './Options.mjs';
 
 class BaseCommand {
 	constructor(descriptor) {
@@ -44,12 +19,12 @@ class BaseCommand {
 	}
 }
 
-const defineCommand = (descriptor) => {
+export const defineCommand = (descriptor) => {
 	const CLASS_NAME = `${descriptor.name}Command`;
 
 	const CustomCommand = { [CLASS_NAME]: class extends BaseCommand {
 		constructor(options, parent = null) {
-			const finalOptions = normalize(options);
+			const finalOptions = Options.normalize(options);
 
 			super(finalOptions);
 
@@ -74,10 +49,4 @@ const defineCommand = (descriptor) => {
 	} }[CLASS_NAME];
 
 	return CustomCommand;
-};
-
-export {
-	BaseCommand as Base,
-	defineCommand as define,
-	CommandDescriptorSchema as Schema,
 };

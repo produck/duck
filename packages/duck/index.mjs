@@ -3,15 +3,6 @@ import * as Kit from '@produck/kit';
 import semver from 'semver';
 import version from './version.mjs';
 
-import { createRequire } from 'node:module';
-import exp from 'node:constants';
-
-
-const require = createRequire(import.meta.url);
-createRequire(import.meta.url)();
-
-require();
-
 const OptionalSemver = S.Value(semver.valid, 'semver string', () => '0.0.0');
 
 const DuckOptionsSchema = S.Object({
@@ -80,6 +71,8 @@ const ProductProvider = (options, assembler = () => {}) => {
 
 export const define = any => any;
 
-export { ProductProvider as Provider };
-export { DuckOptionsSchema as Schema };
-export { define as defineComponent };
+export {
+	ProductProvider as Provider,
+	DuckOptionsSchema as Schema,
+	define as defineComponent,
+};

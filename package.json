@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"deps:install": "npm -v && npm i && lerna bootstrap",
-		"deps:clean": "lerna clean -y"
+		"deps:clean": "lerna clean -y",
+		"lint": "eslint --fix packages/**/*.mjs"
 	},
 	"devDependencies": {
 		"c8": "^7.12.0",
