@@ -1,7 +1,7 @@
 import { defineComponent, define } from '@produck/duck';
 
 import version from './version.mjs';
-import * as CLI from './CLI.mjs';
+import * as Bridge from './Bridge/index.mjs';
 
 const meta = defineComponent({
 	id: 'org.produck.duck.cli',
@@ -16,9 +16,10 @@ const DuckCLIProvider = (options, Descriptor) => {
 		created: InstalledKit => {
 			const CLIKit = InstalledKit('DuckCLI');
 			const descriptor = Descriptor(CLIKit);
-			const CustomCLI = CLI.define(descriptor);
+			const CustomCLI = Bridge.define(descriptor);
 
 			const cli = new CustomCLI();
+
 			const parse = async () => await cli.parse();
 
 			InstalledKit.CLI = Object.freeze({ parse });
