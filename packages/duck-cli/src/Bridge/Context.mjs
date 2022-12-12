@@ -1,8 +1,10 @@
+import * as Feature from './Feature.mjs';
+
 export class Context {
 	constructor(parent, current, feature, state = {}) {
 		this.parent = parent;
 		this.current = current;
-		this.feature = feature;
+		this.feature = Feature.normalize(feature);
 		this.state = state;
 	}
 

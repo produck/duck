@@ -11,7 +11,7 @@ const meta = defineComponent({
 	description: ''
 });
 
-const DuckCLIProvider = (feature, provider) => {
+const DuckCLIProvider = (provider, feature = null) => {
 	const finalDescriptor = Bridge.Provider.normalize(provider);
 	const CustomCommander = Bridge.define(finalDescriptor);
 	const staticFeature = Options.normalizeFeature(feature);
@@ -25,7 +25,7 @@ const DuckCLIProvider = (feature, provider) => {
 				return new CustomCommander(Bridge.Feature.normalize(feature));
 			};
 
-			const append = (path, feature) => {
+			const append = (feature, path = '') => {
 				const parent = select(path);
 				const child = Commander(feature);
 
