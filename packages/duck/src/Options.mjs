@@ -9,7 +9,6 @@ export const ComponentSchema = S.Object({
 	version: OptionalSemver,
 	description: P.String('No descrition'),
 	install: P.Function(() => {}),
-	created: P.Function(() => {}),
 });
 
 export const Schema = S.Object({

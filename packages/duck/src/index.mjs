@@ -4,20 +4,20 @@ import * as Kit from '@produck/kit';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
 
-const DuckKit = Kit.global('Duck::Global');
+const DuckKit = Kit.global('Duck');
 
 DuckKit.duck = Object.freeze({ version });
 
-const ProductProvider = (options = {}, assembler = Kit => Kit) => {
+export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 	const { id, name, version, description, components } = Options.normalize(options);
 
 	if (!T.Native.Function(assembler)) {
 		Utils.throwError('assembler', 'function');
 	}
 
-	const ProviderKit = DuckKit('Duck::Provider');
+	const DefinitionKit = DuckKit('Duck::Definition');
 
-	ProviderKit.product = Object.freeze({
+	DefinitionKit.product = Object.freeze({
 		meta: Object.freeze({ id, name, version, description }),
 		components: Object.freeze(components.map(component => {
 			const { id, name, version, description } = component;
@@ -26,29 +26,23 @@ const ProductProvider = (options = {}, assembler = Kit => Kit) => {
 		}))
 	});
 
-	const InstalledKit = () => {
-		const BaseProductKit = ProviderKit('Product::Base');
+	const ProductKit = () => {
+		const Kit = DefinitionKit('Duck::Product');
 
 		for (const component of components) {
-			component.install(BaseProductKit);
+			component.install(Kit);
 		}
 
-		const InstalledProductKit = BaseProductKit('Product::Installed');
-
-		for (const component of components) {
-			component.created(InstalledProductKit);
-		}
-
-		return InstalledProductKit;
+		return Kit;
 	};
 
-	return (...args) => assembler(InstalledKit(), ...args);
+	return (...args) => assembler(ProductKit(), ...args);
 };
 
 export const defineAny = any => any;
 
 export {
 	Options,
-	ProductProvider as define,
+	defineProduct as define,
 	defineAny as defineComponent,
 };

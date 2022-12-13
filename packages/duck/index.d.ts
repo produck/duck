@@ -5,7 +5,7 @@ interface DuckKit extends GlobalKit {
 	duck: { version: string }
 }
 
-interface ProviderKit extends DuckKit {
+interface DefinitionKit extends DuckKit {
 	produck: {
 		meta: {
 			id: string;
@@ -23,13 +23,7 @@ interface ProviderKit extends DuckKit {
 	};
 }
 
-interface BaseKit extends ProviderKit {
-
-}
-
-interface InstalledKit extends BaseKit {
-
-}
+interface ProductKit extends DefinitionKit {}
 
 interface Component {
 	/**
@@ -52,13 +46,7 @@ interface Component {
 	 * Invoking when Product is called.
 	 * Some new functions CAN be set into baseInjection
 	 */
-	install?: (Kit: BaseKit) => void;
-
-	/**
-	 * Invoking after all components have been installed.
-	 * You MAY set some new functions into installedInjection
-	 */
-	created?: (Kit: InstalledKit) => void;
+	install?: (Kit: ProductKit) => void;
 
 	/**
 	 * Description of the component.
@@ -66,7 +54,7 @@ interface Component {
 	description?: String;
 }
 
-interface ProductProviderOptions {
+interface ProductOptions {
 	/**
 	 * Product id
 	 */
@@ -84,22 +72,20 @@ interface ProductProviderOptions {
 	components?: Array<Component>
 }
 
-interface ProductProvider {
+interface defineProduct {
 	<Type>(
-		options: ProductProviderOptions,
+		options: ProductOptions,
 		assembler: () => any
 	): (...args: any[]) => Type;
 }
 
 export function defineAny<T>(any: T): T;
 export function defineComponent(component: Component): Component;
-export const define: ProductProvider;
+export const define: defineProduct;
+export const defineProduct: defineProduct;
 
 export namespace Options {
-	export function normalize(
-		options: ProductProviderOptions
-	): ProductProviderOptions;
-
-	export const Schema: Schema<ProductProviderOptions>;
+	export function normalize(options: ProductOptions): ProductOptions;
+	export const Schema: Schema<ProductOptions>;
 	export const ComponentSchema: Schema<Component>;
 }

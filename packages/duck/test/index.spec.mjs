@@ -124,17 +124,18 @@ describe('Duck', function () {
 
 			describe('>Component', function () {
 				it('should create a product with 1 component.', function () {
-					let BaseKit, InstalledKit;
+					let InstalledKit;
 
 					const Kit = Duck.define({
 						id: 'org.example.test',
 						components: [{
 							id: 'org.example.foo',
 							name: 'bar',
-							install: () => {},
-							created: () => {},
+							install: (Kit) => InstalledKit = Kit,
 						}]
 					})();
+
+					assert.ok(Kit === InstalledKit);
 
 					assert.deepEqual(Kit.product, {
 						meta: {
@@ -150,6 +151,14 @@ describe('Duck', function () {
 							description: 'No descrition',
 						}]
 					});
+				});
+
+				it('should pass params from a Product().', function () {
+					const params = [true, null, 1, new Date()];
+					let passed;
+
+					Duck.define({ id: 'org' }, (_, ...args) => passed = args)(...params);
+					assert.deepEqual(passed, params);
 				});
 			});
 		});
