@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"commander": "^9.4.1",
-		"rollup": "^3.4.0"
+		"rollup": "^3.7.4"
 	},
 	"dependencies": {
 		"@produck/duck": "^1.0.0",

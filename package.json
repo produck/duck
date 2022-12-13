@@ -5,13 +5,15 @@
 	"scripts": {
 		"deps:install": "npm -v && npm i && lerna bootstrap",
 		"deps:clean": "lerna clean -y",
-		"lint": "eslint --fix packages/**/*.mjs"
+		"lint": "eslint --fix packages/**/*.mjs",
+		"test": "mocha \"packages/**/*.spec.mjs\" --no-diff -t 999999999",
+		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test"
 	},
 	"devDependencies": {
 		"c8": "^7.12.0",
-		"eslint": "^8.28.0",
-		"mocha": "^10.1.0",
-		"lerna": "^6.0.3"
+		"eslint": "^8.29.0",
+		"mocha": "^10.2.0",
+		"lerna": "^6.1.0"
 	},
 	"workspaces": [
 		"packages/*"
