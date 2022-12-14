@@ -1,4 +1,4 @@
-import { createRequire } from 'node:module';
+import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 
 import { defineConfig } from 'rollup';
@@ -15,7 +15,7 @@ const BANNER =
 
 const moduleList = [
 	{
-		output: path.resolve('index.cjs'),
+		output: path.resolve('src/index.cjs'),
 		format: 'cjs',
 		isExternal: true,
 	}
@@ -27,7 +27,7 @@ const dependencies = { ...meta.dependencies };
 
 export default moduleList.map(config => {
 	return defineConfig({
-		input: path.resolve('index.mjs'),
+		input: path.resolve('src/index.mjs'),
 		output: {
 			file: config.output,
 			format: config.format,
@@ -36,7 +36,8 @@ export default moduleList.map(config => {
 		},
 		external: [
 			...Object.keys(dependencies),
-			/^node:/
+			...builtinModules,
+			...builtinModules.map(name => `node:${name}`),
 		]
 	});
 });
