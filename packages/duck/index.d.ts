@@ -72,17 +72,21 @@ interface ProductOptions {
 	components?: Array<Component>
 }
 
-interface defineProduct {
-	<Type>(
-		options: ProductOptions,
-		assembler: () => any
-	): (...args: any[]) => Type;
-}
+type Product<ProductType> = (...args: any[]) => ProductType
+
+type Assembler<ProductType> = (
+	Kit?: ProductKit,
+	...args: any[]
+) => ProductType
+
+export function defineProduct<ProductType>(
+	options: ProductOptions,
+	assembler: Assembler<ProductType>
+): Product<ProductType>
 
 export function defineAny<T>(any: T): T;
 export function defineComponent(component: Component): Component;
-export const define: defineProduct;
-export const defineProduct: defineProduct;
+export { defineProduct as define };
 
 export namespace Options {
 	export function normalize(options: ProductOptions): ProductOptions;

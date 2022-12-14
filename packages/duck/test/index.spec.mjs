@@ -16,7 +16,7 @@ describe('Duck', function () {
 		});
 	});
 
-	describe('::Provider()', function () {
+	describe('::define()', function () {
 		it('should define a simple Product.', function () {
 			Duck.define({ id: 'org.example.test' });
 		});
