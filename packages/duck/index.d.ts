@@ -23,7 +23,7 @@ interface DefinitionKit extends DuckKit {
 	};
 }
 
-interface ProductKit extends DefinitionKit {}
+export interface ProductKit extends DefinitionKit {}
 
 export interface Component {
 	/**

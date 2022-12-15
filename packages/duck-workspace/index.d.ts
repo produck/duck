@@ -1,4 +1,5 @@
 import * as Duck from '@produck/duck';
+import { Schema } from '@produck/mold/types/schema';
 import Workspace from '@produck/workspace';
 
 interface WorkspaceOptions {
@@ -12,4 +13,10 @@ declare module '@produck/duck' {
 	interface ProductKit {
 		Workspace: Workspace;
 	}
+}
+
+export namespace Options {
+	const Schema: Schema<WorkspaceOptions>;
+
+	export function normalize(options: WorkspaceOptions): WorkspaceOptions;
 }

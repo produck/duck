@@ -29,3 +29,4 @@ const DuckWorkspaceComponent = (options = {}) => {
 };
 
 export { DuckWorkspaceComponent as Component };
+export { Options };
