@@ -8,7 +8,7 @@ const meta = defineComponent({
 	id: 'org.produck.duck.cli',
 	name: 'DuckCLI',
 	version,
-	description: ''
+	description: '',
 });
 
 const DuckCLIProvider = (provider, feature = null) => {
@@ -55,7 +55,7 @@ const DuckCLIProvider = (provider, feature = null) => {
 			})(staticFeature);
 
 			InstalledKit.CLI = Object.freeze({ parse, Commander, select, append });
-		}
+		},
 	});
 };
 

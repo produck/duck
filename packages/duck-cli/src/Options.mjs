@@ -8,7 +8,7 @@ export const FeatureSchema = Circ(SelfSchema => S.Object({
 	options: S.Object({ [PROPERTY]: Bridge.Feature.OptionSchema }),
 	arguments: S.Array({ items: Bridge.Feature.ArgumentSchema, key: _ => _.name }),
 	Handler: P.Function(() => () => {}),
-	children: S.Array({ items: SelfSchema })
+	children: S.Array({ items: SelfSchema }),
 }));
 
 export const normalizeFeature = Normalizer(FeatureSchema);

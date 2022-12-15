@@ -8,7 +8,7 @@ const meta = defineComponent({
 	id: 'org.produck.duck.workspace',
 	name: 'DuckWorkspace',
 	version,
-	description: 'Helping product to manage important path and easy resolving.'
+	description: 'Helping product to manage important path and easy resolving.',
 });
 
 const DuckWorkspaceComponent = (options = {}) => {
@@ -24,7 +24,7 @@ const DuckWorkspaceComponent = (options = {}) => {
 			}
 
 			Kit.Workspace = workspace;
-		}
+		},
 	});
 };
 

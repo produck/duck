@@ -27,7 +27,7 @@ describe('Duck', function () {
 				name: 'Test',
 				version: '1.0.0',
 				description: 'test',
-				components: []
+				components: [],
 			}, function Test() {
 
 			});
@@ -36,7 +36,7 @@ describe('Duck', function () {
 		it('should throw if bad assembler.', function () {
 			assert.throws(() => Duck.define({ id: 'org.example.test' }, null), {
 				name: 'TypeError',
-				message: 'Invalid "assembler", one "function" expected.'
+				message: 'Invalid "assembler", one "function" expected.',
 			});
 		});
 
@@ -47,7 +47,7 @@ describe('Duck', function () {
 					components: [{
 						id: 'org.example.foo',
 						name: 'bar',
-					}]
+					}],
 				});
 			});
 
@@ -61,12 +61,12 @@ describe('Duck', function () {
 						}, {
 							id: 'org.example.foo',
 							name: 'bar',
-						}]
+						}],
 					});
 				}, {
 					name: 'TypeError',
 					message: 'Invalid ".components", one "array" expected.\n' +
-						'The element at [1] is duplicated.'
+						'The element at [1] is duplicated.',
 				});
 			});
 		});
@@ -82,7 +82,7 @@ describe('Duck', function () {
 						version: '0.0.0',
 						description: 'No descrition',
 					},
-					components: []
+					components: [],
 				});
 			});
 
@@ -92,7 +92,7 @@ describe('Duck', function () {
 					name: 'Test',
 					version: '1.0.0',
 					description: 'test',
-					components: []
+					components: [],
 				})();
 
 				assert.deepEqual(Kit.product, {
@@ -102,7 +102,7 @@ describe('Duck', function () {
 						version: '1.0.0',
 						description: 'test',
 					},
-					components: []
+					components: [],
 				});
 			});
 
@@ -132,7 +132,7 @@ describe('Duck', function () {
 							id: 'org.example.foo',
 							name: 'bar',
 							install: (Kit) => InstalledKit = Kit,
-						}]
+						}],
 					})();
 
 					assert.ok(Kit === InstalledKit);
@@ -149,7 +149,7 @@ describe('Duck', function () {
 							name: 'bar',
 							version: '0.0.0',
 							description: 'No descrition',
-						}]
+						}],
 					});
 				});
 

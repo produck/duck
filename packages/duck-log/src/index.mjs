@@ -8,7 +8,7 @@ const meta = defineComponent({
 	id: 'org.produck.duck.log',
 	name: 'DuckLog',
 	version,
-	description: 'Creating log channel for recording log message.'
+	description: 'Creating log channel for recording log message.',
 });
 
 const DuckLogProvider = options => {
@@ -33,7 +33,7 @@ const DuckLogProvider = options => {
 				},
 				set: () => {
 					throw new Error('Illegal setting property.');
-				}
+				},
 			});
 		},
 	});

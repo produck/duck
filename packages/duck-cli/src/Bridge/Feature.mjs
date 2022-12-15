@@ -4,7 +4,7 @@ export const OptionSchema = S.Object({
 	name: P.StringLength(2)(),
 	alias: P.OrNull(P.StringPattern(/^[A-Za-z]$/, 'single letter')(), false),
 	description: P.OrNull(P.String(), false),
-	value: P.OrNull(P.String(), false)
+	value: P.OrNull(P.String(), false),
 });
 
 export const OptionsSchema = Cust(S.Array({

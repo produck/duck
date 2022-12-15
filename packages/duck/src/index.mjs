@@ -23,7 +23,7 @@ export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 			const { id, name, version, description } = component;
 
 			return Object.freeze({ id, name, version, description });
-		}))
+		})),
 	});
 
 	const ProductKit = () => {

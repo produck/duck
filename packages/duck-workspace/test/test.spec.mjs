@@ -9,8 +9,8 @@ describe('DuckWorkspace', function () {
 		const Test = Duck.define({
 			id: 'foo',
 			components: [
-				DuckWorkspace.Component()
-			]
+				DuckWorkspace.Component(),
+			],
 		});
 
 		const Kit = Test();
@@ -23,9 +23,9 @@ describe('DuckWorkspace', function () {
 			id: 'foo',
 			components: [
 				DuckWorkspace.Component({
-					bar: 'baz'
-				})
-			]
+					bar: 'baz',
+				}),
+			],
 		});
 
 		const Kit = Test();

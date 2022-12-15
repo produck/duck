@@ -3,7 +3,7 @@ import { Custom, Normalizer, PROPERTY, S } from '@produck/mold';
 import * as Logger from './Logger/index.mjs';
 
 const DuckLogOptionsSchema = Custom(S.Object({
-	[PROPERTY]: Logger.Options.Schema
+	[PROPERTY]: Logger.Options.Schema,
 }), (_value, _empty, next) => {
 	for (const key in _value) {
 		if (_value[key].label === undefined) {

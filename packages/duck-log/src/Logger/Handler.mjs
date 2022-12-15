@@ -33,7 +33,7 @@ const LoggerProxy = handler => {
 		},
 		set: () => {
 			throw new Error('Illegal setting property.');
-		}
+		},
 	});
 };
 
@@ -44,7 +44,7 @@ export class LoggerHandler {
 
 		const Level = this.Level = {
 			sequence: [...level.sequence],
-			recorders: { /** Formal */ }
+			recorders: { /** Formal */ },
 		};
 
 		const transcribe = Transcriber(label, level.sequence);

@@ -18,7 +18,7 @@ const moduleList = [
 		output: path.resolve('src/index.cjs'),
 		format: 'cjs',
 		isExternal: true,
-	}
+	},
 ];
 
 export default moduleList.map(config => {
@@ -28,12 +28,12 @@ export default moduleList.map(config => {
 			file: config.output,
 			format: config.format,
 			name: config.name,
-			banner: BANNER
+			banner: BANNER,
 		},
 		external: [
 			...Object.keys(meta.dependencies),
 			...builtinModules,
-			...builtinModules.map(name => `node:${name}`)
-		]
+			...builtinModules.map(name => `node:${name}`),
+		],
 	});
 });

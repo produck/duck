@@ -9,7 +9,7 @@ const meta = defineComponent({
 	id: 'org.produck.duck.runner',
 	name: 'DuckRunner',
 	version,
-	description: 'Providing parallel running for product.'
+	description: 'Providing parallel running for product.',
 });
 
 const DuckRunnerProvider = options => {
@@ -38,7 +38,7 @@ const DuckRunnerProvider = options => {
 			}
 
 			Kit.Runner = Object.freeze({ start });
-		}
+		},
 	});
 };
 

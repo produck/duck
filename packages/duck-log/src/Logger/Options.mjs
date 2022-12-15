@@ -18,9 +18,9 @@ const OptionsSchema = S.Object({
 		sequence: S.Array({
 			items: P.String(),
 			minLength: 1,
-			key: item => item
+			key: item => item,
 		}, () => [...LEVELS]),
-		prevents: S.Array({ items: P.String() })
+		prevents: S.Array({ items: P.String() }),
 	}), (_value, _empty, next) => {
 		const levelOptions = next();
 
@@ -39,7 +39,7 @@ const OptionsSchema = S.Object({
 		}
 
 		return levelOptions;
-	})
+	}),
 });
 
 export const DEFAULT_LEVELS = LEVELS;
