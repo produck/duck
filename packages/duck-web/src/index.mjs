@@ -1,5 +1,6 @@
 import { defineComponent } from '@produck/duck';
 
+import * as Preset from './Preset.mjs';
 import * as Application from './Application/index.mjs';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
@@ -11,38 +12,34 @@ const meta = defineComponent({
 	description: 'For creating and managing multiple application providers.'
 });
 
-const DuckWebProvider = (options) => {
+const DEFAULT_APPLICATION = Object.freeze({
+	id: 'Default',
+	provider: Preset.Default,
+	description: 'Display the product definition meta data.'
+});
+
+const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 	const staticApplicationList = Options.normalize(options);
 
 	return defineComponent({
 		...meta,
-		install: Kit => Kit.Web = {},
-		created: ({ Kit, Web }) => {
+		install: Kit => {
 			const registry = new Application.Registry(Kit);
 
 			for (const id in staticApplicationList) {
 				registry.register(staticApplicationList[id]);
 			}
 
-			Object.assign(Web, {
+			Kit.Web = Object.freeze({
 				register: options => registry.register(options),
-				// Web.Application('name')(...args);
-				Application: id => registry.get(id),
-				getAllApplicationMetaList: () => {
-					return Array.from(registry.map.values()).map(Factory => {
-						return {
-							id: Factory.id,
-							description: Factory.description
-						};
-					});
-				}
+				Application: id => registry.get(id).ApplicationProxy,
 			});
-
-			Object.freeze(Web);
 		}
 	});
 };
 
-export { DuckWebProvider as Provider };
-export { Application };
-export * as Preset from './Preset.mjs';
+export {
+	DuckWebComponent as Component,
+	Application,
+	Preset,
+};

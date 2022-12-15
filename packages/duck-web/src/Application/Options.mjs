@@ -1,10 +1,9 @@
 import { Normalizer, P, S } from '@produck/mold';
 
-const ApplicationDescriptorSchema = S.Object({
+export const Schema = S.Object({
 	id: P.String(),
-	Provider: P.Function(),
+	provider: P.Function(),
 	description: P.String('No description.')
 });
 
-export const normalize = Normalizer(ApplicationDescriptorSchema);
-export { ApplicationDescriptorSchema as Schema };
+export const normalize = Normalizer(Schema);

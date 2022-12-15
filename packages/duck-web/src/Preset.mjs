@@ -1,10 +1,7 @@
 function DefaultApplicationProvider({ product }) {
 	return function DefaultApplication() {
 		return function requestListener(_request, response) {
-			response.end(JSON.stringify({
-				meta: product.meta,
-				components: product.components
-			}, null, '  '));
+			response.end(JSON.stringify(product, null, '  '));
 		};
 	};
 }

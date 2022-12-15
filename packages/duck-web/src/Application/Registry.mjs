@@ -9,12 +9,12 @@ export class ApplicationRegistry {
 	}
 
 	register(options) {
-		const { id, Provider, description } = Options.normalize(options);
+		const { id, provider, description } = Options.normalize(options);
 		const ApplicationKit = this.Kit(`DuckWeb::Application::<${id}>`);
 
 		ApplicationKit.WebAppMeta = Object.freeze({ id, description });
 
-		const Application = Provider(ApplicationKit);
+		const Application = provider(ApplicationKit);
 
 		if (!T.Native.Function(Application)) {
 			throw new Error('`Provider` MUST return a function as `Application`.');

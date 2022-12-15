@@ -25,7 +25,7 @@ interface DefinitionKit extends DuckKit {
 
 interface ProductKit extends DefinitionKit {}
 
-interface Component {
+export interface Component {
 	/**
 	 * The component unique id.
 	 * Example: org.orchange.duck.default
@@ -75,11 +75,11 @@ interface ProductOptions {
 type Product<ProductType> = (...args: any[]) => ProductType
 
 type Assembler<ProductType> = (
-	Kit?: ProductKit,
+	Kit: ProductKit,
 	...args: any[]
 ) => ProductType
 
-export function defineProduct<ProductType>(
+export function defineProduct<ProductType = ProductKit>(
 	options: ProductOptions,
 	assembler: Assembler<ProductType>
 ): Product<ProductType>
