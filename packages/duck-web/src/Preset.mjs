@@ -1,22 +1,23 @@
 function DefaultApplicationProvider({ product }) {
 	return function DefaultApplication() {
 		return function requestListener(_request, response) {
+			response.setHeader('Content-Type', 'application/json');
 			response.end(JSON.stringify(product, null, '  '));
 		};
 	};
 }
 
 function RedirectHttpsApplicationProvider() {
-	return function RedirectHttpsApplication() {
+	return function RedirectHttpsApplication(code = 302) {
 		return function requestListener(request, response) {
-			if (request.protocol === 'https') {
+			if (request.protocol !== 'http') {
 				throw new Error('RedirectHttps MUST be installed to a http server.');
 			}
 
-			response.setHeader(302, {
-				'Location': `https://${request.header.host}${request.path}`
-			});
+			const location = `https://${request.headers.host}${request.url}`;
 
+			response.setHeader('Location', location);
+			response.statusCode = code;
 			response.end();
 		};
 	};
@@ -24,5 +25,5 @@ function RedirectHttpsApplicationProvider() {
 
 export {
 	DefaultApplicationProvider as Default,
-	RedirectHttpsApplicationProvider as Redirect
+	RedirectHttpsApplicationProvider as Redirect,
 };
