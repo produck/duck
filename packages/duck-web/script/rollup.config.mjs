@@ -33,6 +33,7 @@ export default moduleList.map(config => {
 		external: [
 			...Object.keys(meta.dependencies),
 			...builtinModules,
+			...builtinModules.map(name => `node:${name}`),
 		],
 	});
 });

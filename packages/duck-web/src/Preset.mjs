@@ -1,3 +1,5 @@
+import http from 'node:http';
+
 function DefaultApplicationProvider({ product }) {
 	return function DefaultApplication() {
 		return function requestListener(_request, response) {
@@ -10,7 +12,7 @@ function DefaultApplicationProvider({ product }) {
 function RedirectHttpsApplicationProvider() {
 	return function RedirectHttpsApplication(code = 302) {
 		return function requestListener(request, response) {
-			if (request.protocol !== 'http') {
+			if (request.socket.server.constructor !== http.Server) {
 				throw new Error('RedirectHttps MUST be installed to a http server.');
 			}
 
@@ -25,5 +27,5 @@ function RedirectHttpsApplicationProvider() {
 
 export {
 	DefaultApplicationProvider as Default,
-	RedirectHttpsApplicationProvider as Redirect,
+	RedirectHttpsApplicationProvider as RedirectHttps,
 };

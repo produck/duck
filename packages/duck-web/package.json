@@ -11,6 +11,7 @@
 		"import": "./src/index.mjs",
 		"require": "./src/index.cjs"
 	},
+	"types": "index.d.ts",
 	"files": [
 		"src",
 		"index.d.ts",
@@ -33,7 +34,8 @@
 	},
 	"dependencies": {
 		"@produck/duck": "^1.0.0",
-		"@produck/mold": "^0.3.0"
+		"@produck/mold": "^0.3.0",
+		"@types/node": "^18.11.15"
 	},
 	"devDependencies": {
 		"rollup": "^3.7.4",

@@ -200,7 +200,7 @@ describe('DuckWeb', function () {
 					components: [
 						DuckWeb.Component([{
 							id: 'Redirect',
-							provider: DuckWeb.Preset.Redirect,
+							provider: DuckWeb.Preset.RedirectHttps,
 						}]),
 					],
 				})();
