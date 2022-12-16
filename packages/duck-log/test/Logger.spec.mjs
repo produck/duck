@@ -193,12 +193,38 @@ describe('DuckLog::Logger', function () {
 	});
 
 	describe('::LoggerProxy()', function () {
-		it('should access level.');
+		it('should access level.', function () {
+			const handler = new Logger.Handler({ label: 'a' });
+			const proxy = handler.proxy;
 
-		it('should NOT set custom property');
+			proxy({});
+			proxy.info({});
+		});
 
-		it('should throw if non-existed level.');
+		it('should throw if non-existed level.', function () {
+			const handler = new Logger.Handler({ label: 'a' });
+			const proxy = handler.proxy;
 
-		it('should access its handler by MODIFIER.');
+			assert.throws(() => proxy.foo, {
+				name: 'Error',
+				message: 'Missing level(foo).',
+			});
+		});
+
+		it('should access its handler by MODIFIER.', function () {
+			const handler = new Logger.Handler({ label: 'a' });
+			const proxy = handler.proxy;
+
+			assert.equal(proxy[Logger.MODIFIER], handler);
+		});
+
+		it('should call IGNORE.', function () {
+			const handler = new Logger.Handler({
+				label: 'a',
+				level: { prevents: ['info'] },
+			});
+
+			handler.proxy.info({});
+		});
 	});
 });

@@ -6,13 +6,16 @@ export const MODIFIER = Symbol.for('DUCKLOG_LOGGER_MODIFIER');
 
 const LoggerProxy = handler => {
 	const { recorders, head } = handler;
-	const logByHeadLevel = (...args) => recorders[head](...args);
+	const logByHeadLevel = (message) => recorders[head](message);
 
-	logByHeadLevel[MODIFIER] = handler;
 	Object.freeze(logByHeadLevel);
 
 	return new Proxy(logByHeadLevel, {
 		get: (_target, level) => {
+			if (level === MODIFIER) {
+				return handler;
+			}
+
 			if (!handler.hasLevel(level)) {
 				throw new Error(`Missing level(${level}).`);
 			}
