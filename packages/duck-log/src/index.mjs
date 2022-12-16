@@ -1,3 +1,4 @@
+import { T, Utils } from '@produck/mold';
 import { defineComponent } from '@produck/duck';
 
 import * as Logger from './Logger/index.mjs';
@@ -11,28 +12,41 @@ const meta = defineComponent({
 	description: 'Creating log channel for recording log message.',
 });
 
-const DuckLogProvider = options => {
+const DuckLogComponent = options => {
 	const staticLoggerOptionsMap = Options.normalize(options);
 
 	return defineComponent({
 		...meta,
 		created: Kit => {
-			const registry = new Logger.Registry();
+			const map = new Map();
+
+			const register = (category, options) => {
+				if (!T.Native.String(category)) {
+					Utils.throwError('category', 'string');
+				}
+
+				if (map.has(category)) {
+					throw new Error(`The category(${category}) is existed.`);
+				}
+
+				map.set(category, new Logger.Handler(options));
+			};
 
 			for (const category in staticLoggerOptionsMap) {
-				registry.register(category, staticLoggerOptionsMap[category]);
+				register(category, staticLoggerOptionsMap[category]);
 			}
 
-			Kit.Log = new Proxy((...args) => registry.register(...args), {
+			Kit.Log = new Proxy(Object.freeze(register), {
 				get: (_target, category) => {
-					if (!registry.has(category)) {
+					if (!T.Native.String(category)) {
+						Utils.throwError('category', 'string');
+					}
+
+					if (!map.has(category)) {
 						throw new Error(`Category logger(${category}) is NOT defined.`);
 					}
 
-					return registry.get(category);
-				},
-				set: () => {
-					throw new Error('Illegal setting property.');
+					return map.get(category).proxy;
 				},
 			});
 		},
@@ -42,5 +56,5 @@ const DuckLogProvider = options => {
 export const defineTranscriber = any => any;
 
 export { Options };
-export { DuckLogProvider as Provider };
+export { DuckLogComponent as Component };
 export { MODIFIER } from './Logger/index.mjs';

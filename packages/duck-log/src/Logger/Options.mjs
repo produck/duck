@@ -1,7 +1,7 @@
 import { Custom, Normalizer, P, S } from '@produck/mold';
 
 const HEAD = 'info';
-const LEVELS = Object.freeze(['trace', 'debug', HEAD, 'warn', 'error', 'fatal']);
+const LEVELS = ['trace', 'debug', HEAD, 'warn', 'error', 'fatal'];
 
 export const SimpleConsoleTranscriber = () => {
 	const log = console.log.bind(console);
@@ -10,7 +10,7 @@ export const SimpleConsoleTranscriber = () => {
 		log(label, level, date.toISOString(), message);
 };
 
-const OptionsSchema = S.Object({
+export const Schema = S.Object({
 	Transcriber: P.Function(SimpleConsoleTranscriber),
 	label: P.String(),
 	level: Custom(S.Object({
@@ -22,26 +22,21 @@ const OptionsSchema = S.Object({
 		}, () => [...LEVELS]),
 		prevents: S.Array({ items: P.String() }),
 	}), (_value, _empty, next) => {
-		const levelOptions = next();
+		const options = next();
 
-		if (levelOptions.head === '') {
-			levelOptions.head = levelOptions.sequence[0];
-		}
-
-		if (!levelOptions.sequence.includes(levelOptions.head)) {
+		if (!options.sequence.includes(options.head)) {
 			throw new Error('Level head MUST be one member of levels list.');
 		}
 
-		for (const [index, level] of levelOptions.prevents.entries()) {
-			if (!levelOptions.sequence.includes(level)) {
+		for (const [index, level] of options.prevents.entries()) {
+			if (!options.sequence.includes(level)) {
 				throw new Error(`The level(${level}) at [${index}] is NOT a member.`);
 			}
 		}
 
-		return levelOptions;
+		return options;
 	}),
-});
+}, 'logger descriptor');
 
-export const DEFAULT_LEVELS = LEVELS;
-export const normalize = Normalizer(OptionsSchema);
-export { OptionsSchema as Schema };
+export const DEFAULT_LEVELS = Object.freeze([...LEVELS]);
+export const normalize = Normalizer(Schema);

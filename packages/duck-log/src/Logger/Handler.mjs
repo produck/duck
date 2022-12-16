@@ -1,27 +1,15 @@
+import { T, Utils } from '@produck/mold';
 import * as Options from './Options.mjs';
 
 const IGNORE = () => {};
 export const MODIFIER = Symbol.for('DUCKLOG_LOGGER_MODIFIER');
 
-const assertLevelExisted = (proxy, level) => {
-	if (!proxy.hasLevel(level)) {
-		throw new Error('Can NOT access a non-existed level.');
-	}
-};
-
 const LoggerProxy = handler => {
-	const logByHeadLevel = (...args) => handler.recorders[handler.head](...args);
+	const { recorders, head } = handler;
+	const logByHeadLevel = (...args) => recorders[head](...args);
 
-	logByHeadLevel[MODIFIER] = {
-		get levels() {
-			return handler.levels;
-		},
-		hasLevel: level => handler.hasLevel(level),
-		isPrevent: level => handler.isPrevent(level),
-		preventOne: level => handler.preventOne(level),
-		preventTo: level => handler.preventTo(level),
-		setHead: level => handler.setHead(level),
-	};
+	logByHeadLevel[MODIFIER] = handler;
+	Object.freeze(logByHeadLevel);
 
 	return new Proxy(logByHeadLevel, {
 		get: (_target, level) => {
@@ -29,10 +17,7 @@ const LoggerProxy = handler => {
 				throw new Error(`Missing level(${level}).`);
 			}
 
-			return handler.recorders[level];
-		},
-		set: () => {
-			throw new Error('Illegal setting property.');
+			return recorders[level];
 		},
 	});
 };
@@ -49,18 +34,25 @@ export class LoggerHandler {
 
 		const transcribe = Transcriber(label, level.sequence);
 
-		for (const level of Level.sequence) {
-			Level.recorders[level] = function record(message) {
-				sharedDate.setTime(Date.now());
-				transcribe(label, level, sharedDate, message);
-			};
+		if (!T.Native.Function(transcribe)) {
+			Utils.throwError('.Transcriber', '() => Function');
 		}
-
-		level.prevents.forEach(level => this.preventOne(level));
 
 		this.recorders = { /** Formal or IGNORE */ };
 		this.head = level.head;
 		this.proxy = LoggerProxy(this);
+
+		for (const level of Level.sequence) {
+			const record = function record(message) {
+				sharedDate.setTime(Date.now());
+				transcribe(label, level, sharedDate, message);
+			};
+
+			Level.recorders[level] = record;
+			this.recorders[level] = record;
+		}
+
+		level.prevents.forEach(level => this.prevent(level));
 	}
 
 	get levels() {
@@ -71,19 +63,34 @@ export class LoggerHandler {
 		return Object.hasOwn(this.recorders, level);
 	}
 
+	assertLevel(level) {
+		if (!T.Native.String(level)) {
+			Utils.throwError('level', 'string');
+		}
+
+		if (!this.hasLevel(level)) {
+			throw new Error(`Can NOT access a non-existed level(${level}).`);
+		}
+	}
+
 	isPrevent(level) {
-		assertLevelExisted(this, level);
+		this.assertLevel(level);
 
 		return this.recorders[level] === IGNORE;
 	}
 
-	preventOne(level) {
-		assertLevelExisted(this, level);
-		this.Level.recorders[level] = IGNORE;
+	resume(level) {
+		this.assertLevel(level);
+		this.recorders[level] = this.Level.recorders[level];
+	}
+
+	prevent(level) {
+		this.assertLevel(level);
+		this.recorders[level] = IGNORE;
 	}
 
 	preventTo(level) {
-		assertLevelExisted(this, level);
+		this.assertLevel(level);
 
 		let matched = false;
 
@@ -97,7 +104,7 @@ export class LoggerHandler {
 	}
 
 	setHead(level) {
-		assertLevelExisted(this, level);
+		this.assertLevel(level);
 
 		return this.head = level;
 	}

@@ -2,7 +2,7 @@ import { Custom, Normalizer, PROPERTY, S } from '@produck/mold';
 
 import * as Logger from './Logger/index.mjs';
 
-const DuckLogOptionsSchema = Custom(S.Object({
+export const Schema = Custom(S.Object({
 	[PROPERTY]: Logger.Options.Schema,
 }), (_value, _empty, next) => {
 	for (const key in _value) {
@@ -14,5 +14,4 @@ const DuckLogOptionsSchema = Custom(S.Object({
 	return next();
 });
 
-export const normalize = Normalizer(DuckLogOptionsSchema);
-export { DuckLogOptionsSchema as Schema };
+export const normalize = Normalizer(Schema);
