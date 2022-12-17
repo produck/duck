@@ -1,4 +1,4 @@
-import { defineComponent, define } from '@produck/duck';
+import { defineComponent, defineAny } from '@produck/duck';
 import { T, U } from '@produck/mold';
 
 import * as Runner from './Runner/index.mjs';
@@ -12,7 +12,7 @@ const meta = defineComponent({
 	description: 'Providing parallel running for product.',
 });
 
-const DuckRunnerProvider = options => {
+const DuckRunnerComponent = options => {
 	const { modes, roles } = Options.normalize(options);
 
 	return defineComponent({
@@ -26,14 +26,14 @@ const DuckRunnerProvider = options => {
 					U.throwError('mode', 'string');
 				}
 
-				return await manager.run(mode);
+				return await manager.run(mode, RunnerKit);
 			};
 
-			for (const name of modes) {
+			for (const name in modes) {
 				manager.Mode(name, modes[name]);
 			}
 
-			for (const name of roles) {
+			for (const name in roles) {
 				manager.Role(name, roles[name]);
 			}
 
@@ -42,5 +42,8 @@ const DuckRunnerProvider = options => {
 	});
 };
 
-export { DuckRunnerProvider as Provider };
-export { define as defineExecute, define as definePlay };
+export {
+	DuckRunnerComponent as Component,
+	defineAny as defineExecute,
+	defineAny as definePlay,
+};

@@ -1,15 +1,22 @@
-export function SoloModeTemplateProvider(options) {
-	return async function execute({ Kit: BootingKit, Booting }) {
-		await options.beforeExecute(BootingKit);
+const BOOT = next => next();
+const ACT = (_name, next) => next();
 
-		try {
-			for (const name in Booting.actors) {
-				await Booting.actors[name]();
+export function SoloModeTemplate(boot = BOOT, act = ACT) {
+	return async function execute({ Booting }) {
+		const actors = Booting.actors;
+
+		boot(async function next() {
+			const actions = [];
+
+			for (const name in actors) {
+				const action = act(name, async function next() {
+					await actors[name]();
+				});
+
+				actions.push(action);
 			}
 
-			await options.afterExecute(BootingKit);
-		} catch(error) {
-			await options.catchExecute(error, BootingKit);
-		}
+			await Promise.all(actions);
+		});
 	};
 }

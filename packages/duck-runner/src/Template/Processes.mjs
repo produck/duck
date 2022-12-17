@@ -6,7 +6,10 @@ const IPC_MESSAGE_SYMBOL = 'org.produck.runner.processes';
 const { isPrimary, isWorker } = cluster;
 const MessageData = (args = []) => ({ [IPC_MESSAGE_SYMBOL]: true, args });
 
-export function ProcessesModeTemplateProvider(options) {
+const BOOT = next => next();
+const ACT = (_name, next) => next();
+
+export function ProcessesModeTemplate(boot = BOOT, act = ACT) {
 	async function asPrimary({ Bus, Booting }) {
 		const workers = new Set();
 
@@ -43,9 +46,19 @@ export function ProcessesModeTemplateProvider(options) {
 			workers.add(worker);
 		}
 
-		for (const name in Booting.actors) {
-			forkRole(name);
-		}
+		boot(async function next() {
+			const actions = [];
+
+			for (const name in Booting.actors) {
+				const action = act(name, async function next() {
+					forkRole(name);
+				});
+
+				actions.push(action);
+			}
+
+			await Promise.all(actions);
+		});
 	}
 
 	async function asWorker({ Bus, Booting }) {

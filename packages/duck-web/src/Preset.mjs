@@ -9,10 +9,12 @@ function DefaultApplicationProvider({ product }) {
 	};
 }
 
+const isHttpServer = any => any instanceof http.Server;
+
 function RedirectHttpsApplicationProvider() {
 	return function RedirectHttpsApplication(code = 302) {
 		return function requestListener(request, response) {
-			if (request.socket.server.constructor !== http.Server) {
+			if (!isHttpServer(request.socket.server)) {
 				throw new Error('RedirectHttps MUST be installed to a http server.');
 			}
 

@@ -1,7 +1,8 @@
 import EventEmitter from 'node:events';
 
 class Role {
-	constructor(name, play) {
+	constructor(manager, name, play) {
+		this.manager = manager;
 		this.name = name;
 		this.play = play.bind();
 	}
@@ -9,13 +10,14 @@ class Role {
 	async act(BootingKit) {
 		const ActingKit = BootingKit(`Acting<${this.name}>`);
 
-		ActingKit.Acting = { name: this.name, at: Date.now() };
-		await this.play(undefined, ActingKit);
+		ActingKit.Acting = { name: this.name };
+		await this.play(ActingKit);
 	}
 }
 
 class Mode {
-	constructor(name, execute) {
+	constructor(manager, name, execute) {
+		this.manager = manager;
 		this.name = name;
 		this.execute = execute.bind();
 	}
@@ -24,45 +26,48 @@ class Mode {
 		const BootingKit = RunningKit(`Booting<${this.name}>`);
 		const actors = {};
 
-		for (const role of this.registry.role.values()) {
+		for (const [, role] of this.manager.roles) {
 			actors[role.name] = async () => await role.act(BootingKit);
 		}
 
 		Object.freeze(actors);
-		BootingKit.Booting = { name: this.name, at: Date.now(), actors };
-		await this.execute(undefined, BootingKit);
+		BootingKit.Booting = { name: this.name, actors };
+		await this.execute(BootingKit);
 	}
 }
 
 export class RunnerManager {
-	constructor(RunnerKit) {
-		const ManagerKit = RunnerKit('Manager');
-		const registry = { mode: new Map(), role: new Map() };
-
-		this.registry = registry;
-		this.ManagerKit = ManagerKit;
+	constructor() {
+		this.modes = new Map();
+		this.roles = new Map();
 	}
 
 	Mode(name, execute) {
-		const mode = new Mode(name, execute);
+		if (this.modes.has(name)) {
+			throw new Error(`Duplicated mode(${name}).`);
+		}
 
-		this.registry.mode.set(name, mode);
+		this.modes.set(name, new Mode(this, name, execute));
 	}
 
 	Role(name, play) {
-		const role = new Role(name, play);
+		if (this.roles.has(name)) {
+			throw new Error(`Duplicated role(${name}).`);
+		}
 
-		this.registry.role.set(name, role);
+		this.roles.set(name, new Role(this, name, play));
 	}
 
-	async run(modeName) {
+	async run(modeName, Kit) {
+		if (!this.modes.has(modeName)) {
+			throw new Error(`No mode(${modeName}) is found.`);
+		}
+
 		const Bus = new EventEmitter();
-		const RunningKit = this.ManagerKit('Running');
-		const mode = this.registry.mode.get(modeName);
+		const RunningKit = Kit('Running');
+		const mode = this.modes.get(modeName);
 
 		RunningKit.Bus = Bus;
 		await mode.boot(RunningKit);
-
-		return Bus;
 	}
 }
