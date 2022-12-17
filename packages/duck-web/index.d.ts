@@ -1,6 +1,6 @@
 import { RequestListener } from 'http';
 import * as Duck from '@produck/duck';
-import { Schema } from '@produck/mold/types/schema';
+import { Schema } from '@produck/mold';
 
 export interface ApplicationKit extends Duck.ProductKit {}
 
@@ -30,7 +30,7 @@ declare module '@produck/duck' {
 
 export function defineApplication(provider: Provider): Provider;
 
-export namespace Optiosn {
+export namespace Options {
 	export const Schema: Schema<Options>;
 	export const DescriptorSchema: Schema<Descriptor>;
 	export function normalize(options: Options): Options;

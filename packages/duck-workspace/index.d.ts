@@ -1,5 +1,5 @@
 import * as Duck from '@produck/duck';
-import { Schema } from '@produck/mold/types/schema';
+import { Schema } from '@produck/mold';
 import Workspace from '@produck/workspace';
 
 interface WorkspaceOptions {

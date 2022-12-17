@@ -1,5 +1,5 @@
 import { GlobalKit } from '@produck/kit';
-import { Schema } from '@produck/mold/types/schema';
+import { Schema } from '@produck/mold';
 
 interface DuckKit extends GlobalKit {
 	duck: { version: string }
