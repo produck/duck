@@ -28,6 +28,8 @@ declare module '@produck/duck' {
 	}
 }
 
+export function defineApplication(provider: Provider): Provider;
+
 export namespace Optiosn {
 	export const Schema: Schema<Options>;
 	export const DescriptorSchema: Schema<Descriptor>;

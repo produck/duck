@@ -35,6 +35,6 @@
 	},
 	"dependencies": {
 		"@produck/duck": "^1.0.0",
-		"@produck/mold": "^0.3.0"
+		"@produck/mold": "^0.3.1"
 	}
 }
