@@ -43,18 +43,10 @@ export class RunnerManager {
 	}
 
 	Mode(name, execute) {
-		if (this.modes.has(name)) {
-			throw new Error(`Duplicated mode(${name}).`);
-		}
-
 		this.modes.set(name, new Mode(this, name, execute));
 	}
 
 	Role(name, play) {
-		if (this.roles.has(name)) {
-			throw new Error(`Duplicated role(${name}).`);
-		}
-
 		this.roles.set(name, new Role(this, name, play));
 	}
 

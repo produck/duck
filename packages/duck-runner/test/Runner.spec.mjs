@@ -21,17 +21,6 @@ describe('DuckRunner::Runner', function () {
 
 				manager.Mode('a', () => {});
 			});
-
-			it('should throw if duplicated mode.', function () {
-				const manager = new Runner.Manager();
-
-				manager.Mode('a', () => {});
-
-				assert.throws(() => manager.Mode('a', () => {}), {
-					name: 'Error',
-					message: 'Duplicated mode(a).',
-				});
-			});
 		});
 
 		describe('.Role()', function () {
@@ -39,17 +28,6 @@ describe('DuckRunner::Runner', function () {
 				const manager = new Runner.Manager();
 
 				manager.Role('a', () => {});
-			});
-
-			it('should throw if duplicated role.', function () {
-				const manager = new Runner.Manager();
-
-				manager.Role('a', () => {});
-
-				assert.throws(() => manager.Role('a', () => {}), {
-					name: 'Error',
-					message: 'Duplicated role(a).',
-				});
 			});
 		});
 

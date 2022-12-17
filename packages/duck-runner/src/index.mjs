@@ -12,12 +12,12 @@ const meta = defineComponent({
 	description: 'Providing parallel running for product.',
 });
 
-const DuckRunnerComponent = options => {
-	const { modes, roles } = Options.normalize(options);
+const DuckRunnerComponent = (...args) => {
+	const { modes, roles } = Options.normalize(...args);
 
 	return defineComponent({
 		...meta,
-		created: Kit => {
+		install: Kit => {
 			const RunnerKit = Kit('DuckRunner');
 			const manager = new Runner.Manager(RunnerKit);
 
@@ -41,6 +41,8 @@ const DuckRunnerComponent = options => {
 		},
 	});
 };
+
+export * as Template from './Template/index.mjs';
 
 export {
 	DuckRunnerComponent as Component,
