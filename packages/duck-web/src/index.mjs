@@ -1,4 +1,4 @@
-import { defineComponent, define } from '@produck/duck';
+import { defineComponent, defineAny } from '@produck/duck';
 import { T, Utils } from '@produck/mold';
 
 import * as Preset from './Preset.mjs';
@@ -76,7 +76,7 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 };
 
 export {
-	define as defineApplication,
+	defineAny as defineApplication,
 	DuckWebComponent as Component,
 	Options,
 	Preset,

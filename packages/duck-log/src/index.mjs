@@ -1,5 +1,5 @@
 import { T, Utils } from '@produck/mold';
-import { defineComponent } from '@produck/duck';
+import { defineComponent, defineAny } from '@produck/duck';
 
 import * as Logger from './Logger/index.mjs';
 import * as Options from './Options.mjs';
@@ -12,18 +12,22 @@ const meta = defineComponent({
 	description: 'Creating log channel for recording log message.',
 });
 
-const DuckLogComponent = options => {
+const assertCategory = any => {
+	if (!T.Native.String(any)) {
+		Utils.throwError('category', 'string');
+	}
+};
+
+const DuckLogComponent = (options = {}) => {
 	const staticLoggerOptionsMap = Options.normalize(options);
 
 	return defineComponent({
 		...meta,
-		created: Kit => {
+		install: Kit => {
 			const map = new Map();
 
 			const register = (category, options) => {
-				if (!T.Native.String(category)) {
-					Utils.throwError('category', 'string');
-				}
+				assertCategory(category);
 
 				if (map.has(category)) {
 					throw new Error(`The category(${category}) is existed.`);
@@ -38,9 +42,7 @@ const DuckLogComponent = options => {
 
 			Kit.Log = new Proxy(Object.freeze(register), {
 				get: (_target, category) => {
-					if (!T.Native.String(category)) {
-						Utils.throwError('category', 'string');
-					}
+					assertCategory(category);
 
 					if (!map.has(category)) {
 						throw new Error(`Category logger(${category}) is NOT defined.`);
@@ -53,8 +55,6 @@ const DuckLogComponent = options => {
 	});
 };
 
-export const defineTranscriber = any => any;
-
-export { Options };
+export { Options, defineAny as defineTranscriber };
 export { DuckLogComponent as Component };
 export { MODIFIER } from './Logger/index.mjs';

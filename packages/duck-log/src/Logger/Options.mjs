@@ -6,8 +6,11 @@ const LEVELS = ['trace', 'debug', HEAD, 'warn', 'error', 'fatal'];
 export const SimpleConsoleTranscriber = () => {
 	const log = console.log.bind(console);
 
-	return (label, level, date, message) =>
-		log(label, level, date.toISOString(), message);
+	return (label, level, date, message) => {
+		const msg = JSON.stringify(message);
+
+		log(`[${date.toISOString()}] [${level.toUpperCase()}] [${label}]: ${msg}`);
+	};
 };
 
 export const Schema = S.Object({
