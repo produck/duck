@@ -62,7 +62,6 @@ export function ProcessesModeTemplate(boot = BOOT, act = ACT) {
 	}
 
 	async function asWorker({ Bus, Booting }) {
-		await Booting.actors[process.env[ENV_ROLE_KEY]]();
 		Bus.on('message', message => process.send(message));
 
 		const _emit = Bus.emit;
@@ -84,6 +83,8 @@ export function ProcessesModeTemplate(boot = BOOT, act = ACT) {
 				Bus.emit(...message.args);
 			}
 		});
+
+		await Booting.actors[process.env[ENV_ROLE_KEY]]();
 	}
 
 	return async function execute(BootingKit) {

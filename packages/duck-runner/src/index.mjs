@@ -1,3 +1,4 @@
+import EventEmitter from 'node:events';
 import { defineComponent, defineAny } from '@produck/duck';
 import { T, U } from '@produck/mold';
 
@@ -19,6 +20,7 @@ const DuckRunnerComponent = (...args) => {
 		...meta,
 		install: Kit => {
 			const RunnerKit = Kit('DuckRunner');
+			const Bus = new EventEmitter();
 			const manager = new Runner.Manager(RunnerKit);
 
 			const start = async (mode) => {
@@ -38,6 +40,7 @@ const DuckRunnerComponent = (...args) => {
 			}
 
 			Kit.Runner = Object.freeze({ start });
+			Kit.Bus = Bus;
 		},
 	});
 };

@@ -1,5 +1,3 @@
-import EventEmitter from 'node:events';
-
 class Role {
 	constructor(manager, name, play) {
 		this.manager = manager;
@@ -55,11 +53,9 @@ export class RunnerManager {
 			throw new Error(`No mode(${modeName}) is found.`);
 		}
 
-		const Bus = new EventEmitter();
 		const RunningKit = Kit('Running');
 		const mode = this.modes.get(modeName);
 
-		RunningKit.Bus = Bus;
 		await mode.boot(RunningKit);
 	}
 }
