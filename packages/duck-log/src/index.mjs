@@ -1,4 +1,4 @@
-import { T, Utils } from '@produck/mold';
+import { T, U } from '@produck/mold';
 import { defineComponent, defineAny } from '@produck/duck';
 
 import * as Logger from './Logger/index.mjs';
@@ -14,7 +14,7 @@ const meta = defineComponent({
 
 const assertCategory = any => {
 	if (!T.Native.String(any)) {
-		Utils.throwError('category', 'string');
+		U.throwError('category', 'string');
 	}
 };
 

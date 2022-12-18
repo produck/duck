@@ -1,4 +1,4 @@
-import { T, Utils } from '@produck/mold';
+import { T, U } from '@produck/mold';
 import * as Options from './Options.mjs';
 
 const IGNORE = () => {};
@@ -38,7 +38,7 @@ export class LoggerHandler {
 		const transcribe = Transcriber(label, level.sequence);
 
 		if (!T.Native.Function(transcribe)) {
-			Utils.throwError('.Transcriber', '() => Function');
+			U.throwError('.Transcriber', '() => Function');
 		}
 
 		this.recorders = { /** Formal or IGNORE */ };
@@ -68,7 +68,7 @@ export class LoggerHandler {
 
 	assertLevel(level) {
 		if (!T.Native.String(level)) {
-			Utils.throwError('level', 'string');
+			U.throwError('level', 'string');
 		}
 
 		if (!this.hasLevel(level)) {

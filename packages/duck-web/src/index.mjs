@@ -1,5 +1,5 @@
 import { defineComponent, defineAny } from '@produck/duck';
-import { T, Utils } from '@produck/mold';
+import { T, U } from '@produck/mold';
 
 import * as Preset from './Preset.mjs';
 import * as Options from './Options.mjs';
@@ -56,7 +56,7 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 
 			const Application = (id, ...args) => {
 				if (!T.Native.String(id)) {
-					Utils.throwError('id', 'string');
+					U.throwError('id', 'string');
 				}
 
 				if (!map.has(id)) {
