@@ -84,8 +84,12 @@ export function defineProduct<ProductType = ProductKit>(
 	assembler: Assembler<ProductType>
 ): Product<ProductType>
 
-export function defineAny<T>(any: T): T;
-export function defineComponent(component: Component): Component;
+export interface AnyDefiner<T = any> {
+	(any: T): T;
+}
+
+export const defineAny: AnyDefiner;
+export const defineComponent: AnyDefiner<Component>;
 export { defineProduct as define };
 
 export namespace Options {

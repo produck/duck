@@ -19,16 +19,15 @@ const DuckRunnerComponent = (...args) => {
 	return defineComponent({
 		...meta,
 		install: Kit => {
-			const RunnerKit = Kit('DuckRunner');
 			const Bus = new EventEmitter();
-			const manager = new Runner.Manager(RunnerKit);
+			const manager = new Runner.Manager();
 
 			const start = async (mode) => {
 				if (!T.Native.String(mode)) {
 					U.throwError('mode', 'string');
 				}
 
-				return await manager.run(mode, RunnerKit);
+				return await manager.run(mode, Kit);
 			};
 
 			for (const name in modes) {
@@ -48,6 +47,7 @@ const DuckRunnerComponent = (...args) => {
 export * as Template from './Template/index.mjs';
 
 export {
+	Options,
 	DuckRunnerComponent as Component,
 	defineAny as defineExecute,
 	defineAny as definePlay,

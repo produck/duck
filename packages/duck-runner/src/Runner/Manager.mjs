@@ -5,8 +5,8 @@ class Role {
 		this.play = play.bind();
 	}
 
-	async act(BootingKit) {
-		const ActingKit = BootingKit(`Acting<${this.name}>`);
+	async act(RunningKit) {
+		const ActingKit = RunningKit(`Acting<${this.name}>`);
 
 		ActingKit.Acting = { name: this.name };
 		await this.play(ActingKit);
@@ -25,7 +25,7 @@ class Mode {
 		const actors = {};
 
 		for (const [, role] of this.manager.roles) {
-			actors[role.name] = async () => await role.act(BootingKit);
+			actors[role.name] = async () => await role.act(RunningKit);
 		}
 
 		Object.freeze(actors);
