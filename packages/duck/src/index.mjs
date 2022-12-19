@@ -45,4 +45,5 @@ export {
 	Options,
 	defineProduct as define,
 	defineAny as defineComponent,
+	defineAny as inject,
 };

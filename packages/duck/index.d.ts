@@ -92,6 +92,10 @@ export const defineAny: AnyDefiner;
 export const defineComponent: AnyDefiner<Component>;
 export { defineProduct as define };
 
+type InjectionTarget = <T = any>(Kit: ProductKit) => T;
+
+export const inject: AnyDefiner<InjectionTarget>;
+
 export namespace Options {
 	export function normalize(options: ProductOptions): ProductOptions;
 	export const Schema: Schema<ProductOptions>;
