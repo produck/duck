@@ -38,9 +38,9 @@ export class Commander {
 		return target;
 	}
 
-	async buildChildren(context) {
+	async buildChildren(context, builder) {
 		for (const name in this.children) {
-			await this.children[name].build(context);
+			await this.children[name].build(context, builder);
 		}
 	}
 }

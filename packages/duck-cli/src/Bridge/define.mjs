@@ -7,24 +7,20 @@ export const defineCommander = (provider) => {
 	const CLASS_NAME = `${finalProvider.name}Commander`;
 
 	const CustomCommander = { [CLASS_NAME]: class extends Commander {
-		async buildProgram() {
-			const context = new Context(null, this.symbol, this.feature);
-
-			await finalProvider.program(context.proxy);
-			await this.buildChildren(context);
-		}
-
-		async build(parentContext) {
+		async build(parentContext, builder) {
 			const context = parentContext.create(this.symbol, this.feature);
 
-			await finalProvider.commander(context.proxy);
+			await builder.commander(context.proxy);
 			await this.buildChildren(context);
 		}
 
 		async parse() {
-			const build = async () => await this.buildProgram();
+			const builder = finalProvider.Builder();
+			const context = new Context(null, this.symbol, this.feature);
 
-			await finalProvider.parse(context.proxy, build);
+			await builder.program(context.proxy);
+			await this.buildChildren(context, builder);
+			await builder.parse();
 		}
 	} }[CLASS_NAME];
 

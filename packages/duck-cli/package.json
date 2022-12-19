@@ -1,6 +1,7 @@
 {
 	"name": "@produck/duck-cli",
 	"version": "1.0.0",
+	"private": true,
 	"description": "> TODO: description",
 	"author": "chaoslee <chaos2lee@qq.com>",
 	"homepage": "https://github.com/produck/duck#readme",

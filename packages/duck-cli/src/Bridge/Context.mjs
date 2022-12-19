@@ -1,11 +1,10 @@
 import * as Feature from './Feature.mjs';
 
 export class Context {
-	constructor(parent, current, feature, state = {}) {
+	constructor(parent, current, feature) {
 		this.parent = parent;
 		this.current = current;
 		this.feature = Feature.normalize(feature);
-		this.state = state;
 	}
 
 	get proxy() {
@@ -13,6 +12,6 @@ export class Context {
 	}
 
 	create(current, feature) {
-		return new Context(this.current, current, feature, this.state);
+		return new Context(this.current, current, feature);
 	}
 }
