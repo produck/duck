@@ -1,7 +1,7 @@
 import { Cust, Normalizer, P, S, T } from '@produck/mold';
 
 export const OptionSchema = S.Object({
-	name: P.StringLength(2)(),
+	name: P.StringPattern(/^[a-zA-Z0-9][A-Za-z0-9-]*/)(),
 	alias: P.OrNull(P.StringPattern(/^[A-Za-z]$/, 'single letter')(), false),
 	description: P.OrNull(P.String(), false),
 	value: P.OrNull(P.String(), false),

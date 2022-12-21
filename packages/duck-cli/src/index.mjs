@@ -22,20 +22,36 @@ const DuckCLIProvider = (factory, provider) => {
 	return defineComponent({
 		...meta,
 		install: Kit => {
-			Kit.CLI = Object.freeze({
-				parse: async () => {
-					const CLIKit = Kit('DuckCLI');
+			const parse = async (argv = process.argv) => {
+				const CLIKit = Kit('DuckCLI');
+				const context = { program: null };
 
-					CLIKit.Commander = CustomCommander;
+				CLIKit.Commander = CustomCommander;
 
-					await factory(CLIKit).parse();
-				},
-			});
+				CLIKit.setProgram = (commander) => {
+					if (!(commander instanceof Bridge.Commander)) {
+						U.throwError('program', 'commander');
+					}
+
+					context.program = commander;
+				};
+
+				factory(CLIKit);
+
+				if (context.program === null) {
+					throw new Error('Program is NOT defined.');
+				}
+
+				await context.program.parse(argv);
+			};
+
+			Kit.CLI = Object.freeze({ parse });
 		},
 	});
 };
 
 export {
+	Bridge,
 	DuckCLIProvider as Provider,
 	defineAny as defineProvider,
 	defineAny as defineFeature,

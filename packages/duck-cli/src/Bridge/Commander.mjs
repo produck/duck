@@ -1,46 +1,85 @@
+import { T, U } from '@produck/mold';
 import * as Feature from './Feature.mjs';
+
+const assertCommanderName = any => {
+	if (!T.Native.String(any)) {
+		U.throwError('name', 'string');
+	}
+};
 
 export class Commander {
 	constructor(feature) {
 		this.symbol = Symbol('Commander');
 		this.feature = Feature.normalize(feature);
-		this.children = {};
+
+		this.parent = null;
+		this.children = [];
+		this.defaultChild = null;
 	}
 
-	has(childName) {
-		return Object.hasOwn(this.children, childName);
+	get name() {
+		return this.feature.name;
 	}
 
-	appendChild(commander) {
-		if (this.has(commander.feature.name)) {
-			throw new Error('Duplicated child commander name.');
+	get options() {
+		return {
+			feature: this.feature,
+			isDefault: this.isDefault,
+		};
+	}
+
+	get isDefault() {
+		return this.parent !== null && this.parent.defaultChild === this;
+	}
+
+	hasChild(name) {
+		assertCommanderName(name);
+
+		return this.children.some(commander => commander.name === name);
+	}
+
+	setDefaultChild(name) {
+		assertCommanderName(name);
+
+		const child = this.children.find(commander => commander.name === name);
+
+		if (child === undefined) {
+			throw new Error(`No child(${name})`);
 		}
 
-		this.children[commander.feature.name] = commander;
+		this.defaultChild = child;
 	}
 
-	select(path) {
-		const list = path.split(' ');
-		const finding = [this.feature.name];
+	appendChild(commander, asDefault = false) {
+		if (!(commander instanceof Commander)) {
+			U.throwError('commander', 'Commander');
+		}
 
-		let target = this;
+		if (!T.Native.Boolean(asDefault)) {
+			U.throwError('asDefault', 'boolean');
+		}
 
-		while (list.length > 0) {
-			const currentName = list.shift();
+		const newChildName = commander.name;
 
-			finding.push(currentName);
+		for (const childCommander of this.children) {
+			const existedName = childCommander.name;
 
-			if (!target.has(currentName)) {
-				throw new Error(`Command "${finding.join(' ')}" is NOT found.`);
+			if (existedName === newChildName) {
+				throw new Error(`Duplicated child commander(${newChildName}).`);
+			}
+
+			for (const alias of commander.feature.aliases) {
+				if (childCommander.feature.aliases.includes(alias)) {
+					throw new Error(`Duplicated alias(${alias}) in commander(${existedName})`);
+				}
 			}
 		}
 
-		return target;
-	}
+		this.children.push(commander);
+		commander.parent = this;
 
-	async buildChildren(context, builder) {
-		for (const name in this.children) {
-			await this.children[name].build(context, builder);
+		if (asDefault) {
+			this.setDefaultChild(newChildName);
 		}
 	}
 }
