@@ -1,4 +1,4 @@
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import * as Bridge from '../../src/Bridge/index.mjs';
 
 describe('DuckCLI::Bridge::Commander', function () {
