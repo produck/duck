@@ -1,6 +1,6 @@
 {
 	"name": "@produck/duck-cli",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "> TODO: description",
 	"author": "chaoslee <chaos2lee@qq.com>",
 	"homepage": "https://github.com/produck/duck#readme",
@@ -37,7 +37,7 @@
 		"rollup": "^3.8.0"
 	},
 	"dependencies": {
-		"@produck/duck": "^1.0.1",
+		"@produck/duck": "^1.0.2",
 		"@produck/mold": "^0.3.1"
 	}
 }
