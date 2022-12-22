@@ -41,7 +41,7 @@ const Mock = Duck.define({
 });
 
 if (cluster.isPrimary) {
-	describe.skip('DuckRunner::Template::Processes', function () {
+	describe('DuckRunner::Template::Processes', function () {
 		it('should run.', async function () {
 			await Mock();
 			await sleep(3000);

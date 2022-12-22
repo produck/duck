@@ -11,8 +11,8 @@ const meta = defineComponent({
 	description: '',
 });
 
-const DuckCLIProvider = (factory, provider) => {
-	if (T.Native.Function(factory)) {
+const DuckCLIComponent = (factory, provider) => {
+	if (!T.Native.Function(factory)) {
 		U.throwError('factory', 'function');
 	}
 
@@ -52,7 +52,7 @@ const DuckCLIProvider = (factory, provider) => {
 
 export {
 	Bridge,
-	DuckCLIProvider as Provider,
+	DuckCLIComponent as Component,
 	defineAny as defineProvider,
 	defineAny as defineFeature,
 };
