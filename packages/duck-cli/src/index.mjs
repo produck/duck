@@ -55,4 +55,5 @@ export {
 	DuckCLIComponent as Component,
 	defineAny as defineProvider,
 	defineAny as defineFeature,
+	defineAny as defineFactory,
 };
