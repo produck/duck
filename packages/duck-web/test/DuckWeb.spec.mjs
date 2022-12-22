@@ -183,7 +183,7 @@ describe('DuckWeb', function () {
 							components: [{
 								id: 'org.produck.duck.web',
 								name: 'DuckWeb',
-								version: '1.0.0',
+								version: res.body.components[0].version,
 								description: 'For creating and managing multiple application providers.',
 							}],
 						});
