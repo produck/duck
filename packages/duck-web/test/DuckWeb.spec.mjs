@@ -165,8 +165,8 @@ describe('DuckWeb', function () {
 				})();
 
 				const listener = Kit.Web.App('Default');
-				const server = http.createServer(listener).listen(80, '127.0.0.2');
-				const client = supertest('http://127.0.0.2');
+				const server = http.createServer(listener).listen(8080, '127.0.0.2');
+				const client = supertest('http://127.0.0.2:8080');
 
 				await client
 					.get('/')
@@ -206,13 +206,13 @@ describe('DuckWeb', function () {
 				})();
 
 				const listener = Kit.Web.App('Redirect');
-				const server = http.createServer(listener).listen(80, '127.0.0.2');
-				const client = supertest('http://127.0.0.2');
+				const server = http.createServer(listener).listen(8080, '127.0.0.2');
+				const client = supertest('http://127.0.0.2:8080');
 
 				await client
 					.get('/')
 					.expect(302)
-					.expect('Location', 'https://127.0.0.2/');
+					.expect('Location', 'https://127.0.0.2:8080/');
 
 				server.close();
 			});
