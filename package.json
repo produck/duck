@@ -8,7 +8,8 @@
 		"lint": "eslint --fix packages/**/*.mjs",
 		"test": "lerna run build:extract && mocha \"packages/**/*.spec.mjs\" --no-diff -t 999999999 --delay",
 		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
-		"ci:install": "npm install"
+		"ci:install": "npm install",
+		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
 		"c8": "^7.12.0",
