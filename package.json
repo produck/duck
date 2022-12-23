@@ -1,6 +1,5 @@
 {
 	"name": "@produck/duck-workspace",
-	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"deps:install": "npm -v && npm i && lerna bootstrap",
