@@ -6,10 +6,17 @@ interface Recorder {
 }
 
 declare namespace Logger {
+	type Transcribe = (
+		label: string,
+		level: string,
+		date: Date,
+		message: any
+	) => void;
+
 	type Transcriber = (
 		label: string,
 		levels: Array<string>
-	) => Recorder;
+	) => Transcribe;
 
 	interface OptionsLevel {
 		head?: string;
