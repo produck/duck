@@ -42,9 +42,9 @@ export namespace Bridge {
 
 	export namespace Provider {
 		interface Builder {
-			program: () => Promise<void>;
-			commander: () => Promise<void>;
-			parse: () => Promise<void>;
+			program: (proxy: ContextProxy) => Promise<void>;
+			commander: (proxy: ContextProxy) => Promise<void>;
+			parse: (argv: Argv) => Promise<void>;
 		}
 
 		interface BuilderConstructor {
