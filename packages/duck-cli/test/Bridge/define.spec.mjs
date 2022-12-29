@@ -40,8 +40,8 @@ describe('DuckCLI::Bridge::define()', function () {
 					Builder: function Builder() {
 						return {
 							program: () => {},
-							commander: (context) => {
-								flag.push(context.parent, context.current);
+							commander: (options) => {
+								flag.push(options.parent, options.current);
 							},
 							parse: () => {},
 						};
@@ -53,17 +53,15 @@ describe('DuckCLI::Bridge::define()', function () {
 
 				parent.appendChild(child);
 
-				const context = new Bridge.Context(null, parent.symbol, parent.feature);
-
 				const builder = {
 					program: () => {},
-					commander: (context) => {
-						flag.push(context.parent, context.current);
+					commander: (options) => {
+						flag.push(options.parent, options.current);
 					},
 					parse: () => {},
 				};
 
-				await parent.buildChildren(context, builder);
+				await parent.buildChildren(builder);
 				assert.deepEqual(flag, [parent.symbol, child.symbol]);
 			});
 		});
@@ -77,8 +75,8 @@ describe('DuckCLI::Bridge::define()', function () {
 					Builder: function Builder() {
 						return {
 							program: () => {},
-							commander: (context) => {
-								flag.push(context.parent, context.current);
+							commander: (options) => {
+								flag.push(options.parent, options.current);
 							},
 							parse: () => {},
 						};
@@ -90,17 +88,15 @@ describe('DuckCLI::Bridge::define()', function () {
 
 				parent.appendChild(child);
 
-				const context = new Bridge.Context(null, Symbol(), { name: 'foo' });
-
 				const builder = {
 					program: () => {},
-					commander: (context) => {
-						flag.push(context.current);
+					commander: (options) => {
+						flag.push(options.current);
 					},
 					parse: () => {},
 				};
 
-				await parent.build(context, builder);
+				await parent.build(builder);
 				assert.deepEqual(flag, [parent.symbol, child.symbol]);
 			});
 		});
@@ -114,8 +110,8 @@ describe('DuckCLI::Bridge::define()', function () {
 					Builder: function Builder() {
 						return {
 							program: () => {},
-							commander: (context) => {
-								flag.push(context.parent, context.current);
+							commander: (options) => {
+								flag.push(options.parent, options.current);
 							},
 							parse: () => {
 								flag.push(true);

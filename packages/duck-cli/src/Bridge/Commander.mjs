@@ -23,7 +23,9 @@ export class Commander {
 
 	get options() {
 		return {
-			feature: this.feature,
+			parent: this.parent === null ? null : this.parent.symbol,
+			current: this.symbol,
+			feature: Feature.normalize(this.feature),
 			isDefault: this.isDefault,
 		};
 	}

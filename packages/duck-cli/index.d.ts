@@ -8,13 +8,18 @@ export namespace Bridge {
 		interface Option {
 			name: string;
 			alias?: string | null;
-			description?: string | null;
 			value?: string | null;
+			allowBoolean?: boolean;
+			required?: boolean;
+			default?: string;
+			variadic?: boolean;
+			description?: string | null;
 		}
 
 		interface Argument {
 			name: string;
 			required?: boolean;
+			default?: string;
 			variadic?: boolean;
 		}
 
@@ -37,13 +42,13 @@ export namespace Bridge {
 		export const ArgumentsSchema: Schema<Arguments>;
 		export const AliasesSchema: Schema<Aliases>;
 		export const Schema: Schema<Object>;
-		export function normalize(feature: Object): Object;
+		export function normalize(feature: Object): Required<Object>;
 	}
 
 	export namespace Provider {
 		interface Builder {
-			program: (proxy: ContextProxy) => Promise<void>;
-			commander: (proxy: ContextProxy) => Promise<void>;
+			program: (options: CommanderOptions) => Promise<void>;
+			commander: (options: CommanderOptions) => Promise<void>;
 			parse: (argv: Argv) => Promise<void>;
 		}
 
@@ -63,23 +68,10 @@ export namespace Bridge {
 	}
 
 	interface CommanderOptions {
+		parent: symbol | null;
+		current: symbol;
 		feature: Feature.Object;
 		isDefault: boolean;
-	}
-
-	interface ContextProxy {
-		parent: symbol;
-		current: symbol;
-		feature: Feature.Object;
-	}
-
-	export class Context {
-		constructor(parent: symbol | null, current: symbol, feature: Feature.Object);
-		parent: symbol;
-		current: symbol;
-		feature: Feature.Object;
-		readonly proxy: Readonly<ContextProxy>;
-		create(current: symbol, feature: Feature.Object): Context;
 	}
 
 	export class Commander {
@@ -98,8 +90,7 @@ export namespace Bridge {
 	}
 
 	class CustomCommander extends Commander {
-		build(parentContext: Context): Promise<void>;
-		parse(argv: Argv): Promise<void>;
+		parse(argv?: Argv): Promise<void>;
 	}
 
 	export function define(provider: Provider.Object): typeof CustomCommander;
@@ -111,10 +102,10 @@ interface CLIKit extends Duck.ProductKit {
 }
 
 interface CLI {
-	parser: (argv: Argv) => Promise<void>;
+	parser: (argv?: Argv) => Promise<void>;
 }
 
-declare module 'produck/duck' {
+declare module '@produck/duck' {
 	interface ProductKit {
 		CLI: CLI;
 	}

@@ -33,4 +33,20 @@ describe('DuckCLI::Bridge::Feature', function () {
 				'Error: Duplicated option alias(v), at 1.',
 		});
 	});
+
+	it('should throw if required argument behind a optional one', function () {
+		assert.throws(() => {
+			Bridge.Feature.normalize({
+				name: 'foo',
+				arguments: [
+					{ name: 'version', required: false },
+					{ name: 'viewer' },
+				],
+			});
+		}, {
+			name: 'TypeError',
+			message: 'Invalid ".arguments", one "unknown" expected.\n' +
+				'Error: The required argument(at 1) MUST NOT behind a optional one.',
+		});
+	});
 });

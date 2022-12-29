@@ -45,8 +45,10 @@ describe('DuckCLI::Bridge::Commander', function () {
 			const commander = new Bridge.Commander({ name: 'foo' });
 
 			assert.deepEqual(commander.options, {
+				parent: null,
+				current: commander.symbol,
 				feature: commander.feature,
-				isDefault: commander.isDefault,
+				isDefault: false,
 			});
 		});
 	});

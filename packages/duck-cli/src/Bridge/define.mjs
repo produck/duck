@@ -1,7 +1,6 @@
 import { Normalizer, P, S } from '@produck/mold';
 
 import * as Provider from './provider.mjs';
-import { Context } from './Context.mjs';
 import { Commander } from './Commander.mjs';
 
 export const ArgvSchema = S.Array({ items: P.String() }, 'string[]');
@@ -17,26 +16,23 @@ export const defineCommander = (provider) => {
 	assertBuilder(Builder());
 
 	const CustomCommander = { [CLASS_NAME]: class extends Commander {
-		async buildChildren(context, builder) {
+		async buildChildren(builder) {
 			for (const commander of this.children) {
-				await commander.build(context, builder);
+				await commander.build(builder);
 			}
 		}
 
-		async build(parentContext, builder) {
-			const context = parentContext.create(this.symbol, this.feature);
-
-			await builder.commander(context.proxy);
-			await this.buildChildren(context, builder);
+		async build(builder) {
+			await builder.commander(this.options);
+			await this.buildChildren(builder);
 		}
 
 		async parse(argv) {
 			const finalArgv = normalizeArgv(argv);
 			const builder = Builder();
-			const context = new Context(null, this.symbol, this.feature);
 
-			await builder.program(context.proxy);
-			await this.buildChildren(context, builder);
+			await builder.program(this.options);
+			await this.buildChildren(builder);
 			await builder.parse(finalArgv);
 		}
 	} }[CLASS_NAME];
