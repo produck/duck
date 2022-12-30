@@ -5,13 +5,18 @@ type Argv = string[];
 
 export namespace Bridge {
 	export namespace Feature {
+		interface ValueOptions {
+			name: string;
+			required: boolean;
+		}
+
 		interface Option {
 			name: string;
 			alias?: string | null;
-			value?: string | null;
-			allowBoolean?: boolean;
+			value?: null | string | ValueOptions;
+			optional?: boolean;
 			required?: boolean;
-			default?: string;
+			default?: boolean | string | Array<string> | undefined;
 			variadic?: boolean;
 			description?: string | null;
 		}

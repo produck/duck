@@ -1,14 +1,48 @@
-import { Cust, Normalizer, P, S, T } from '@produck/mold';
+import { C, Cust, Normalizer, P, S, T } from '@produck/mold';
 
-export const OptionSchema = S.Object({
+const DefaultValueSchema = C.Or([
+	P.String(),
+	P.Boolean(),
+	S.Array({ items: P.String() }, null),
+	(_value, _empty) => {
+		if (_empty) {
+			return undefined;
+		}
+	},
+]);
+
+const ValueNameSchema = P.String();
+
+const ValueOptionsSchema = S.Object({
+	name: ValueNameSchema,
+	/**
+	 * true: string | string[]
+	 * false: string | string[] | boolean
+	 */
+	required: P.Boolean(true),
+});
+
+const ValueSimpleSchema = Cust(ValueNameSchema, (_v, _e, next) => {
+	return ValueOptionsSchema({ name: next() });
+});
+
+const ValueSchema = C.Or([ValueOptionsSchema, ValueSimpleSchema]);
+
+export const OptionSchema = Cust(S.Object({
 	name: P.StringPattern(/^[a-zA-Z0-9][A-Za-z0-9-]*/)(),
 	alias: P.OrNull(P.StringPattern(/^[A-Za-z]$/, 'single letter')(), false),
-	value: P.OrNull(P.String(), false),
-	allowBoolean: P.Boolean(false),
+	value: P.OrNull(ValueSchema, false),
+	/**
+	 * The option MUST be specified if true.
+	 */
 	required: P.Boolean(false),
-	default: P.OrNull(P.String(), false),
 	variadic: P.Boolean(false),
+	default: DefaultValueSchema,
 	description: P.OrNull(P.String(), false),
+}), (_v, _e, next) => {
+	const options = next();
+
+	return options;
 });
 
 export const OptionsSchema = Cust(S.Array({
