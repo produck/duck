@@ -8,16 +8,15 @@ export namespace Bridge {
 		interface ValueOptions {
 			name: string;
 			required: boolean;
+			default?: boolean | string | Array<string>;
+			variadic?: boolean;
 		}
 
 		interface Option {
 			name: string;
 			alias?: string | null;
 			value?: null | string | ValueOptions;
-			optional?: boolean;
 			required?: boolean;
-			default?: boolean | string | Array<string> | undefined;
-			variadic?: boolean;
 			description?: string | null;
 		}
 
