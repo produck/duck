@@ -82,6 +82,7 @@ export const OptionsSchema = Cust(S.Array({
 
 export const ArgumentSchema = S.Object({
 	name: P.String(),
+	description: P.OrNull(P.String(), false),
 	required: P.Boolean(true),
 	default: P.OrNull(P.String(), false),
 	variadic: P.Boolean(false),

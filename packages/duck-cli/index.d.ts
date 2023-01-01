@@ -22,6 +22,7 @@ export namespace Bridge {
 
 		interface Argument {
 			name: string;
+			description?: string;
 			required?: boolean;
 			default?: string;
 			variadic?: boolean;
