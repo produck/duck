@@ -44,6 +44,6 @@
 		"semver": "^7.3.8"
 	},
 	"devDependencies": {
-		"rollup": "^3.8.0"
+		"rollup": "^3.9.0"
 	}
 }
