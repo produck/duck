@@ -55,12 +55,12 @@ export namespace Options {
 
 export namespace Template {
 	export function Solo(
-		boot: (next: () => Promise<void>) => void,
+		boot: (next: () => Promise<void>, Kit: BootingKit) => void,
 		act: (name: string, next: () => Promise<void>) => void
 	): Execute;
 
 	export function Processes(
-		boot: (next: () => Promise<void>) => void,
+		boot: (next: () => Promise<void>, Kit: BootingKit) => void,
 		act: (name: string, next: () => Promise<void>) => void
 	): Execute;
 }

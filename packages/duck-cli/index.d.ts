@@ -107,7 +107,7 @@ interface CLIKit extends Duck.ProductKit {
 }
 
 interface CLI {
-	parser: (argv?: Argv) => Promise<void>;
+	parse: (argv?: Argv) => Promise<void>;
 }
 
 declare module '@produck/duck' {

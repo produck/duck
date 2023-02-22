@@ -2,10 +2,10 @@ const BOOT = next => next();
 const ACT = (_name, next) => next();
 
 export function SoloModeTemplate(boot = BOOT, act = ACT) {
-	return async function execute({ Booting }) {
+	return async function execute({ Booting, Kit }) {
 		const actors = Booting.actors;
 
-		boot(async function next() {
+		await boot(async function next() {
 			const actions = [];
 
 			for (const name in actors) {
@@ -17,6 +17,6 @@ export function SoloModeTemplate(boot = BOOT, act = ACT) {
 			}
 
 			await Promise.all(actions);
-		});
+		}, Kit);
 	};
 }

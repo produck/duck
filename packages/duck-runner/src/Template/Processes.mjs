@@ -10,7 +10,7 @@ const BOOT = next => next();
 const ACT = (_name, next) => next();
 
 export function ProcessesModeTemplate(boot = BOOT, act = ACT) {
-	async function asPrimary({ Bus, Booting }) {
+	async function asPrimary({ Kit, Bus, Booting }) {
 		const workers = new Set();
 
 		const _emit = Bus.emit;
@@ -58,7 +58,7 @@ export function ProcessesModeTemplate(boot = BOOT, act = ACT) {
 			}
 
 			await Promise.all(actions);
-		});
+		}, Kit);
 	}
 
 	async function asWorker({ Bus, Booting }) {
