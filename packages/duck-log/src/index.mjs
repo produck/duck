@@ -26,7 +26,7 @@ const DuckLogComponent = (options = {}) => {
 		install: Kit => {
 			const map = new Map();
 
-			const register = (category, options) => {
+			const register = (category, options = { label: category }) => {
 				assertCategory(category);
 
 				if (map.has(category)) {

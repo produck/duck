@@ -39,6 +39,7 @@ describe('DuckLog', function () {
 				})();
 
 				Kit.Log('bar', { label: 'bar' });
+				Kit.Log('baz');
 			});
 
 			it('should throw if bad category.', function () {
