@@ -11,10 +11,10 @@
 		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
-		"c8": "^7.12.0",
-		"eslint": "^8.31.0",
+		"c8": "^7.13.0",
+		"eslint": "^8.34.0",
 		"mocha": "^10.2.0",
-		"lerna": "^6.3.0"
+		"lerna": "^6.5.1"
 	},
 	"workspaces": [
 		"packages/*"

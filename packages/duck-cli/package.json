@@ -33,8 +33,8 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"devDependencies": {
-		"commander": "^9.4.1",
-		"rollup": "^3.9.0"
+		"commander": "^10.0.0",
+		"rollup": "^3.17.2"
 	},
 	"dependencies": {
 		"@produck/duck": "^1.0.3",
