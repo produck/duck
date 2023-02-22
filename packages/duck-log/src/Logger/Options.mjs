@@ -1,4 +1,4 @@
-import { Custom, Normalizer, P, S } from '@produck/mold';
+import { Custom, Normalizer, P, S, T } from '@produck/mold';
 
 const HEAD = 'info';
 const LEVELS = ['trace', 'debug', HEAD, 'warn', 'error', 'fatal'];
@@ -7,7 +7,7 @@ export const SimpleConsoleTranscriber = () => {
 	const log = console.log.bind(console);
 
 	return (label, level, date, message) => {
-		const msg = JSON.stringify(message);
+		const msg = T.Native.Object(message) ? JSON.stringify(message) : message;
 
 		log(`[${date.toISOString()}] [${level.toUpperCase()}] [${label}]: ${msg}`);
 	};

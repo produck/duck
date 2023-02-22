@@ -33,6 +33,10 @@ const DuckLogComponent = (options = {}) => {
 					throw new Error(`The category(${category}) is existed.`);
 				}
 
+				if (!Object.hasOwn(options, 'label')) {
+					options.label = category;
+				}
+
 				map.set(category, new Logger.Handler(options));
 			};
 
