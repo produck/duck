@@ -21,6 +21,15 @@ describe('DuckLog', function () {
 		});
 	});
 
+	it('should throw if bad static logger.', function () {
+		assert.throws(() => {
+			DuckLog.Component({ foo: 1 });
+		}, {
+			name: 'TypeError',
+			message: 'Invalid ".foo", one "logger descriptor" expected.',
+		});
+	});
+
 	describe('>Log', function () {
 		it('should install Log to a Product.', function () {
 			const Kit = Duck.define({

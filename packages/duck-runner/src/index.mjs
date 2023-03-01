@@ -22,6 +22,8 @@ const DuckRunnerComponent = (...args) => {
 			const Bus = new EventEmitter();
 			const manager = new Runner.Manager();
 
+			Kit.Bus = Bus;
+
 			const start = async (mode) => {
 				if (!T.Native.String(mode)) {
 					U.throwError('mode', 'string');
@@ -35,11 +37,20 @@ const DuckRunnerComponent = (...args) => {
 			}
 
 			for (const name in roles) {
-				manager.Role(name, roles[name]);
+				const RoleKit = Kit(`Role<${name}>`);
+
+				RoleKit.Acting = Object.freeze({ name });
+
+				const play = roles[name](RoleKit);
+
+				if (!T.Native.Function(play)) {
+					U.throwError('play <= role()', 'function <= role()');
+				}
+
+				manager.Role(name, play);
 			}
 
 			Kit.Runner = Object.freeze({ start });
-			Kit.Bus = Bus;
 		},
 	});
 };

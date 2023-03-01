@@ -26,18 +26,14 @@ const DuckLogComponent = (options = {}) => {
 		install: Kit => {
 			const map = new Map();
 
-			const register = (category, options = { label: category }) => {
+			const register = (category, options = {}) => {
 				assertCategory(category);
 
 				if (map.has(category)) {
 					throw new Error(`The category(${category}) is existed.`);
 				}
 
-				if (!Object.hasOwn(options, 'label')) {
-					options.label = category;
-				}
-
-				map.set(category, new Logger.Handler(options));
+				map.set(category, new Logger.Handler({ label: category, ...options}));
 			};
 
 			for (const category in staticLoggerOptionsMap) {

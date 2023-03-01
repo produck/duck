@@ -15,12 +15,28 @@ describe('DuckRunner', function () {
 				components: [
 					DuckRunner.Component({
 						modes: { a: () => {} },
-						roles: { b: () => {} },
+						roles: { b: () => () => {} },
 					}),
 				],
 			})();
 
 			assert.notEqual(ProductKit.Runner, undefined);
+		});
+
+		it('should throw if bad role.', function () {
+			assert.throws(() => {
+				Duck.define({
+					id: '',
+					components: [
+						DuckRunner.Component({
+							roles: { b: () => {} },
+						}),
+					],
+				})();
+			}, {
+				name: 'TypeError',
+				message: 'Invalid "play <= role()", one "function <= role()" expected.',
+			});
 		});
 
 		describe('::start()', function () {
@@ -30,7 +46,7 @@ describe('DuckRunner', function () {
 					components: [
 						DuckRunner.Component({
 							modes: { a: () => {} },
-							roles: { b: () => {} },
+							roles: { b: () => () => {} },
 						}),
 					],
 				})();
@@ -56,7 +72,7 @@ describe('DuckRunner', function () {
 									Booting.actors.b();
 								},
 							},
-							roles: { b: () => flag[1] = true },
+							roles: { b: () => () => flag[1] = true },
 						}),
 					],
 				})();

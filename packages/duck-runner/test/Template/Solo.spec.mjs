@@ -14,11 +14,11 @@ describe('DuckRunner::Template::Solo', function () {
 						solo: DuckRunner.Template.Solo(),
 					},
 					roles: {
-						a: Kit => {
+						a: Kit => () => {
 							flag.push(true);
 							Kit.Bus.on('b', () => flag.push(null));
 						},
-						b: Kit => {
+						b: Kit => () => {
 							flag.push(true);
 							Kit.Bus.emit('b');
 						},

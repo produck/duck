@@ -15,11 +15,11 @@ const Mock = Duck.define({
 				processes: DuckRunner.Template.Processes(),
 			},
 			roles: {
-				a: Kit => {
+				a: Kit => () => {
 					Kit.Bus.emit('a');
 					console.log(process.pid, 'aaaaaaaaaaa');
 				},
-				b: Kit => {
+				b: Kit => () => {
 					Kit.Bus.emit('b');
 					console.log(process.pid, 'bbbbbbbbbbbbb');
 				},
