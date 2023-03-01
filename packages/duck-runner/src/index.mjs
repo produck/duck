@@ -24,7 +24,35 @@ const DuckRunnerComponent = (...args) => {
 
 			Kit.Bus = Bus;
 
+			let installed = false;
+
+			const ready = () => {
+				if (installed) {
+					throw new Error('Runner has been ready.');
+				}
+
+				for (const name in roles) {
+					const RoleKit = Kit(`Role<${name}>`);
+
+					RoleKit.Acting = Object.freeze({ name });
+
+					const play = roles[name](RoleKit);
+
+					if (!T.Native.Function(play)) {
+						U.throwError('play <= role()', 'function <= role()');
+					}
+
+					manager.Role(name, play);
+				}
+
+				installed = true;
+			};
+
 			const start = async (mode) => {
+				if (!installed) {
+					throw new Error('It MUST Runner.ready() first.');
+				}
+
 				if (!T.Native.String(mode)) {
 					U.throwError('mode', 'string');
 				}
@@ -36,21 +64,7 @@ const DuckRunnerComponent = (...args) => {
 				manager.Mode(name, modes[name]);
 			}
 
-			for (const name in roles) {
-				const RoleKit = Kit(`Role<${name}>`);
-
-				RoleKit.Acting = Object.freeze({ name });
-
-				const play = roles[name](RoleKit);
-
-				if (!T.Native.Function(play)) {
-					U.throwError('play <= role()', 'function <= role()');
-				}
-
-				manager.Role(name, play);
-			}
-
-			Kit.Runner = Object.freeze({ start });
+			Kit.Runner = Object.freeze({ ready, start });
 		},
 	});
 };

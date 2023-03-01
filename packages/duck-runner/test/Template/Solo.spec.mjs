@@ -26,6 +26,7 @@ describe('DuckRunner::Template::Solo', function () {
 				}),
 			],
 		}, async ({ Runner }) => {
+			Runner.ready();
 			Runner.start('solo');
 			await new Promise(resolve => setTimeout(resolve, 1000));
 			assert.deepEqual(flag, [true, true, null]);

@@ -27,6 +27,7 @@ const Mock = Duck.define({
 		}),
 	],
 }, async ({ Runner, Bus }) => {
+	Runner.ready();
 	Runner.start('processes');
 
 	if (cluster.isPrimary) {
