@@ -31,6 +31,7 @@ interface ActingKit extends RunningKit {
 
 interface Runner {
 	start: (mode: string) => Promise<void>;
+	ready(): void;
 }
 
 declare module '@produck/duck' {
