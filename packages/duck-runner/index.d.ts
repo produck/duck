@@ -2,7 +2,7 @@ import { EventEmitter } from 'node:events';
 import * as Duck from '@produck/duck';
 import { Schema } from '@produck/mold';
 
-interface RunningKit extends Duck.ProductKit {}
+interface RunningKit extends Duck.ProductKit { }
 
 type Actor = () => Promise<void>;
 
@@ -34,10 +34,12 @@ interface Runner {
 	ready(): void;
 }
 
+interface EventBus extends EventEmitter {}
+
 declare module '@produck/duck' {
 	interface ProductKit {
 		Runner: Runner;
-		Bus: EventEmitter;
+		Bus: EventBus;
 	}
 }
 
