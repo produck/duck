@@ -5,7 +5,7 @@
 	"author": "chaoslee <chaos2lee@qq.com>",
 	"homepage": "https://github.com/produck/duck#readme",
 	"license": "MIT",
-	"main": "index.cjs",
+	"main": "src/index.cjs",
 	"type": "module",
 	"exports": {
 		"import": "./src/index.mjs",
