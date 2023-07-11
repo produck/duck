@@ -51,7 +51,6 @@ if (cluster.isPrimary) {
 	});
 
 	after(() => setTimeout(() => process.exit(0), 1000));
-	setTimeout(() => run(), 1000);
 } else {
 	await Mock();
 	await sleep(1000);

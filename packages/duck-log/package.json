@@ -27,13 +27,15 @@
 	"scripts": {
 		"build:extract": "node script/extract.mjs",
 		"build": "npm run build:extract && rollup -c script/rollup.config.mjs",
-		"prepublishOnly": " npm run build"
+		"prepublishOnly": " npm run build",
+		"test": "npm run build:extract && mocha \"**/*.spec.mjs\" --no-diff -t 999999999"
 	},
 	"bugs": {
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"devDependencies": {
-		"rollup": "^3.17.2"
+		"mocha": "^10.2.0",
+		"rollup": "^3.26.2"
 	},
 	"dependencies": {
 		"@produck/duck": "^1.0.4",

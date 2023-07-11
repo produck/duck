@@ -2,19 +2,18 @@
 	"name": "@produck/duck-workspace",
 	"private": true,
 	"scripts": {
-		"deps:install": "npm -v && npm i && lerna bootstrap",
+		"deps:install": "npm -v && npm i",
 		"deps:clean": "lerna clean -y",
 		"lint": "eslint --fix packages/**/*.mjs",
-		"test": "lerna run build:extract && mocha \"packages/**/*.spec.mjs\" --no-diff -t 999999999 --delay",
+		"test": "npm run test --workspaces",
 		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
 		"ci:install": "npm install",
 		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
-		"c8": "^7.13.0",
-		"eslint": "^8.34.0",
-		"mocha": "^10.2.0",
-		"lerna": "^6.5.1"
+		"c8": "^8.0.0",
+		"eslint": "^8.44.0",
+		"lerna": "^7.1.1"
 	},
 	"workspaces": [
 		"packages/*"
