@@ -3,11 +3,9 @@
 	"private": true,
 	"scripts": {
 		"deps:install": "npm -v && npm i",
-		"deps:clean": "lerna clean -y",
 		"lint": "eslint --fix packages/**/*.mjs",
-		"test": "npm run test --workspaces",
+		"test": "npm run build:extract --workspaces && npm run test --workspaces",
 		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
-		"ci:install": "npm install",
 		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
