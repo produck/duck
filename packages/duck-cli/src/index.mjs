@@ -46,6 +46,8 @@ const DuckCLIComponent = (factory, provider) => {
 			};
 
 			Kit.CLI = Object.freeze({ parse });
+
+			return () => {};
 		},
 	});
 };

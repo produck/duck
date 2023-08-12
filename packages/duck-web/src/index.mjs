@@ -23,7 +23,7 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 
 	return defineComponent({
 		...meta,
-		install: Kit => {
+		install: (Kit, indicator) => {
 			const map = new Map();
 
 			const register = descriptor => {
@@ -59,6 +59,10 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 					U.throwError('id', 'string');
 				}
 
+				if (!indicator.ready) {
+					indicator.assertReady('It could NOT `.Application()` when assembly.');
+				}
+
 				if (!map.has(id)) {
 					throw new Error(`No application(${id}) existed.`);
 				}
@@ -66,11 +70,13 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				return map.get(id).ApplicationProxy(...args);
 			};
 
-			for (const id in staticApplicationList) {
-				register(staticApplicationList[id]);
-			}
-
 			Kit.Web = Object.freeze({ register, Application, App: Application });
+
+			return function after() {
+				for (const Application of staticApplicationList) {
+					register(Application);
+				}
+			};
 		},
 	});
 };

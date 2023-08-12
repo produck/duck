@@ -18,17 +18,27 @@ const DuckRunnerComponent = (...args) => {
 
 	return defineComponent({
 		...meta,
-		install: Kit => {
-			const Bus = new EventEmitter();
+		install: (Kit, indicator) => {
 			const manager = new Runner.Manager();
 
-			Kit.Bus = Bus;
+			const start = async (mode) => {
+				if (!T.Native.String(mode)) {
+					U.throwError('mode', 'string');
+				}
 
-			let installed = false;
+				if (!indicator.ready) {
+					indicator.assertReady('It could NOT `.start()` when assembly.');
+				}
 
-			const ready = () => {
-				if (installed) {
-					throw new Error('Runner has been ready.');
+				return await manager.run(mode, Kit);
+			};
+
+			Kit.Runner = Object.freeze({ start });
+			Kit.Bus = new EventEmitter();
+
+			return function after() {
+				for (const name in modes) {
+					manager.Mode(name, modes[name]);
 				}
 
 				for (const name in roles) {
@@ -44,27 +54,7 @@ const DuckRunnerComponent = (...args) => {
 
 					manager.Role(name, play);
 				}
-
-				installed = true;
 			};
-
-			const start = async (mode) => {
-				if (!installed) {
-					throw new Error('It MUST Runner.ready() first.');
-				}
-
-				if (!T.Native.String(mode)) {
-					U.throwError('mode', 'string');
-				}
-
-				return await manager.run(mode, Kit);
-			};
-
-			for (const name in modes) {
-				manager.Mode(name, modes[name]);
-			}
-
-			Kit.Runner = Object.freeze({ ready, start });
 		},
 	});
 };

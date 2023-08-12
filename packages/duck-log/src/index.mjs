@@ -51,6 +51,8 @@ const DuckLogComponent = (options = {}) => {
 					return map.get(category).proxy;
 				},
 			});
+
+			return () => {};
 		},
 	});
 };

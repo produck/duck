@@ -26,17 +26,28 @@ export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 		})),
 	});
 
-	const ProductKit = () => {
+	return { [name]: (...args) => {
+		let ready = false;
+
+		const indicator = Object.freeze({
+			get ready() {
+				return ready;
+			},
+			assertReady(message) {
+				throw new Error(message);
+			},
+		});
+
 		const Kit = DefinitionKit('Duck::Product');
+		const install = component => component.install(Kit, indicator);
+		const afterList = components.map(install);
+		const artifact = assembler(Kit, ...args);
 
-		for (const component of components) {
-			component.install(Kit);
-		}
+		afterList.forEach(after => after());
+		ready = true;
 
-		return Kit;
-	};
-
-	return (...args) => assembler(ProductKit(), ...args);
+		return artifact;
+	} }[name];
 };
 
 export const defineAny = any => any;

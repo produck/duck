@@ -24,6 +24,8 @@ const DuckWorkspaceComponent = (options = {}) => {
 			}
 
 			Kit.Workspace = workspace;
+
+			return () => {};
 		},
 	});
 };
