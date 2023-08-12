@@ -39,6 +39,7 @@
 		"@types/node": "^20.4.1"
 	},
 	"devDependencies": {
+		"@types/mocha": "^10.0.1",
 		"mocha": "^10.2.0",
 		"rollup": "^3.26.2",
 		"supertest": "^6.3.3"

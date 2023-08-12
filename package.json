@@ -9,9 +9,9 @@
 		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
-		"c8": "^8.0.0",
-		"eslint": "^8.44.0",
-		"lerna": "^7.1.1"
+		"c8": "^8.0.1",
+		"eslint": "^8.47.0",
+		"lerna": "^7.1.5"
 	},
 	"workspaces": [
 		"packages/*"
