@@ -1,6 +1,7 @@
 import { T, Utils } from '@produck/mold';
 import * as Kit from '@produck/kit';
 
+import * as Installation from './Installation.mjs';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
 
@@ -26,28 +27,31 @@ export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 		})),
 	});
 
-	return { [name]: (...args) => {
-		let ready = false;
+	const NAME = `${assembler.name}ProductProxy`;
 
-		const indicator = Object.freeze({
-			get ready() {
-				return ready;
-			},
-			assertReady(message) {
-				throw new Error(message);
-			},
-		});
-
+	return { [NAME]: (...args) => {
 		const Kit = DefinitionKit('Duck::Product');
-		const install = component => component.install(Kit, indicator);
-		const afterList = components.map(install);
-		const artifact = assembler(Kit, ...args);
+		let product, ready = false;
 
-		afterList.forEach(after => after());
+		Kit.ReadyTo = function ReadyDecorator(fn, message) {
+			return { [fn.name](...args) {
+				if (!ready) {
+					throw new Error(message);
+				}
+
+				fn.call(this, ...args);
+			} }[fn.name];
+		};
+
+		Installation.install(
+			...components.map(component => next => component.install(Kit, next)),
+			() => product = assembler(Kit, ...args),
+		);
+
 		ready = true;
 
-		return artifact;
-	} }[name];
+		return product;
+	} }[NAME];
 };
 
 export const defineAny = any => any;

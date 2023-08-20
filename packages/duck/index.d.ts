@@ -23,11 +23,8 @@ interface DefinitionKit extends DuckKit {
 	};
 }
 
-export interface ProductKit extends DefinitionKit { }
-
-interface Indicator {
-	readonly ready: boolean;
-	assertReady(message: string): never;
+export interface ProductKit extends DefinitionKit {
+	ReadyTo: <T extends (...args: any) => any>(fn: T, message?: string) => T;
 }
 
 export interface Component {
@@ -51,7 +48,7 @@ export interface Component {
 	 * Invoking when Product is called.
 	 * Some new functions CAN be set into baseInjection
 	 */
-	install?: (Kit: ProductKit, indicator: Indicator) => any;
+	install?: (Kit: ProductKit, next: () => any) => any;
 
 	/**
 	 * Description of the component.

@@ -131,7 +131,10 @@ describe('Duck', function () {
 						components: [{
 							id: 'org.example.foo',
 							name: 'bar',
-							install: (Kit) => InstalledKit = Kit,
+							install: (Kit, next) => {
+								InstalledKit = Kit;
+								next();
+							},
 						}],
 					})();
 
