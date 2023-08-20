@@ -30,5 +30,8 @@
 			"error",
 			"always-multiline"
 		]
-	}
+	},
+	"ignorePatterns": [
+		"*.cjs"
+	]
 }

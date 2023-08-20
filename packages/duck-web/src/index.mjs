@@ -23,7 +23,7 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 
 	return defineComponent({
 		...meta,
-		install: (Kit, indicator) => {
+		install: ({ Kit, ReadyTo }, next) => {
 			const map = new Map();
 
 			const register = descriptor => {
@@ -54,13 +54,9 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				map.set(id, { id, description, ApplicationProxy });
 			};
 
-			const Application = (id, ...args) => {
+			const Application = ReadyTo(function Application(id, ...args) {
 				if (!T.Native.String(id)) {
 					U.throwError('id', 'string');
-				}
-
-				if (!indicator.ready) {
-					indicator.assertReady('It could NOT `.Application()` when assembly.');
 				}
 
 				if (!map.has(id)) {
@@ -68,15 +64,15 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				}
 
 				return map.get(id).ApplicationProxy(...args);
-			};
+			});
 
 			Kit.Web = Object.freeze({ register, Application, App: Application });
 
-			return function after() {
-				for (const Application of staticApplicationList) {
-					register(Application);
-				}
-			};
+			next();
+
+			for (const Application of staticApplicationList) {
+				register(Application);
+			}
 		},
 	});
 };

@@ -23,7 +23,7 @@ const DuckLogComponent = (options = {}) => {
 
 	return defineComponent({
 		...meta,
-		install: Kit => {
+		install: ({ Kit }, next) => {
 			const map = new Map();
 
 			const register = (category, options = {}) => {
@@ -35,10 +35,6 @@ const DuckLogComponent = (options = {}) => {
 
 				map.set(category, new Logger.Handler({ label: category, ...options}));
 			};
-
-			for (const category in staticLoggerOptionsMap) {
-				register(category, staticLoggerOptionsMap[category]);
-			}
 
 			Kit.Log = new Proxy(Object.freeze(register), {
 				get: (_target, category) => {
@@ -52,7 +48,11 @@ const DuckLogComponent = (options = {}) => {
 				},
 			});
 
-			return () => {};
+			next();
+
+			for (const category in staticLoggerOptionsMap) {
+				register(category, staticLoggerOptionsMap[category]);
+			}
 		},
 	});
 };

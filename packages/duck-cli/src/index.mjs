@@ -21,7 +21,7 @@ const DuckCLIComponent = (factory, provider) => {
 
 	return defineComponent({
 		...meta,
-		install: Kit => {
+		install: (Kit, next) => {
 			const parse = async (argv = process.argv.slice(2)) => {
 				const CLIKit = Kit('DuckCLI');
 				const context = { program: null };
@@ -46,8 +46,7 @@ const DuckCLIComponent = (factory, provider) => {
 			};
 
 			Kit.CLI = Object.freeze({ parse });
-
-			return () => {};
+			next();
 		},
 	});
 };

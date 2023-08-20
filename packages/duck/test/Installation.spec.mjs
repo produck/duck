@@ -24,5 +24,6 @@ describe('Installation', function () {
 
 		assert.ok(a);
 		assert.ok(b);
+		assert.ok(c);
 	});
 });

@@ -18,43 +18,39 @@ const DuckRunnerComponent = (...args) => {
 
 	return defineComponent({
 		...meta,
-		install: (Kit, indicator) => {
+		install: ({ Kit, ReadyTo }, next) => {
 			const manager = new Runner.Manager();
 
-			const start = async (mode) => {
+			const start = ReadyTo(async function start(mode) {
 				if (!T.Native.String(mode)) {
 					U.throwError('mode', 'string');
 				}
 
-				if (!indicator.ready) {
-					indicator.assertReady('It could NOT `.start()` when assembly.');
-				}
-
 				return await manager.run(mode, Kit);
-			};
+			});
 
 			Kit.Runner = Object.freeze({ start });
 			Kit.Bus = new EventEmitter();
 
-			return function after() {
-				for (const name in modes) {
-					manager.Mode(name, modes[name]);
+			next();
+
+			for (const name in modes) {
+				manager.Mode(name, modes[name]);
+			}
+
+			for (const name in roles) {
+				const RoleKit = Kit(`Role<${name}>`);
+
+				RoleKit.Acting = Object.freeze({ name });
+
+				const play = roles[name](RoleKit);
+
+				if (!T.Native.Function(play)) {
+					U.throwError('play <= role()', 'function <= role()');
 				}
 
-				for (const name in roles) {
-					const RoleKit = Kit(`Role<${name}>`);
-
-					RoleKit.Acting = Object.freeze({ name });
-
-					const play = roles[name](RoleKit);
-
-					if (!T.Native.Function(play)) {
-						U.throwError('play <= role()', 'function <= role()');
-					}
-
-					manager.Role(name, play);
-				}
-			};
+				manager.Role(name, play);
+			}
 		},
 	});
 };

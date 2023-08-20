@@ -16,7 +16,7 @@ const DuckWorkspaceComponent = (options = {}) => {
 
 	return defineComponent({
 		...meta,
-		install: Kit => {
+		install: (Kit, next) => {
 			const workspace = new Workspace();
 
 			for (const name in staticPath) {
@@ -24,8 +24,7 @@ const DuckWorkspaceComponent = (options = {}) => {
 			}
 
 			Kit.Workspace = workspace;
-
-			return () => {};
+			next();
 		},
 	});
 };

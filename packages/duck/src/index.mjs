@@ -1,10 +1,11 @@
-import { T, Utils } from '@produck/mold';
+import { T, U, Utils } from '@produck/mold';
 import * as Kit from '@produck/kit';
 
 import * as Installation from './Installation.mjs';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
 
+const NOT_READY_MESSAGE = 'Assembler is NOT ready.';
 const DuckKit = Kit.global('Duck');
 
 DuckKit.duck = Object.freeze({ version });
@@ -33,7 +34,15 @@ export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 		const Kit = DefinitionKit('Duck::Product');
 		let product, ready = false;
 
-		Kit.ReadyTo = function ReadyDecorator(fn, message) {
+		Kit.ReadyTo = function ReadyDecorator(fn, message = NOT_READY_MESSAGE) {
+			if (!T.Native.Function(fn)) {
+				U.throwError('fn', 'function');
+			}
+
+			if (!T.Native.String(message)) {
+				U.throwError('message', 'string');
+			}
+
 			return { [fn.name](...args) {
 				if (!ready) {
 					throw new Error(message);
