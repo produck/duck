@@ -27,9 +27,6 @@ const Mock = Duck.define({
 		}),
 	],
 }, async ({ Runner, Bus }) => {
-	Runner.ready();
-	Runner.start('processes');
-
 	if (cluster.isPrimary) {
 		Bus.on('a', () => {
 			flag.push(true);
@@ -39,12 +36,16 @@ const Mock = Duck.define({
 			flag.push(true);
 		});
 	}
+
+	return Runner;
 });
 
 if (cluster.isPrimary) {
 	describe('DuckRunner::Template::Processes', function () {
 		it('should run.', async function () {
-			await Mock();
+			const mock = await Mock();
+
+			await mock.start('processes');
 			await sleep(3000);
 			assert.ok(flag.length >= 2);
 		});
@@ -52,7 +53,9 @@ if (cluster.isPrimary) {
 
 	after(() => setTimeout(() => process.exit(0), 1000));
 } else {
-	await Mock();
+	const mock = await Mock();
+
+	await mock.start('processes');
 	await sleep(1000);
 	process.exit(0);
 }

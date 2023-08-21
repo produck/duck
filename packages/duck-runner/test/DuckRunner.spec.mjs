@@ -32,8 +32,6 @@ describe('DuckRunner', function () {
 							roles: { b: () => {} },
 						}),
 					],
-				}, ({ Runner }) => {
-					Runner.ready();
 				})();
 			}, {
 				name: 'TypeError',
@@ -54,7 +52,6 @@ describe('DuckRunner', function () {
 				})();
 
 				await assert.rejects(async () => {
-					ProductKit.Runner.ready();
 					await ProductKit.Runner.start(null);
 				}, {
 					name: 'TypeError',
@@ -80,47 +77,26 @@ describe('DuckRunner', function () {
 					],
 				})();
 
-				ProductKit.Runner.ready();
 				await ProductKit.Runner.start('a');
 				assert.deepEqual(flag, [true, true]);
 			});
 
 			it('should throw if not ready.', async function () {
-				const ProductKit = Duck.define({
-					id: '',
-					components: [
-						DuckRunner.Component({
-							modes: { a: () => {} },
-							roles: { b: () => () => {} },
-						}),
-					],
-				})();
-
 				await assert.rejects(async () => {
-					await ProductKit.Runner.start('a');
+					Duck.define({
+						id: '',
+						components: [
+							DuckRunner.Component({
+								modes: { a: () => {} },
+								roles: { b: () => () => {} },
+							}),
+						],
+					}, ({ Runner }) => {
+						Runner.start('a');
+					})();
 				}, {
 					name: 'Error',
-					message: 'It MUST Runner.ready() first.',
-				});
-			});
-
-			it('should throw if duplicated ready.', async function () {
-				const ProductKit = Duck.define({
-					id: '',
-					components: [
-						DuckRunner.Component({
-							modes: { a: () => {} },
-							roles: { b: () => () => {} },
-						}),
-					],
-				})();
-
-				await assert.rejects(async () => {
-					ProductKit.Runner.ready();
-					ProductKit.Runner.ready();
-				}, {
-					name: 'Error',
-					message: 'Runner has been ready.',
+					message: 'Assembler is NOT ready.',
 				});
 			});
 		});

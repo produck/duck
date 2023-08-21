@@ -6,7 +6,7 @@ describe('DuckRunner::Template::Solo', function () {
 	it('should run.', async function () {
 		const flag = [];
 
-		await Duck.define({
+		const Kit = Duck.define({
 			id: 'foo',
 			components: [
 				DuckRunner.Component({
@@ -25,11 +25,10 @@ describe('DuckRunner::Template::Solo', function () {
 					},
 				}),
 			],
-		}, async ({ Runner }) => {
-			Runner.ready();
-			Runner.start('solo');
-			await new Promise(resolve => setTimeout(resolve, 1000));
-			assert.deepEqual(flag, [true, true, null]);
 		})();
+
+		await Kit.Runner.start('solo');
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		assert.deepEqual(flag, [true, true, null]);
 	});
 });
