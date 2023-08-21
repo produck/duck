@@ -26,4 +26,33 @@ describe('Installation', function () {
 		assert.ok(b);
 		assert.ok(c);
 	});
+
+	it('should throw if duplicated call,', function () {
+		assert.throws(() => {
+			Installation.install(
+				next => {
+					next();
+					next();
+				},
+			);
+		}, {
+			name: 'Error',
+			message: 'next() called multiple times.',
+		});
+	});
+
+	it('should throw if aborted.', function () {
+		assert.throws(() => {
+			Installation.install(
+				() => {},
+				next => {
+					next();
+				},
+			);
+		}, {
+			name: 'Error',
+			message: 'Installation aborted.',
+		});
+
+	});
 });
