@@ -101,14 +101,14 @@ describe('DuckWeb', function () {
 
 			it('should throw if bad id.', function () {
 				assert.throws(() => {
-					Duck.define({
+					const Kit = Duck.define({
 						id: 'foo',
 						components: [
 							DuckWeb.Component(),
 						],
-					}, function ({ Kit }) {
-						Kit.Web.Application(1);
 					})();
+
+					Kit.Web.Application(1);
 				}, {
 					name: 'TypeError',
 					message: 'Invalid "id", one "string" expected.',
@@ -117,14 +117,14 @@ describe('DuckWeb', function () {
 
 			it('should throw if not found.', function () {
 				assert.throws(() => {
-					Duck.define({
+					const Kit = Duck.define({
 						id: 'foo',
 						components: [
 							DuckWeb.Component(),
 						],
-					}, function ({ Kit }) {
-						Kit.Web.Application('Foo');
 					})();
+
+					Kit.Web.Application('Foo');
 				}, {
 					name: 'Error',
 					message: 'No application(Foo) existed.',
@@ -133,7 +133,7 @@ describe('DuckWeb', function () {
 
 			it('should throw if bad request listener.', function () {
 				assert.throws(() => {
-					Duck.define({
+					const Kit = Duck.define({
 						id: 'foo',
 						components: [
 							DuckWeb.Component([
@@ -144,9 +144,9 @@ describe('DuckWeb', function () {
 								},
 							]),
 						],
-					}, function ({ Kit }) {
-						Kit.Web.Application('Foo');
 					})();
+
+					Kit.Web.Application('Foo');
 				}, {
 					name: 'Error',
 					message: 'Bad Application(Foo), one "(req, res) => any" expected.',

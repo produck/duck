@@ -48,7 +48,7 @@ export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 					throw new Error(message);
 				}
 
-				fn.call(this, ...args);
+				return fn.call(this, ...args);
 			} }[fn.name];
 		};
 
