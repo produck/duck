@@ -24,3 +24,21 @@ export function install(...list) {
 		throw new Error('Installation aborted.', { cause: index() });
 	}
 }
+
+export function Invoker(...chain) {
+	const length = chain.length;
+
+	return async function invoker(ctx, next = () => {}) {
+		let i = 0;
+
+		return (async function invoke(index) {
+			if (i > index) {
+				throw new Error('next() called multiple times.');
+			}
+
+			if (i <= length) {
+				return await (i < length ? chain[i] : next)(ctx, invoke.bind(null, ++i));
+			}
+		})(i);
+	};
+}

@@ -9,11 +9,23 @@
 		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
-		"c8": "^8.0.1",
-		"eslint": "^8.47.0",
-		"lerna": "^7.1.5"
+		"@eslint/js": "^9.15.0",
+		"@produck/eslint-rules": "^0.1.2",
+		"@types/mocha": "^10.0.9",
+		"@types/node": "^22.9.0",
+		"c8": "^10.1.2",
+		"eslint": "^9.15.0",
+		"globals": "^15.12.0",
+		"lerna": "^8.1.9",
+		"mocha": "^10.8.2",
+		"rollup": "^4.27.2",
+		"typescript-eslint": "^8.14.0"
 	},
 	"workspaces": [
-		"packages/*"
+		"packages/duck",
+		"packages/duck-log",
+		"packages/duck-runner",
+		"packages/duck-web",
+		"packages/duck-workspace"
 	]
 }

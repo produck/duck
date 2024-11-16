@@ -1,5 +1,6 @@
 import { T, U, Utils } from '@produck/mold';
 import * as Kit from '@produck/kit';
+import { compose } from '@produck/compose';
 
 import * as Installation from './Installation.mjs';
 import * as Options from './Options.mjs';

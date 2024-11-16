@@ -33,11 +33,6 @@
 	"bugs": {
 		"url": "https://github.com/produck/duck/issues"
 	},
-	"devDependencies": {
-		"@types/mocha": "^10.0.1",
-		"mocha": "^10.2.0",
-		"rollup": "^3.28.0"
-	},
 	"dependencies": {
 		"@produck/duck": "^1.0.5",
 		"@produck/mold": "^0.3.1",

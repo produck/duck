@@ -40,13 +40,9 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"dependencies": {
-		"@produck/kit": "^0.1.5",
+		"@produck/compose": "^0.1.4",
+		"@produck/kit": "^0.1.8",
 		"@produck/mold": "^0.3.1",
-		"semver": "^7.5.4"
-	},
-	"devDependencies": {
-		"@types/mocha": "^10.0.1",
-		"mocha": "^10.2.0",
-		"rollup": "^3.28.0"
+		"semver": "^7.6.3"
 	}
 }
