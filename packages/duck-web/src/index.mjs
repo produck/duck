@@ -1,5 +1,6 @@
+import * as Ow from '@produck/ow';
 import { defineComponent, defineAny } from '@produck/duck';
-import { T, U } from '@produck/mold';
+import { T } from '@produck/mold';
 
 import * as Preset from './Preset.mjs';
 import * as Options from './Options.mjs';
@@ -23,7 +24,7 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 
 	return defineComponent({
 		...meta,
-		install: ({ Kit, ReadyTo }, next) => {
+		install: ({ Kit }, next) => {
 			const map = new Map();
 
 			const register = descriptor => {
@@ -31,21 +32,21 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				const { id, provider, description } = finalDescriptor;
 
 				if (map.has(id)) {
-					throw new Error(`Duplicate Application(${id}).`);
+					return Ow.Error.Common(`Duplicate Application(${id}).`);
 				}
 
 				const ApplicationKit = Kit(`Application<${id}>`);
 				const Application = provider(ApplicationKit);
 
 				if (!T.Native.Function(Application)) {
-					throw new Error('The `.provider` MUST return a function as `Application`.');
+					return Ow.Invalid('.provider()=>', 'function');
 				}
 
 				const ApplicationProxy = (...args) => {
 					const requestListener = Application(...args);
 
 					if (!T.Native.Function(requestListener)) {
-						throw new Error(`Bad Application(${id}), one "(req, res) => any" expected.`);
+						return Ow.Invalid(`Application(${id})=>`, '(req, res) => any');
 					}
 
 					return requestListener;
@@ -54,17 +55,17 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				map.set(id, { id, description, ApplicationProxy });
 			};
 
-			const Application = ReadyTo(function Application(id, ...args) {
+			const Application = function Application(id, ...args) {
 				if (!T.Native.String(id)) {
-					U.throwError('id', 'string');
+					return Ow.Invalid('id', 'string');
 				}
 
 				if (!map.has(id)) {
-					throw new Error(`No application(${id}) existed.`);
+					return Ow.Error.Common(`No application(${id}) existed.`);
 				}
 
 				return map.get(id).ApplicationProxy(...args);
-			});
+			};
 
 			Kit.Web = Object.freeze({ register, Application, App: Application });
 

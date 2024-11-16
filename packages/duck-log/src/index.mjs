@@ -1,4 +1,5 @@
-import { T, U } from '@produck/mold';
+import * as Ow from '@produck/ow';
+import { T } from '@produck/mold';
 import { defineComponent, defineAny } from '@produck/duck';
 
 import * as Logger from './Logger/index.mjs';
@@ -14,7 +15,7 @@ const meta = defineComponent({
 
 const assertCategory = any => {
 	if (!T.Native.String(any)) {
-		U.throwError('category', 'string');
+		return Ow.Invalid('category', 'string');
 	}
 };
 
@@ -30,29 +31,31 @@ const DuckLogComponent = (options = {}) => {
 				assertCategory(category);
 
 				if (map.has(category)) {
-					throw new Error(`The category(${category}) is existed.`);
+					return Ow.Error.Common(`The category(${category}) is existed.`);
 				}
 
 				map.set(category, new Logger.Handler({ label: category, ...options}));
 			};
 
-			Kit.Log = new Proxy(Object.freeze(register), {
+			Object.freeze(register);
+
+			Kit.Log = new Proxy(register, {
 				get: (_target, category) => {
 					assertCategory(category);
 
 					if (!map.has(category)) {
-						throw new Error(`Category logger(${category}) is NOT defined.`);
+						return Ow.Error.Common(`Category logger(${category}) is NOT defined.`);
 					}
 
 					return map.get(category).proxy;
 				},
 			});
 
-			next();
-
 			for (const category in staticLoggerOptionsMap) {
 				register(category, staticLoggerOptionsMap[category]);
 			}
+
+			next();
 		},
 	});
 };

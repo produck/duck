@@ -5,8 +5,6 @@
 		],
 		"alwaysStrict": false,
 		"allowJs": true,
-		"noEmit": true,
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext"
+		"noEmit": true
 	}
 }

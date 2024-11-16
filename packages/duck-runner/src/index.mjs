@@ -1,6 +1,7 @@
+import * as Ow from '@produck/ow';
 import EventEmitter from 'node:events';
 import { defineComponent, defineAny } from '@produck/duck';
-import { T, U } from '@produck/mold';
+import { T } from '@produck/mold';
 
 import * as Runner from './Runner/index.mjs';
 import * as Options from './Options.mjs';
@@ -18,21 +19,13 @@ const DuckRunnerComponent = (...args) => {
 
 	return defineComponent({
 		...meta,
-		install: ({ Kit, ReadyTo }, next) => {
+		install: ({ Kit }, next) => {
 			const manager = new Runner.Manager();
+			const runner = Kit.Runner = {};
 
-			const start = ReadyTo(async function start(mode) {
-				if (!T.Native.String(mode)) {
-					U.throwError('mode', 'string');
-				}
-
-				return await manager.run(mode, Kit);
-			});
-
-			Kit.Runner = Object.freeze({ start });
 			Kit.Bus = new EventEmitter();
 
-			next();
+			runner.start = () => Ow.Error.Common('Installation not completed.');
 
 			for (const name in modes) {
 				manager.Mode(name, modes[name]);
@@ -46,11 +39,23 @@ const DuckRunnerComponent = (...args) => {
 				const play = roles[name](RoleKit);
 
 				if (!T.Native.Function(play)) {
-					U.throwError('play <= role()', 'function <= role()');
+					Ow.Invalid('play <= role()', 'function <= role()');
 				}
 
 				manager.Role(name, play);
 			}
+
+			next();
+
+			runner.start = async function start(mode) {
+				if (!T.Native.String(mode)) {
+					Ow.Invalid('mode', 'string');
+				}
+
+				return await manager.run(mode, Kit);
+			};
+
+			Object.freeze(runner);
 		},
 	});
 };

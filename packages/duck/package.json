@@ -14,6 +14,7 @@
 	"main": "src/index.cjs",
 	"type": "module",
 	"exports": {
+		"types": "./index.d.ts",
 		"import": "./src/index.mjs",
 		"require": "./src/index.cjs"
 	},
@@ -40,8 +41,8 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"dependencies": {
-		"@produck/compose": "^0.1.4",
-		"@produck/kit": "^0.1.8",
+		"@produck/compose": "^0.1.6",
+		"@produck/kit": "^0.1.9",
 		"@produck/mold": "^0.3.1",
 		"semver": "^7.6.3"
 	}

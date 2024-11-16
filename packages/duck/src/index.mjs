@@ -1,31 +1,32 @@
-import { T, U, Utils } from '@produck/mold';
+import { T, Utils } from '@produck/mold';
 import * as Kit from '@produck/kit';
 import { compose } from '@produck/compose';
 
-import * as Installation from './Installation.mjs';
 import * as Options from './Options.mjs';
 import version from './version.mjs';
 
-const NOT_READY_MESSAGE = 'Assembler is NOT ready.';
 const DuckKit = Kit.global('Duck');
 
 DuckKit.duck = Object.freeze({ version });
 
 export const defineProduct = (options = {}, assembler = Kit => Kit) => {
-	const { id, name, version, description, components } = Options.normalize(options);
+	const { components, ...meta } = Options.normalize(options);
 
 	if (!T.Native.Function(assembler)) {
 		Utils.throwError('assembler', 'function');
 	}
 
 	const DefinitionKit = DuckKit('Duck::Definition');
+	const installList = [];
 
 	DefinitionKit.product = Object.freeze({
-		meta: Object.freeze({ id, name, version, description }),
+		meta: Object.freeze(meta),
 		components: Object.freeze(components.map(component => {
-			const { id, name, version, description } = component;
+			const { install, ...meta } = component;
 
-			return Object.freeze({ id, name, version, description });
+			installList.push(install);
+
+			return Object.freeze(meta);
 		})),
 	});
 
@@ -33,32 +34,9 @@ export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 
 	return { [NAME]: (...args) => {
 		const Kit = DefinitionKit('Duck::Product');
-		let product, ready = false;
+		let product;
 
-		Kit.ReadyTo = function ReadyDecorator(fn, message = NOT_READY_MESSAGE) {
-			if (!T.Native.Function(fn)) {
-				U.throwError('fn', 'function');
-			}
-
-			if (!T.Native.String(message)) {
-				U.throwError('message', 'string');
-			}
-
-			return { [fn.name](...args) {
-				if (!ready) {
-					throw new Error(message);
-				}
-
-				return fn.call(this, ...args);
-			} }[fn.name];
-		};
-
-		Installation.install(
-			...components.map(component => next => component.install(Kit, next)),
-			() => product = assembler(Kit, ...args),
-		);
-
-		ready = true;
+		compose(...installList, () => product = assembler(Kit, ...args))(Kit);
 
 		return product;
 	} }[NAME];
