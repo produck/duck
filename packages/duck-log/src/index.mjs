@@ -1,5 +1,5 @@
 import * as Ow from '@produck/ow';
-import { T } from '@produck/mold';
+import { Assert } from '@produck/idiom';
 import { defineComponent, defineAny } from '@produck/duck';
 
 import * as Logger from './Logger/index.mjs';
@@ -13,11 +13,7 @@ const meta = defineComponent({
 	description: 'Creating log channel for recording log message.',
 });
 
-const assertCategory = any => {
-	if (!T.Native.String(any)) {
-		return Ow.Invalid('category', 'string');
-	}
-};
+const assertCategory = any => Assert.Type.String(any, 'category');
 
 const DuckLogComponent = (options = {}) => {
 	const staticLoggerOptionsMap = Options.normalize(options);

@@ -1,4 +1,4 @@
-import { T, Utils } from '@produck/mold';
+import { Assert } from '@produck/idiom';
 import * as Kit from '@produck/kit';
 import { compose } from '@produck/compose';
 
@@ -12,9 +12,7 @@ DuckKit.duck = Object.freeze({ version });
 export const defineProduct = (options = {}, assembler = Kit => Kit) => {
 	const { components, ...meta } = Options.normalize(options);
 
-	if (!T.Native.Function(assembler)) {
-		Utils.throwError('assembler', 'function');
-	}
+	Assert.Type.Function(assembler, 'assembler');
 
 	const DefinitionKit = DuckKit('Duck::Definition');
 	const installList = [];

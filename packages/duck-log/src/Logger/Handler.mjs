@@ -1,4 +1,6 @@
-import { T, U } from '@produck/mold';
+import * as Ow from '@produck/ow';
+import { Assert } from '@produck/idiom';
+
 import * as Options from './Options.mjs';
 
 const IGNORE = () => {};
@@ -17,7 +19,7 @@ const LoggerProxy = handler => {
 			}
 
 			if (!handler.hasLevel(level)) {
-				throw new Error(`Missing level(${level}).`);
+				Ow.Error.Common(`Missing level(${level}).`);
 			}
 
 			return recorders[level];
@@ -37,9 +39,7 @@ export class LoggerHandler {
 
 		const transcribe = Transcriber(label, level.sequence);
 
-		if (!T.Native.Function(transcribe)) {
-			U.throwError('.Transcriber', '() => Function');
-		}
+		Assert.Type.Function(transcribe, '.Transcriber', '() => Function');
 
 		this.recorders = { /** Formal or IGNORE */ };
 		this.head = level.head;
@@ -67,12 +67,10 @@ export class LoggerHandler {
 	}
 
 	assertLevel(level) {
-		if (!T.Native.String(level)) {
-			U.throwError('level', 'string');
-		}
+		Assert.Type.String(level, 'level');
 
 		if (!this.hasLevel(level)) {
-			throw new Error(`Can NOT access a non-existed level(${level}).`);
+			Ow.Error.Common(`Can NOT access a non-existed level(${level}).`);
 		}
 	}
 

@@ -1,3 +1,4 @@
+import * as Ow from '@produck/ow';
 import { Custom, Normalizer, P, S, T } from '@produck/mold';
 
 const HEAD = 'info';
@@ -28,12 +29,12 @@ export const Schema = S.Object({
 		const options = next();
 
 		if (!options.sequence.includes(options.head)) {
-			throw new Error('Level head MUST be one member of levels list.');
+			Ow.Error.Common('Level head MUST be one member of levels list.');
 		}
 
 		for (const [index, level] of options.prevents.entries()) {
 			if (!options.sequence.includes(level)) {
-				throw new Error(`The level(${level}) at [${index}] is NOT a member.`);
+				Ow.Error.Common(`The level(${level}) at [${index}] is NOT a member.`);
 			}
 		}
 
