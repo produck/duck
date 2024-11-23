@@ -167,29 +167,5 @@ describe('Duck', function () {
 				});
 			});
 		});
-
-		describe('Kit::ReadyTo()', function () {
-			it('should throw if bad fn.', function () {
-				assert.throws(() => {
-					Duck.define({ id: 'org.example.test' }, Kit => {
-						Kit.ReadyTo();
-					})();
-				}, {
-					name: 'TypeError',
-					message: 'Invalid "fn", one "function" expected.',
-				});
-			});
-
-			it('should throw if bad message.', function () {
-				assert.throws(() => {
-					Duck.define({ id: 'org.example.test' }, Kit => {
-						Kit.ReadyTo(() => {}, 1);
-					})();
-				}, {
-					name: 'TypeError',
-					message: 'Invalid "message", one "string" expected.',
-				});
-			});
-		});
 	});
 });

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import cluster from 'node:cluster';
+import { describe, it, after } from 'mocha';
+
 import * as Duck from '@produck/duck';
 import * as DuckRunner from '../../src/index.mjs';
 

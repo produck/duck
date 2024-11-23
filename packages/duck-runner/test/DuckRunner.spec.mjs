@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import * as Duck from '@produck/duck';
+import { describe, it } from 'mocha';
 
+import * as Duck from '@produck/duck';
 import * as DuckRunner from '../src/index.mjs';
 
 describe('DuckRunner', function () {
@@ -96,7 +97,7 @@ describe('DuckRunner', function () {
 					})();
 				}, {
 					name: 'Error',
-					message: 'Assembler is NOT ready.',
+					message: 'Installation not completed.',
 				});
 			});
 		});

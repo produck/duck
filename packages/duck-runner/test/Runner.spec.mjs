@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import * as Duck from '@produck/duck';
+import { describe, it } from 'mocha';
 
+import * as Duck from '@produck/duck';
 import * as Runner from '../src/Runner/index.mjs';
 
 const ProductKit = Duck.define({ id: 'foo' })();

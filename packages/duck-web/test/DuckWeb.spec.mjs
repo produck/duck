@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';
-import supertest from 'supertest';
+import { describe, it } from 'mocha';
+
 import * as Duck from '@produck/duck';
 
 import * as DuckWeb from '../src/index.mjs';
@@ -81,8 +82,8 @@ describe('DuckWeb', function () {
 						});
 					})();
 				}, {
-					name: 'Error',
-					message: 'The `.provider` MUST return a function as `Application`.',
+					name: 'TypeError',
+					message: 'Invalid ".provider()=>", one "function" expected.',
 				});
 			});
 		});
@@ -148,8 +149,8 @@ describe('DuckWeb', function () {
 
 					Kit.Web.Application('Foo');
 				}, {
-					name: 'Error',
-					message: 'Bad Application(Foo), one "(req, res) => any" expected.',
+					name: 'TypeError',
+					message: 'Invalid "Application(Foo)=>", one "(req, res) => any" expected.',
 				});
 
 			});
@@ -166,28 +167,27 @@ describe('DuckWeb', function () {
 
 				const listener = Kit.Web.App('Default');
 				const server = http.createServer(listener).listen(8080, '127.0.0.2');
-				const client = supertest('http://127.0.0.2:8080');
+				const response = await fetch('http://127.0.0.2:8080/');
 
-				await client
-					.get('/')
-					.expect('Content-Type', 'application/json')
-					.expect(200)
-					.expect(res => {
-						assert.deepEqual(res.body, {
-							meta: {
-								id: 'foo',
-								name: 'Default Product Name',
-								version: '0.0.0',
-								description: 'No descrition',
-							},
-							components: [{
-								id: 'org.produck.duck.web',
-								name: 'DuckWeb',
-								version: res.body.components[0].version,
-								description: 'For creating and managing multiple application providers.',
-							}],
-						});
-					});
+				assert.equal(response.headers.get('Content-Type'), 'application/json');
+				assert.equal(response.status, 200);
+
+				const json = await response.json();
+
+				assert.deepEqual(json, {
+					meta: {
+						id: 'foo',
+						name: 'Default Product Name',
+						version: '0.0.0',
+						description: 'No descrition',
+					},
+					components: [{
+						id: 'org.produck.duck.web',
+						name: 'DuckWeb',
+						version: json.components[0].version,
+						description: 'For creating and managing multiple application providers.',
+					}],
+				});
 
 				server.close();
 			});
@@ -207,12 +207,13 @@ describe('DuckWeb', function () {
 
 				const listener = Kit.Web.App('Redirect');
 				const server = http.createServer(listener).listen(8080, '127.0.0.2');
-				const client = supertest('http://127.0.0.2:8080');
 
-				await client
-					.get('/')
-					.expect(302)
-					.expect('Location', 'https://127.0.0.2:8080/');
+				const response = await fetch('http://127.0.0.2:8080/', {
+					redirect: 'manual',
+				});
+
+				assert.equal(response.status, 302);
+				assert.equal(response.headers.get('Location'), 'https://127.0.0.2:8080/');
 
 				server.close();
 			});

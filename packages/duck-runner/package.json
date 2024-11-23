@@ -8,6 +8,7 @@
 	"main": "src/index.cjs",
 	"type": "module",
 	"exports": {
+		"types": "./index.d.ts",
 		"import": "./src/index.mjs",
 		"require": "./src/index.cjs"
 	},

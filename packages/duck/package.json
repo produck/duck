@@ -41,7 +41,7 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"dependencies": {
-		"@produck/compose": "^0.1.8",
+		"@produck/compose": "^0.1.9",
 		"@produck/idiom": "^0.3.2",
 		"@produck/kit": "^0.1.9",
 		"@produck/mold": "^0.3.1",

@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { describe, it } from 'mocha';
+
 import * as Logger from '../src/Logger/index.mjs';
 
 describe('DuckLog::Logger', function () {

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { describe, it } from 'mocha';
 import * as Duck from '@produck/duck';
 
 import * as DuckLog from '../src/index.mjs';
