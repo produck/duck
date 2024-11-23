@@ -1,6 +1,6 @@
 {
 	"name": "@produck/duck-workspace",
-	"version": "1.0.5",
+	"version": "1.1.0",
 	"description": "Using workspace in duck.",
 	"author": "chaoslee <chaos2lee@qq.com>",
 	"homepage": "https://github.com/produck/duck#readme",
@@ -35,7 +35,7 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"dependencies": {
-		"@produck/duck": "^1.0.5",
+		"@produck/duck": "^1.1.0",
 		"@produck/idiom": "^0.3.2",
 		"@produck/mold": "^0.3.1",
 		"@produck/ow": "^0.1.2",
