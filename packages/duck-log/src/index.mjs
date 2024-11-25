@@ -22,25 +22,28 @@ const DuckLogComponent = (options = {}) => {
 		...meta,
 		install: ({ Kit }, next) => {
 			const map = new Map();
+			let installed = false;
 
-			const register = (category, options = {}) => {
+			const register = Object.freeze((category, options = {}) => {
+				if (installed) {
+					Ow.Error.Common('Can NOT register log category after installed.');
+				}
+
 				assertCategory(category);
 
 				if (map.has(category)) {
-					return Ow.Error.Common(`The category(${category}) is existed.`);
+					Ow.Error.Common(`The category(${category}) is existed.`);
 				}
 
 				map.set(category, new Logger.Handler({ label: category, ...options}));
-			};
-
-			Object.freeze(register);
+			});
 
 			Kit.Log = new Proxy(register, {
 				get: (_target, category) => {
 					assertCategory(category);
 
 					if (!map.has(category)) {
-						return Ow.Error.Common(`Category logger(${category}) is NOT defined.`);
+						Ow.Error.Common(`Category logger(${category}) is NOT defined.`);
 					}
 
 					return map.get(category).proxy;
@@ -52,6 +55,7 @@ const DuckLogComponent = (options = {}) => {
 			}
 
 			next();
+			installed = true;
 		},
 	});
 };

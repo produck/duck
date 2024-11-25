@@ -24,7 +24,7 @@ interface DefinitionKit extends DuckKit {
 }
 
 export interface ProductKit extends DefinitionKit {
-	ReadyTo: <T extends (...args: any) => any>(fn: T, message?: string) => T;
+	[key: string]: unknown;
 }
 
 export interface Component {
@@ -32,41 +32,41 @@ export interface Component {
 	 * The component unique id.
 	 * Example: org.orchange.duck.default
 	 */
-	id: String,
+	id: string,
 
 	/**
 	 * The component name for reading.
 	 */
-	name: String,
+	name: string,
 
 	/**
 	 * The component version in semver.
 	 */
-	version?: String;
+	version?: string;
 
 	/**
 	 * Invoking when Product is called.
 	 * Some new functions CAN be set into baseInjection
 	 */
-	install?: (Kit: ProductKit, next: () => any) => any;
+	install?: (Kit: ProductKit, next: () => unknown) => unknown;
 
 	/**
 	 * Description of the component.
 	 */
-	description?: String;
+	description?: string;
 }
 
 interface ProductOptions {
 	/**
 	 * Product id
 	 */
-	id: String
+	id: string
 
-	name?: String
+	name?: string
 
-	version?: String
+	version?: string
 
-	description?: String
+	description?: string
 
 	/**
 	 * Duck components list. Use to mixin some function into injection.
@@ -74,11 +74,11 @@ interface ProductOptions {
 	components?: Array<Component>
 }
 
-type Product<ProductType> = (...args: any[]) => ProductType
+type Product<ProductType> = (...args: unknown[]) => ProductType
 
 type Assembler<ProductType> = (
 	Kit: ProductKit,
-	...args: any[]
+	...args: unknown[]
 ) => ProductType
 
 export function defineProduct<ProductType = ProductKit>(
@@ -86,7 +86,7 @@ export function defineProduct<ProductType = ProductKit>(
 	assembler: Assembler<ProductType>
 ): Product<ProductType>
 
-export interface AnyDefiner<T = any> {
+export interface AnyDefiner<T = unknown> {
 	(any: T): T;
 }
 
@@ -94,7 +94,7 @@ export const defineAny: AnyDefiner;
 export const defineComponent: AnyDefiner<Component>;
 export { defineProduct as define };
 
-type InjectionTarget = <T = any>(Kit: ProductKit) => T;
+type InjectionTarget = <T = unknown>(Kit: ProductKit) => T;
 
 export const inject: AnyDefiner<InjectionTarget>;
 
@@ -102,4 +102,8 @@ export namespace Options {
 	export function normalize(options: ProductOptions): ProductOptions;
 	export const Schema: Schema<ProductOptions>;
 	export const ComponentSchema: Schema<Component>;
+}
+
+export namespace Utils {
+	export function throwNotInstalled(): never;
 }

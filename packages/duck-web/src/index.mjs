@@ -1,6 +1,6 @@
 import * as Ow from '@produck/ow';
-import { defineComponent, defineAny } from '@produck/duck';
-import { T } from '@produck/mold';
+import { Assert } from '@produck/idiom';
+import { defineComponent, defineAny, Utils } from '@produck/duck';
 
 import * as Preset from './Preset.mjs';
 import * as Options from './Options.mjs';
@@ -32,22 +32,18 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				const { id, provider, description } = finalDescriptor;
 
 				if (map.has(id)) {
-					return Ow.Error.Common(`Duplicate Application(${id}).`);
+					Ow.Error.Common(`Duplicate Application(${id}).`);
 				}
 
 				const ApplicationKit = Kit(`Application<${id}>`);
 				const Application = provider(ApplicationKit);
 
-				if (!T.Native.Function(Application)) {
-					return Ow.Invalid('.provider()=>', 'function');
-				}
+				Assert.Type.Function(Application, '.provider()=>');
 
 				const ApplicationProxy = (...args) => {
 					const requestListener = Application(...args);
 
-					if (!T.Native.Function(requestListener)) {
-						return Ow.Invalid(`Application(${id})=>`, '(req, res) => any');
-					}
+					Assert.Type.Function(requestListener, `Application(${id})=>`);
 
 					return requestListener;
 				};
@@ -55,25 +51,31 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				map.set(id, { id, description, ApplicationProxy });
 			};
 
-			const Application = function Application(id, ...args) {
-				if (!T.Native.String(id)) {
-					return Ow.Invalid('id', 'string');
-				}
+			for (const Application of staticApplicationList) {
+				register(Application);
+			}
+
+			const Web = Kit.Web = {
+				register,
+				Application: Utils.throwNotInstalled,
+				get App() {
+					return this.Application;
+				},
+			};
+
+			next();
+
+			Web.Application = function Application(id, ...args) {
+				Assert.Type.String(id, 'id');
 
 				if (!map.has(id)) {
-					return Ow.Error.Common(`No application(${id}) existed.`);
+					Ow.Error.Common(`No application(${id}) existed.`);
 				}
 
 				return map.get(id).ApplicationProxy(...args);
 			};
 
-			Kit.Web = Object.freeze({ register, Application, App: Application });
-
-			next();
-
-			for (const Application of staticApplicationList) {
-				register(Application);
-			}
+			Object.freeze(Web);
 		},
 	});
 };

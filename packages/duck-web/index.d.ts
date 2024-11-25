@@ -4,7 +4,7 @@ import { Schema } from '@produck/mold';
 
 export interface ApplicationKit extends Duck.ProductKit {}
 
-type Application = (...args: any[]) => RequestListener;
+type Application = <T>(...args: T[]) => RequestListener;
 type Provider = (Kit: ApplicationKit) => Application;
 
 interface Descriptor {
@@ -13,9 +13,14 @@ interface Descriptor {
 	description?: string;
 }
 
+interface ApplicationBuilder {
+	<T>(id: string, ...args: T[]): RequestListener;
+}
+
 interface WebRegistry {
 	register: (descriptor: Descriptor) => void;
-	Application: (id: string, ...args: any[]) => RequestListener;
+	Application: ApplicationBuilder;
+	App: ApplicationBuilder;
 }
 
 type Options = Array<Descriptor>;

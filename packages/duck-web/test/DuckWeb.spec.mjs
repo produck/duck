@@ -150,10 +150,11 @@ describe('DuckWeb', function () {
 					Kit.Web.Application('Foo');
 				}, {
 					name: 'TypeError',
-					message: 'Invalid "Application(Foo)=>", one "(req, res) => any" expected.',
+					message: 'Invalid "Application(Foo)=>", one "function" expected.',
 				});
-
 			});
+
+			it('should throw if not installed.');
 		});
 	});
 

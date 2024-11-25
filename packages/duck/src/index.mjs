@@ -48,3 +48,5 @@ export {
 	defineAny as defineComponent,
 	defineAny as inject,
 };
+
+export * as Utils from './Utils.mjs';

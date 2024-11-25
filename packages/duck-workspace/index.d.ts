@@ -16,7 +16,7 @@ declare module '@produck/duck' {
 }
 
 export namespace Options {
-	const Schema: Schema<WorkspaceOptions>;
+	export const Schema: Schema<WorkspaceOptions>;
 
 	export function normalize(options: WorkspaceOptions): WorkspaceOptions;
 }

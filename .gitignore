@@ -64,7 +64,8 @@ typings/
 .vscode
 
 # Development debug
-.debug.mjs
+*.ign*
+*.gen*
 
 # Duck dist
 packages/**/index.cjs

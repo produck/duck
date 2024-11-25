@@ -42,29 +42,53 @@ describe('DuckLog', function () {
 		});
 
 		describe('::register()', function () {
-			it('should register a new logger.', function () {
-				const Kit = Duck.define({
-					id: 'foo',
-					components: [DuckLog.Component()],
-				})();
-
-				Kit.Log('bar', { label: 'bar' });
-				Kit.Log('baz');
-			});
-
-			it('should throw if bad category.', function () {
-				const Kit = Duck.define({
-					id: 'foo',
-					components: [DuckLog.Component()],
-				})();
-
-				assert.throws(() => Kit.Log(1), {
-					name: 'TypeError',
-					message: 'Invalid "category", one "string" expected.',
+			it('should register a new logger.', async function () {
+				await new Promise((resolve) => {
+					Duck.define({
+						id: 'foo',
+						components: [DuckLog.Component()],
+					}, function ({ Log }) {
+						Log('bar', { label: 'bar' });
+						Log('baz');
+						resolve();
+					})();
 				});
 			});
 
-			it('should throw if duplicated category.', function () {
+			it('should throw if bad category.', async function () {
+				await new Promise(resolve => {
+					Duck.define({
+						id: 'foo',
+						components: [DuckLog.Component()],
+					}, function ({ Log }) {
+						assert.throws(() => Log(1), {
+							name: 'TypeError',
+							message: 'Invalid "category", one "string" expected.',
+						});
+
+						resolve();
+					})();
+				});
+
+			});
+
+			it('should throw if duplicated category.', async function () {
+				await new Promise(resolve => {
+					Duck.define({
+						id: 'foo',
+						components: [DuckLog.Component({ foo: {} })],
+					}, function ({ Log }) {
+						assert.throws(() => Log('foo'), {
+							name: 'Error',
+							message: 'The category(foo) is existed.',
+						});
+
+						resolve();
+					})();
+				});
+			});
+
+			it('should throw if installed.', function () {
 				const Kit = Duck.define({
 					id: 'foo',
 					components: [DuckLog.Component({ foo: {} })],
@@ -72,7 +96,7 @@ describe('DuckLog', function () {
 
 				assert.throws(() => Kit.Log('foo'), {
 					name: 'Error',
-					message: 'The category(foo) is existed.',
+					message: 'Can NOT register log category after installed.',
 				});
 			});
 		});

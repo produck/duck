@@ -1,7 +1,6 @@
-import * as Ow from '@produck/ow';
 import EventEmitter from 'node:events';
-import { defineComponent, defineAny } from '@produck/duck';
-import { T } from '@produck/mold';
+import { Assert } from '@produck/idiom';
+import { defineComponent, defineAny, Utils } from '@produck/duck';
 
 import * as Runner from './Runner/index.mjs';
 import * as Options from './Options.mjs';
@@ -21,11 +20,9 @@ const DuckRunnerComponent = (...args) => {
 		...meta,
 		install: ({ Kit }, next) => {
 			const manager = new Runner.Manager();
-			const runner = Kit.Runner = {};
+			const runner = Kit.Runner = { start: Utils.throwNotInstalled };
 
 			Kit.Bus = new EventEmitter();
-
-			runner.start = () => Ow.Error.Common('Installation not completed.');
 
 			for (const name in modes) {
 				manager.Mode(name, modes[name]);
@@ -38,9 +35,7 @@ const DuckRunnerComponent = (...args) => {
 
 				const play = roles[name](RoleKit);
 
-				if (!T.Native.Function(play)) {
-					Ow.Invalid('play <= role()', 'function <= role()');
-				}
+				Assert.Type.Function(play, 'play <= role()', 'function <= role()');
 
 				manager.Role(name, play);
 			}
@@ -48,11 +43,8 @@ const DuckRunnerComponent = (...args) => {
 			next();
 
 			runner.start = async function start(mode) {
-				if (!T.Native.String(mode)) {
-					Ow.Invalid('mode', 'string');
-				}
-
-				return await manager.run(mode, Kit);
+				Assert.Type.String(mode, 'mode');
+				await manager.run(mode, Kit);
 			};
 
 			Object.freeze(runner);

@@ -5,7 +5,7 @@
 		"deps:install": "npm -v && npm i",
 		"lint": "eslint --fix packages/**/*.mjs",
 		"test": "npm run build:extract --workspaces && npm run test --workspaces",
-		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
+		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm test",
 		"publish": "npm run lint && npm test && lerna publish --no-private"
 	},
 	"devDependencies": {
