@@ -51,10 +51,6 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 				map.set(id, { id, description, ApplicationProxy });
 			};
 
-			for (const Application of staticApplicationList) {
-				register(Application);
-			}
-
 			const Web = Kit.Web = {
 				register,
 				Application: Utils.throwNotInstalled,
@@ -64,6 +60,10 @@ const DuckWebComponent = (options = [DEFAULT_APPLICATION]) => {
 			};
 
 			next();
+
+			for (const Application of staticApplicationList) {
+				register(Application);
+			}
 
 			Web.Application = function Application(id, ...args) {
 				Assert.Type.String(id, 'id');

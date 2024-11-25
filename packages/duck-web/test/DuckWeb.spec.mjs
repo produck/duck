@@ -31,6 +31,24 @@ describe('DuckWeb', function () {
 	}});
 
 	describe('>Web', function () {
+		it('should create component and access injection in assembler.', function () {
+			Duck.define({
+				id: 'foo',
+				components: [
+					DuckWeb.Component([{
+						id: 'Foo',
+						provider: ({ mock }) => {
+							console.log(mock);
+							return () => {};
+						},
+						description: '',
+					}]),
+				],
+			}, function ({ Kit }) {
+				Kit.mock = {};
+			})();
+		});
+
 		describe('::register()', function () {
 			it('should rigister a custom Application.', function () {
 				Duck.define({
@@ -154,7 +172,27 @@ describe('DuckWeb', function () {
 				});
 			});
 
-			it('should throw if not installed.');
+			it('should throw if not installed.', function () {
+				assert.throws(() => {
+					Duck.define({
+						id: 'foo',
+						components: [
+							DuckWeb.Component([
+								{
+									id: 'Foo',
+									provider: () => () => {},
+									description: 'Bar',
+								},
+							]),
+						],
+					}, (Kit) => {
+						Kit.Web.Application('Foo');
+					})();
+				}, {
+					name: 'Error',
+					message: 'Installation not completed.',
+				});
+			});
 		});
 	});
 
@@ -207,14 +245,14 @@ describe('DuckWeb', function () {
 				})();
 
 				const listener = Kit.Web.App('Redirect');
-				const server = http.createServer(listener).listen(8080, '127.0.0.2');
+				const server = http.createServer(listener).listen(8081, '127.0.0.2');
 
-				const response = await fetch('http://127.0.0.2:8080/', {
+				const response = await fetch('http://127.0.0.2:8081/', {
 					redirect: 'manual',
 				});
 
 				assert.equal(response.status, 302);
-				assert.equal(response.headers.get('Location'), 'https://127.0.0.2:8080/');
+				assert.equal(response.headers.get('Location'), 'https://127.0.0.2:8081/');
 
 				server.close();
 			});

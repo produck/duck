@@ -24,11 +24,11 @@ const DuckRunnerComponent = (...args) => {
 
 			Kit.Bus = new EventEmitter();
 
+			next();
+
 			for (const name in modes) {
 				manager.Mode(name, modes[name]);
 			}
-
-			next();
 
 			for (const name in roles) {
 				const RoleKit = Kit(`Role<${name}>`);
