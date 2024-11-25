@@ -28,6 +28,8 @@ const DuckRunnerComponent = (...args) => {
 				manager.Mode(name, modes[name]);
 			}
 
+			next();
+
 			for (const name in roles) {
 				const RoleKit = Kit(`Role<${name}>`);
 
@@ -39,8 +41,6 @@ const DuckRunnerComponent = (...args) => {
 
 				manager.Role(name, play);
 			}
-
-			next();
 
 			runner.start = async function start(mode) {
 				Assert.Type.String(mode, 'mode');
