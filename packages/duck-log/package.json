@@ -1,6 +1,6 @@
 {
 	"name": "@produck/duck-log",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "> TODO: description",
 	"author": "chaoslee <chaos2lee@qq.com>",
 	"homepage": "https://github.com/produck/duck#readme",
@@ -35,7 +35,7 @@
 		"url": "https://github.com/produck/duck/issues"
 	},
 	"dependencies": {
-		"@produck/duck": "^1.1.0",
+		"@produck/duck": "^1.1.1",
 		"@produck/idiom": "^0.3.2",
 		"@produck/mold": "^0.3.1",
 		"@produck/ow": "^0.1.2",
